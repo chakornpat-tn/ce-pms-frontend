@@ -4,7 +4,7 @@ type Props = {
   Title: string
 }
 
-const ButtonWithArrow = ({ Title, Icon }: Props) => {
+const ButtonWithArrow = ({ Title }: Props) => {
   return (
     <button className="bg-primary2-400 hover:bg-primary2-500 text-secondary1 font-bold py-2 px-4 rounded inline-flex items-center w-4/5 ">
       <span>{Title}</span>
