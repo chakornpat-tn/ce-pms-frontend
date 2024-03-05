@@ -1,1 +1,1 @@
-export { default } from './LoginCard/LoginCard'
+export * from './LoginCard/LoginCard'
