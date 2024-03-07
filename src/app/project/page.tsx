@@ -1,7 +1,16 @@
-import { Stepper, Step, StepLabel } from '@mui/material'
 import React from 'react'
-type Props = {}
+import { Pjstepper } from '../components/Stepper'
+import { Stepper, Step, StepLabel } from '@mui/material'
+import Box from '@mui/material/Box';
 
+const steps = [
+    'ใบขอสอบ2.0',
+    'ใบซ้อมนำเสนอ3.0',
+    'ใบประเมินคณะกรรมการ4.0',
+    'ใบส่งชิ้นงาน5.0',
+    'ส่งปริญญานิพนธ์'
+];
+type Props = {}
 export default function page({}: Props) {
   return (
     <div className='bg-bg_primary h-auto md:h-dvh flex justify-center items-start'>
@@ -11,15 +20,22 @@ export default function page({}: Props) {
             <div className='w-4/5'>
             <p className='mb-5'><span className='font-bold'> อัพเดทล่าสุดโดย :</span> นาย ไฟแดง แซงไฟเขียว</p>
             
-            <Stepper activeStep={1} alternativeLabel>
-  {steps.map((label) => (
-    <Step key={label}>
-      <StepLabel>{label}</StepLabel>
-    </Step>
-  ))}
-</Stepper>
-                
-                <h3 className='inline-block'style={{ backgroundColor: 'yellow' }}>สถานะโครงงาน</h3>
+            <Box sx={{ width: '100%' }}>
+      <Stepper activeStep={1} alternativeLabel>
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
+      </Stepper>
+    </Box>
+  
+                <h3 className='inline-block'style={{ backgroundColor: 'yellow', marginRight:'50px' }}>สถานะโครงงาน</h3>
+                <button className="bg-primary1 hover:bg-green-500 text-white py-0 px-4 rounded mb-5">คลิกเพื่อส่งเอกสาร</button>
+                <button className="bg-red-500 hover:bg-green-500 text-white py-0 px-4 rounded" style={{ marginRight: "1px", float: "right" }}>ข้อความแนะนำจากอาจารย์</button>
+                <div className="mb-3 border-b border-primary2-500"></div>
+                <h3 className='font-bold'>รายงานความก้าวหน้า</h3>
+                <div className="mb-3 border-b border-primary2-400"></div>
             <section>
                 <h3 className='font-bold'>ผู้พัฒนา</h3>
                 <p>นาย ธนพงษ์ ตั้งทวีเกียรติ</p>
