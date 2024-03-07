@@ -10,7 +10,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Navbar() {
   return (
-    <nav className="flex justify-between items-center w-full top-0 border-b px-20 py-3 border-gray-200 dark:border-gray-300">
+    <>
+    <nav className="flex justify-between items-center w-full top-0 px-20 py-3 ">
       {/* <div className="flex justify-between mx-left-20 p-4 bg-red-500"> */}
         <a href='/#' className="flex items-center space-x-3 rtl:space-x-reverse">
         <span className="md:text-xl font-semibold whitespace-nowrap dark:text-primary1">Project Management System</span>
@@ -22,5 +23,7 @@ export default function Navbar() {
       </div>
       {/* </div> */}
     </nav>
+    <hr className="w-[85vw] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"/>
+    </>
   );
 }
