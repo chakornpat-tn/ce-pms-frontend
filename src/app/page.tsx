@@ -12,7 +12,7 @@ export default function Home() {
     </div>
     <div className="flex max-w-auto justify-center">
       <div className="px-4 py-2">
-        <h5 className="text-2xl text-gray-900">Card Title</h5>
+        <h5 className="text-2xl text-gray-900">เลือกปีการศึกษาที่ต้องการตรวจสอบ </h5>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3 py-2">
           <ProjCard path="/2555"/>
