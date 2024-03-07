@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import { Prompt } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@mui/material/styles'

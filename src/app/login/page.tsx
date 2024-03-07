@@ -7,7 +7,7 @@ type Props = {}
 function page({}: Props) {
   return (
     <div className="min-h-dvh flex flex-col justify-start items-center p-10 bg-bg_primary ">
-      <div className="flex justify-center items-center flex-col md:mt-[15vh]">
+      <div className="flex justify-center items-center flex-col md:mt-[5vh]">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
           ระบบจัดการโครงงานทางวิศวกรรมคอมพิวเตอร์
         </h1>
@@ -15,7 +15,7 @@ function page({}: Props) {
           มหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา
         </h2>
       </div>
-      <article className="flex flex-col md:flex-row justify-evenly mt-[10vh] ">
+      <article className="flex flex-col md:flex-row justify-evenly mt-[3vh] ">
         <LoginCard
           bgColor="bg-secondary2-100"
           title="นักศึกษา"
