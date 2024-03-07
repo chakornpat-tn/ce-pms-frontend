@@ -2,7 +2,7 @@ import {AllpjCard, ProjCard} from './components/Cards/ProjCard/ProjCard'
 import Navbar from './components/Navbar'
 export default function Home() {
   return (
-    <div>
+    <div className='bg-bg_primary min-h-screen'>
     <div>
       <Navbar/>
 

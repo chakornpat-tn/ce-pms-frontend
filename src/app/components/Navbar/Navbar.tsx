@@ -1,29 +1,25 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import Link from 'next/link'
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 
 
 export default function Navbar() {
   return (
     <>
-    <nav className="flex justify-between items-center w-full top-0 px-20 py-3 ">
-      {/* <div className="flex justify-between mx-left-20 p-4 bg-red-500"> */}
-        <a href='/#' className="flex items-center space-x-3 rtl:space-x-reverse">
-        <span className="md:text-xl font-semibold whitespace-nowrap dark:text-primary1">Project Management System</span>
-        </a>
-      <div className="flex items-center rtl:space-x-reverse ml-auto">
-      <span className='md:text-sm'>
-      <Button className='text-primary2-400 bg-primary2-100'>Login/เข้าสู่ระบบ</Button>
+    <nav className="flex justify-between items-center w-full top-0  md:px-20 py-3 px-3 ">
+        <Link href='/#' className="flex items-center space-x-3 rtl:space-x-reverse">
+        <span className="md:text-2xl font-semibold whitespace-nowrap">Project Management System</span>
+        </Link>
+      <div className="flex max-w-20 max-h-20 md:max-w-52 md:max-h-32 items-center rtl:space-x-reverse ml-auto">
+      <span>
+      <Button className='text-primary2-400 bg-primary2-100 text-xs md:text-xl rounded-lg'>
+      <Link href='./login'>Login/เข้าสู่ระบบ
+      </Link>
+      </Button>
       </span>
       </div>
-      {/* </div> */}
     </nav>
-    <hr className="w-[85vw] h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"/>
+    <hr className="w-[85vw] h-1 mx-auto py-0 bg-gray-100 border-0 rounded dark:bg-gray-700"/>
     </>
   );
 }
