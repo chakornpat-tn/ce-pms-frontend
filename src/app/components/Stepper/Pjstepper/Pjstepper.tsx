@@ -1,4 +1,6 @@
+import React from 'react'
 import { Stepper, Step, StepLabel } from '@mui/material'
+import Box from '@mui/material/Box';
 
 const steps = [
       'ใบขอสอบ2.0',
@@ -12,6 +14,7 @@ type Props = {
   }
   const ProjCard = ({ step }: Props) => {
     return (
+      <Box sx={{ width: '100%' }}>
         <Stepper activeStep={step} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
@@ -19,5 +22,6 @@ type Props = {
           </Step>
         ))}
       </Stepper>
+      </Box>
     )
   }
