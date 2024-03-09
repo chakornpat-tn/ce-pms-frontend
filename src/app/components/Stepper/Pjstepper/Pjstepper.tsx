@@ -13,7 +13,7 @@ const steps = [
 type Props = {
     step: number
   }
-  const ProjCard = ({ step }: Props) => {
+  const Pjstepper = ({ step }: Props) => {
     return (
       <Box sx={{ width: '100%' }}>
         <Stepper activeStep={step} alternativeLabel>
@@ -26,3 +26,4 @@ type Props = {
       </Box>
     )
   }
+  export { Pjstepper }

@@ -1,11 +1,10 @@
-import { AllpjCard, ProjCard } from './components/Cards/ProjCard/ProjCard'
-import Navbar from './components/Navbar'
-
+import Navbar from "../components/Navbar"
+import { ProjCard, AllpjCard } from "../components/Cards"
 export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen">
+      <div className="bg-bg_primary min-h-screen">
         <div className="mx-auto max-2xl text-center my-5">
           <h2 className="text-3xl font-bold tracking-tight text-black sm:text-4xl">
             โครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์
