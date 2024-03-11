@@ -6,9 +6,9 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
+    <div className='bg-bg_primary min-h-screen'>
       <Navbar />
       {children}
-    </>
+    </div>
   )
 }

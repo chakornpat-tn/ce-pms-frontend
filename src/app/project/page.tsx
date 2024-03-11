@@ -13,6 +13,7 @@ const steps = [
 type Props = {}
 export default function page({}: Props) {
   return (
+    <div className="bg-bg_primary min-h-screen">
     <div className='bg-bg_primary h-auto md:h-dvh flex justify-center items-start'>
         <div className='flex justify-center items-center flex-col md:mt-[5vh] bg-white w-4/5'>
             <h1 className='text-3xl'>ระบบเจาะยางรถอาจารย์</h1>
@@ -29,7 +30,6 @@ export default function page({}: Props) {
         ))}
       </Stepper>
     </Box>
-  
                 <span className="inline-flex flex-shrink-0 items-center rounded-full bg-yellow-100 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ring-yellow-500">สถานะ</span>
                 <button className="bg-primary1 hover:bg-green-500 text-white py-0 px-4 rounded mb-5 ml-5">คลิกเพื่อส่งเอกสาร</button>
                 <button className="bg-red-500 hover:bg-green-500 text-white py-0 px-4 rounded" style={{ marginRight: "1px", float: "right" }}>ข้อความแนะนำจากอาจารย์</button>
@@ -54,6 +54,7 @@ export default function page({}: Props) {
             </section>
             </div>
         </div>
+    </div>
     </div>
   )
 }

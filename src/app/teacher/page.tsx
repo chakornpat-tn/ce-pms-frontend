@@ -4,8 +4,10 @@ type Props = {}
 
 function page({}: Props) {
   return (
+    <div className="bg-bg_primary min-h-screen">
     <div className="flex items-center justify-center">
-      <h1>หน้าแรกตัวแทนกลุ่ม</h1>
+
+    </div>
     </div>
   )
 }
