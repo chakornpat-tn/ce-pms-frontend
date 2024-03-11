@@ -22,7 +22,7 @@ export default function Navbar() {
           </span>
         </div>
       </nav>
-      <hr className="w-[85vw] h-1 mx-auto py-0 bg- border-0 rounded dark:bg-gray-700" />
+      <hr className="w-[85vw] h-1 mx-auto py-0 bg- border-0 rounded bg-gray-700" />
     </div>
   )
 }

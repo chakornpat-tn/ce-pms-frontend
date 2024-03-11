@@ -4,8 +4,8 @@ import Navbar from './components/Navbar'
 export default function Home() {
   return (
     <>
+      <div className="bg-bg_primary min-h-screen">
       <Navbar />
-      <div className="min-h-screen">
         <div className="mx-auto max-2xl text-center my-5">
           <h2 className="text-3xl font-bold tracking-tight text-black sm:text-4xl">
             โครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์
