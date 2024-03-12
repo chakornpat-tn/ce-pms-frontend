@@ -14,15 +14,15 @@ export default function Navbar() {
             Project Management System
           </span>
         </Link>
-        <div className="flex max-w-20 max-h-20 md:max-w-52 md:max-h-32 items-center rtl:space-x-reverse ml-auto">
+        <div className="flex max-w-16 max-h-16 md:max-w-52 md:max-h-32 items-center rtl:space-x-reverse ml-auto">
           <span>
-            <Button className="text-primary2-300 bg-primary2-100 text-xs md:text-xl rounded-lg">
+            <Button className="text-primary2-300 bg-primary2-100 text-xs md:text-base rounded-lg">
               <Link href="/login">Login/เข้าสู่ระบบ</Link>
             </Button>
           </span>
         </div>
       </nav>
-      <hr className="w-[85vw] h-1 mx-auto py-0 border-0 rounded bg-gray-700" />
+      <hr className="w-[85vw] h-1 mx-auto py-0 border-0 rounded bg-primary2-400" />
     </div>
   )
 }
