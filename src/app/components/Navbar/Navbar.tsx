@@ -1,28 +1,28 @@
-import * as React from 'react'
-import Link from 'next/link'
-import Button from '@mui/material/Button'
+import * as React from "react";
+import Link from "next/link";
+import Button from "@mui/material/Button";
 
 export default function Navbar() {
   return (
     <div className="bg-bg_primary">
-      <nav className="flex justify-between items-center w-full top-0  md:px-20 py-3 px-3 ">
+      <nav className="top-0 flex w-full items-center justify-between  px-3 py-3 md:px-20 ">
         <Link
           href="/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <span className="md:text-2xl font-semibold whitespace-nowrap text-primary2-500">
+          <span className="whitespace-nowrap font-semibold text-primary2-500 md:text-2xl">
             Project Management System
           </span>
         </Link>
-        <div className="flex max-w-16 max-h-16 md:max-w-52 md:max-h-32 items-center rtl:space-x-reverse ml-auto">
+        <div className="ml-auto flex max-h-16 max-w-16 items-center md:max-h-32 md:max-w-52 rtl:space-x-reverse">
           <span>
-            <Button className="text-primary2-300 bg-primary2-100 text-xs md:text-base rounded-lg">
+            <Button className="rounded-lg bg-primary2-100 text-xs text-primary2-300 md:text-base">
               <Link href="/login">Login/เข้าสู่ระบบ</Link>
             </Button>
           </span>
         </div>
       </nav>
-      <hr className="w-[85vw] h-1 mx-auto py-0 border-0 rounded bg-primary2-400" />
+      <hr className="mx-auto h-1 w-[85vw] rounded border-0 bg-primary2-400 py-0" />
     </div>
-  )
+  );
 }

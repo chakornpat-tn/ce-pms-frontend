@@ -1,20 +1,20 @@
-import React from 'react'
-import { DashboardCard, ColumnCard } from '../components/Cards'
+import React from "react";
+import { DashboardCard, ColumnCard } from "../components/Cards";
 
-type Props = {}
+type Props = {};
 
 function page({}: Props) {
   return (
-    <div className="bg-bg_primary min-h-screen">
-    <div className="flex bg-primary2-300 items-center justify-center">
-    <div className="py-16 grid gap-48 grid-cols-2 h-full items-center justify-between ">
-      <DashboardCard/>
-      <DashboardCard/>
+    <div className="min-h-screen bg-bg_primary">
+      <div className="flex items-center justify-center bg-primary2-300">
+        <div className="grid h-full grid-cols-2 items-center justify-between gap-48 py-16 ">
+          <DashboardCard />
+          <DashboardCard />
+        </div>
       </div>
+      <ColumnCard />
     </div>
-    <ColumnCard/>
-    </div>
-  )
+  );
 }
 
-export default page
+export default page;

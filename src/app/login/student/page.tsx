@@ -1,24 +1,24 @@
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from "next/link";
+import Image from "next/image";
 
-type Props = {}
+type Props = {};
 
 function page({}: Props) {
   return (
-    <section className="bg-primary2-500 h-dvh max-sm:grid max-sm:justify-center">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <section className="h-dvh bg-primary2-500 max-sm:grid max-sm:justify-center">
+      <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
         <div className="grid justify-center">
           <Image
             src="/Images/Student.png"
             alt="นักศึกษา"
             width="124"
             height="124"
-            className=" bg-secondary2-100 rounded-full m-0 p-0 z-10"
+            className=" z-10 m-0 rounded-full bg-secondary2-100 p-0"
           />
         </div>
-        <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 relative bottom-12">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8 ">
-            <h1 className=" text-xl sm:text-3xl md:text-5xl font-bold leading-tight tracking-tight text-gray-900 grid justify-center mt-6">
+        <div className="relative bottom-12 w-full rounded-lg  bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
+          <div className="space-y-4 p-6 sm:p-8 md:space-y-6 ">
+            <h1 className=" mt-6 grid justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-3xl md:text-5xl">
               สำหรับนักศึกษา
             </h1>
             <form className="space-y-4 md:space-y-6" action="#">
@@ -27,7 +27,7 @@ function page({}: Props) {
                   type="text"
                   name="ชื่อผู้ใช้"
                   id="username"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5  "
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm  "
                   placeholder="ชื่อผู้ใช้"
                   required
                 />
@@ -38,27 +38,27 @@ function page({}: Props) {
                   name="รหัสผ่าน"
                   id="password"
                   placeholder="รหัสผ่าน"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg  block w-full p-2.5 "
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50  p-2.5 text-gray-900 sm:text-sm "
                   required
                 />
               </div>
               <div className="flex items-center justify-between">
                 <Link
                   href="/"
-                  className="text-sm font-medium  hover:underline text-gray-500  hover:text-gray-700"
+                  className="text-sm font-medium  text-gray-500 hover:text-gray-700  hover:underline"
                 >
                   กลับหน้าแรก
                 </Link>
                 <Link
                   href="#"
-                  className="text-sm font-medium hover:underline text-gray-500 hover:text-gray-700"
+                  className="text-sm font-medium text-gray-500 hover:text-gray-700 hover:underline"
                 >
                   เปลี่ยนรหัสผ่าน
                 </Link>
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primary2-400 hover:bg-primary2-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg bg-primary2-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none focus:ring-4"
               >
                 เข้าสู่ระบบ
               </button>
@@ -67,7 +67,7 @@ function page({}: Props) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default page
+export default page;
