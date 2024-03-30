@@ -6,16 +6,16 @@ type Props = {}
 
 function page({}: Props) {
   return (
-    <div className="min-h-dvh flex flex-col justify-start items-center p-10 bg-bg_primary ">
-      <div className="flex justify-center items-center flex-col md:mt-[5vh]">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
+    <div className="flex min-h-dvh flex-col items-center justify-start bg-bg_primary p-10 ">
+      <div className="flex flex-col items-center justify-center md:mt-[5vh]">
+        <h1 className="text-2xl font-bold sm:text-3xl lg:text-4xl">
           ระบบจัดการโครงงานทางวิศวกรรมคอมพิวเตอร์
         </h1>
         <h2 className="text-xl md:text-3xl">
           มหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา
         </h2>
       </div>
-      <article className="flex flex-col md:flex-row justify-evenly mt-[3vh] ">
+      <article className="mt-[3vh] flex flex-col justify-center md:flex-row ">
         <LoginCard
           bgColor="bg-secondary2-100"
           title="นักศึกษา"
