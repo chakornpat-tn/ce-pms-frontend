@@ -1,7 +1,7 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from 'next/link'
+import Image from 'next/image'
 
-type Props = {};
+type Props = {}
 
 function page({}: Props) {
   return (
@@ -67,7 +67,7 @@ function page({}: Props) {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default page;
+export default page
