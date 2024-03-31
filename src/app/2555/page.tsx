@@ -1,4 +1,4 @@
-import { ProjCard, AllpjCard, Selectprojectcard } from "../components/Cards";
+import { ProjCard, AllpjCard, Selectprojectcard } from '@/components/Cards'
 export default function selectproject() {
   return (
     <div className="min-h-screen bg-bg_primary">
@@ -23,5 +23,5 @@ export default function selectproject() {
         </div>
       </div>
     </div>
-  );
+  )
 }

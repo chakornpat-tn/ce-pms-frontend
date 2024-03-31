@@ -1,5 +1,5 @@
-import { AllpjCard, ProjCard } from "./components/Cards/ProjCard/ProjCard";
-import Navbar from "./components/Navbar";
+import { AllpjCard, ProjCard } from '@/components/Cards/ProjCard/ProjCard'
+import Navbar from '@/components/Navbar/Navbar'
 
 export default function Home() {
   return (
@@ -28,5 +28,5 @@ export default function Home() {
         </div>
       </div>
     </>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import Navbar from '../components/Navbar'
-import Sidebar from '../components/Sidebar/Sidebar'
+import Navbar from '@/components/Navbar'
+import Sidebar from '@/components/Sidebar/Sidebar'
 
 export default function TeacherLayout({
   children,
@@ -7,13 +7,12 @@ export default function TeacherLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className='flex flex-row bg-bg_primary min-h-screen'>
+    <div className="flex min-h-screen flex-row bg-bg_primary">
       <Sidebar />
-    <div className='flex flex-col bg-bg_primary min-h-screen'>
-      <Navbar/>
-    
-      {children}
-    </div>
+      <div className="flex min-h-screen flex-col bg-bg_primary">
+        <Navbar />
+        {children}
+      </div>
     </div>
   )
 }

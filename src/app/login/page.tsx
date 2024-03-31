@@ -1,6 +1,6 @@
 import React from 'react'
-import { LoginCard } from '@/app/components/Cards'
-import { ButtonPrimary2 } from '../components/Buttons'
+import { LoginCard } from '@/components/Cards'
+import { ButtonPrimary2 } from '@/components/Buttons'
 
 type Props = {}
 

@@ -1,7 +1,7 @@
-import React from "react";
-import { DashboardCard, ColumnCard } from "../components/Cards";
+import React from 'react'
+import { DashboardCard, ColumnCard } from '@/components/Cards'
 
-type Props = {};
+type Props = {}
 
 function page({}: Props) {
   return (
@@ -14,7 +14,7 @@ function page({}: Props) {
       </div>
       <ColumnCard />
     </div>
-  );
+  )
 }
 
-export default page;
+export default page
