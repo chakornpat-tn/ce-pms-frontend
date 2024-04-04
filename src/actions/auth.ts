@@ -1,6 +1,7 @@
 'use server'
 
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 type FormState = {
   message: string
@@ -19,9 +20,7 @@ export async function login(prevState: FormState, formData: FormData) {
   if (res.status == 200) {
     const response = await res.json()
     cookies().set('token', response.token, { maxAge: 3 * 60 * 60 })
-    return {
-      message: '',
-    }
+    redirect('/teacher')
   }
 
   return {

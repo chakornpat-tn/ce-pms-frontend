@@ -1,4 +1,4 @@
-import { AllpjCard, ProjCard } from '@/components/Cards/ProjCard/ProjCard'
+import { AllpjCard, ProjCard } from '@/components/Cards/'
 import Navbar from '@/components/Navbar/Navbar'
 
 export default function Home() {

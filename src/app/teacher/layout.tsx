@@ -9,7 +9,7 @@ export default function TeacherLayout({
   return (
     <div className="flex min-h-screen flex-row bg-bg_primary">
       <Sidebar />
-      <div className="flex min-h-screen flex-col bg-bg_primary">
+      <div className="flex min-h-screen w-full flex-col bg-bg_primary">
         <Navbar />
         {children}
       </div>

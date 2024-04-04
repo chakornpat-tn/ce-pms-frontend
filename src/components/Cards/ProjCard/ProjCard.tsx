@@ -8,7 +8,7 @@ const ProjCard = ({ path }: Props) => {
   return (
     <Link
       href={path}
-      className="block max-w-sm rounded-lg border bg-white p-6 shadow-sm hover:border-2  hover:border-primary2-500 hover:bg-gray-100"
+      className="block max-w-sm rounded-lg border bg-white p-6 shadow-sm hover:border-primary2-500  hover:bg-gray-100 hover:shadow-md"
     >
       <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
         ปีการศึกษา 2xxx
@@ -21,7 +21,7 @@ const AllpjCard = ({ path }: Props) => {
   return (
     <Link
       href={path}
-      className="flex max-w-sm items-center justify-center rounded-lg border bg-white p-6 shadow-sm hover:border-2  hover:border-primary2-500 hover:bg-gray-100"
+      className="flex max-w-sm items-center justify-center rounded-lg border bg-white p-6 shadow-sm hover:border-primary2-500  hover:bg-gray-100 hover:shadow-md"
     >
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 md:text-3xl">
         ดูทั้งหมด
