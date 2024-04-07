@@ -30,11 +30,17 @@ const AllpjCard = ({ path }: Props) => {
   )
 }
 
-const Selectprojectcard = ({ path }: Props) => {
+const Selectprojectcard = ({
+  Title,
+  path,
+}: {
+  Title: string
+  path: string
+}) => {
   return (
     <Link
       href={path}
-      className="block max-w-sm rounded-lg border bg-white p-6 shadow-sm hover:border-2  hover:border-primary2-500 hover:bg-gray-100"
+      className="max-h-auto block max-w-sm rounded-lg border bg-white p-6 shadow-sm  hover:border-primary2-500 hover:bg-gray-100"
     >
       <div className="flex-1 truncate">
         <div className="flex items-center justify-between">
@@ -42,7 +48,7 @@ const Selectprojectcard = ({ path }: Props) => {
             ชื่อโครงงาน
           </h3>
           <span className="inline-flex flex-shrink-0 items-center rounded-full bg-yellow-100 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset ring-yellow-500">
-            สถานะ
+            {Title}
           </span>
         </div>
         <p className="mt-1 truncate text-sm text-gray-500">
@@ -61,4 +67,5 @@ const Selectprojectcard = ({ path }: Props) => {
     </Link>
   )
 }
+
 export { ProjCard, AllpjCard, Selectprojectcard }

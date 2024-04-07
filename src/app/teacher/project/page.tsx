@@ -10,9 +10,9 @@ export default function selectproject() {
       <div className="flex w-auto justify-center">
         <div className="px-4 py-2">
           <h5 className="mb-4 text-2xl text-gray-900">
-            เลือกโครงงานที่ต้องการตรวจสอบ
+          ปีการศึกษา 25xx
           </h5>
-          <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3  ">
             <Selectprojectcard path="#" Title={''} />
             <Selectprojectcard path="#" Title={''} />
             <Selectprojectcard path="#" Title={''} />

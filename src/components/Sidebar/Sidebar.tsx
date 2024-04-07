@@ -7,11 +7,11 @@ const hoverStyle = `hover:bg-slate-100 `
 
 const sidebarGroup = {
   โครงงาน: [
-    { name: 'ตัวเลือก1', path: '#' },
+    { name: 'ตัวเลือก1', path: '/teacher/yearproject' },
     { name: 'ตัวเลือก2', path: '#' },
   ],
   เตรียมโครงงาน: [
-    { name: 'ตัวเลือก1', path: '#' },
+    { name: 'ตัวเลือก1', path: '/teacher/yearpreproject' },
     { name: 'ตัวเลือก2', path: '#' },
   ],
   ที่ปรึกษา: [
