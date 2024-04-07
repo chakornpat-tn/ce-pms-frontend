@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { KeyboardArrowUp, KeyboardArrowDown } from '@mui/icons-material'
 
-const hoverStyle = `hover:bg-primary1 `
+const hoverStyle = `hover:bg-slate-100 `
 
 const sidebarGroup = {
   โครงงาน: [
@@ -32,17 +32,17 @@ const Sidebar: React.FC = () => {
   }
 
   return (
-    <aside className="invisible sticky top-0 flex h-screen w-[18.125rem] flex-col overflow-y-auto  border-r bg-primary2-500 px-5 py-8 md:visible rtl:border-l rtl:border-r-0">
-      <p className="text-font-medium mt-1 truncate font-bold text-secondary1">
+    <aside className="invisible flex h-screen w-[18.125rem] flex-col overflow-y-auto  border-r-2 bg-white px-5 py-8  md:visible">
+      <p className="text-font-medium  my-0 font-bold text-primary1">
         นายไปเกาหลี ไปกินเกาเหลา
       </p>
       <div className="mt-6 flex flex-1 flex-col justify-between">
         <nav className="-mx-3 space-y-6 ">
-          <hr className="mx-auto h-1 w-auto rounded border-0 bg-secondary1 py-0" />
+          <hr className="mx-auto h-1 w-11/12 rounded border-0 bg-primary2-500 py-0" />
           <div className="space-y-3 px-3">
             <Link href="/teacher">
               <h3
-                className={`flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-base font-medium text-secondary1 ${hoverStyle}`}
+                className={`flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-base font-medium text-primary1 ${hoverStyle}`}
               >
                 หน้าหลัก
               </h3>
@@ -51,14 +51,14 @@ const Sidebar: React.FC = () => {
           {Object.entries(sidebarGroup).map(([group, items]) => (
             <div key={group} className="space-y-3 px-3">
               <h3
-                className={`flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-base font-medium text-secondary1 ${hoverStyle}`}
+                className={`flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-base font-medium text-primary1 ${hoverStyle}`}
                 onClick={() => toggleGroup(group)}
               >
                 {group}
                 {openGroup === group ? (
-                  <KeyboardArrowUp className="text-secondary1" />
+                  <KeyboardArrowUp className="text-primary1" />
                 ) : (
-                  <KeyboardArrowDown className="text-secondary1" />
+                  <KeyboardArrowDown className="text-primary1" />
                 )}
               </h3>
 
@@ -67,9 +67,11 @@ const Sidebar: React.FC = () => {
                   {items.map((item, index) => (
                     <li
                       key={index}
-                      className={`flex transform items-center rounded-lg px-3 py-2 pl-5 text-sm text-secondary1 transition-colors duration-300 ${hoverStyle}`}
+                      className={`flex transform items-center rounded-lg px-3 py-2 pl-5 text-base  text-primary1 transition-colors duration-300 ${hoverStyle}`}
                     >
-                      <Link href={item.path}>{item.name}</Link>
+                      <Link href={item.path} className="text-sm text-primary1">
+                        {item.name}
+                      </Link>
                     </li>
                   ))}
                 </ul>

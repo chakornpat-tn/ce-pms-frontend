@@ -1,11 +1,18 @@
 'use client'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import { createUser } from '@/actions/user'
+import { useFormState } from 'react-dom'
 
 type Props = {}
 
 function UserModalForm({}: Props) {
+  const initState = {
+    message: '',
+  }
   let [isOpen, setIsOpen] = useState(false)
+
+  const [state, formAction] = useFormState(createUser, initState)
 
   function closeModal() {
     setIsOpen(false)
@@ -16,7 +23,7 @@ function UserModalForm({}: Props) {
   }
 
   const InputForm = () => (
-    <form className="p-4">
+    <form className="p-4" action={formAction}>
       <div className="mb-4 flex">
         <div className="mr-2 w-1/2">
           <label
@@ -87,47 +94,48 @@ function UserModalForm({}: Props) {
         <div className="mb-2 flex items-center justify-around">
           <input
             type="radio"
-            id="manager"
-            name="position"
-            value="manager"
+            id="general"
+            name="role"
+            value="3"
             className="mr-1"
             required
           />
-          <label htmlFor="manager" className="text-md mr-4">
+          <label htmlFor="general" className="text-md mr-4">
             ทั่วไป
           </label>
 
           <input
             type="radio"
-            id="supervisor"
-            name="position"
-            value="supervisor"
+            id="pre"
+            name="role"
+            value="2"
             className="mr-1"
             required
           />
-          <label htmlFor="supervisor" className="text-md mr-4">
+          <label htmlFor="pre" className="text-md mr-4">
             เตรียมโครงงาน
           </label>
 
           <input
             type="radio"
-            id="employee"
-            name="position"
-            value="employee"
+            id="pro"
+            name="role"
+            value="1"
             className="mr-1"
             required
           />
-          <label htmlFor="employee" className="text-md mr-4">
+          <label htmlFor="pro" className="text-md mr-4">
             โครงงาน
           </label>
         </div>
+        {state.message && <p className="text-red-500">{state.message}</p>}
       </div>
       <div className="flex items-center justify-around">
         <button
           type="submit"
           className=" mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
         >
-          สร้างบัญชีผู้ใช้
+          สร้าง
         </button>
         <button
           type="button"

@@ -1,5 +1,6 @@
 import { UserModalForm } from '@/components/Modals'
-import { User, getUserRole } from '@/types/User'
+import { User } from '@/types/User'
+import { UsersTable } from '@/components/Tables'
 
 type Props = {}
 
@@ -13,8 +14,6 @@ const getUsers = async () => {
     console.log(error)
   }
 }
-
-const roleColor = [, 'bg-blue-600', 'bg-orange-600', 'bg-green-600']
 
 async function page({}: Props) {
   const users = await getUsers()
@@ -41,7 +40,8 @@ async function page({}: Props) {
           {/* ---------------------------------------------Users List------------------------------------------------ */}
 
           <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
-            <table className="mb-5  w-full  text-left text-sm">
+            <UsersTable usersData={users} />
+            {/* <table className="mb-5  w-full  text-left text-sm">
               <thead className=" border-b text-xs uppercase  text-primary1">
                 <tr>
                   <th scope="col" className="px-6 py-4 text-lg">
@@ -75,17 +75,12 @@ async function page({}: Props) {
                       {getUserRole(user.role)}
                     </td>
                     <td className="px-6 py-4 text-right text-base text-primary1">
-                      <a
-                        href="#"
-                        className="font-medium text-blue-600 hover:underline"
-                      >
-                        Edit
-                      </a>
+                      <MoreVertIcon />
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table> */}
           </div>
         </article>
       </div>

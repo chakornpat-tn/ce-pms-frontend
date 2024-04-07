@@ -4,7 +4,7 @@ import Button from '@mui/material/Button'
 
 export default function Navbar() {
   return (
-    <div className="bg-bg_primary shadow-md">
+    <div className=" bg-white shadow-sm">
       <nav className="top-0 flex w-full items-center justify-between  px-3 py-3 md:px-20 ">
         <Link
           href="/"
