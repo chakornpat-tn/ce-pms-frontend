@@ -1,4 +1,4 @@
-import { ProjCard, AllpjCard, Selectprojectcard } from '@/components/Cards'
+import { Selectprojectcard } from '@/components/Cards'
 export default function selectproject() {
   return (
     <div className="min-h-screen bg-bg_primary">
@@ -8,51 +8,51 @@ export default function selectproject() {
         </h2>
       </div>
       <div className="flex w-auto justify-center">
-        <div className="px-4 py-2">
+        <div className="py-2">
           <h5 className="mb-4 text-2xl text-gray-900">
-            เลือกโครงงานที่ต้องการตรวจสอบ
+            โครงงานที่คุณเป็นกรรมการสอบ
           </h5>
           <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3">
             <Selectprojectcard
               path="#"
-              Title={''}
-              showButton={false}
-              showStatus={true}
+              Title={'ส่งแบบประเมินการสอบ'}
+              showButton={true}
+              showStatus={false}
               Status={''}
             />
             <Selectprojectcard
               path="#"
-              Title={''}
-              showButton={false}
-              showStatus={true}
+              Title={'ส่งแบบประเมินการสอบ'}
+              showButton={true}
+              showStatus={false}
               Status={''}
             />
             <Selectprojectcard
               path="#"
-              Title={''}
-              showButton={false}
-              showStatus={true}
+              Title={'ส่งแบบประเมินการสอบ'}
+              showButton={true}
+              showStatus={false}
               Status={''}
             />
             <Selectprojectcard
               path="#"
-              Title={''}
-              showButton={false}
-              showStatus={true}
+              Title={'ส่งแบบประเมินการสอบ'}
+              showButton={true}
+              showStatus={false}
               Status={''}
             />
             <Selectprojectcard
               path="#"
-              Title={''}
-              showButton={false}
-              showStatus={true}
+              Title={'ส่งแบบประเมินการสอบ'}
+              showButton={true}
+              showStatus={false}
               Status={''}
             />
             <Selectprojectcard
               path="#"
-              Title={''}
-              showButton={false}
-              showStatus={true}
+              Title={'ส่งแบบประเมินการสอบ'}
+              showButton={true}
+              showStatus={false}
               Status={''}
             />
           </div>

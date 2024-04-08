@@ -16,7 +16,7 @@ const sidebarGroup = {
   ],
   ที่ปรึกษา: [
     { name: 'ตัวเลือก1', path: '#' },
-    { name: 'ตัวเลือก2', path: '#' },
+    { name: 'ตัวเลือก2', path: '/teacher/present' },
   ],
   ผู้ใช้: [
     { name: 'ตัวเลือก1', path: '/teacher/users' },
