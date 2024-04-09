@@ -1,5 +1,7 @@
+import { PresentModalForm } from '@/components/Modals/PresentModalForm/PresentModalForm'
 import Link from 'next/link'
 import React from 'react'
+
 type Props = {
   path: string
 }
@@ -72,11 +74,7 @@ const Selectprojectcard = ({
           <b>อาจารย์ที่ปรึกษา</b> นายไฟแดง แซงไฟเขียว
         </p>
       </div>
-      {showButton ? (
-        <button className="absolute bottom-3 right-3 rounded-md bg-green-500 px-3 py-1 text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
-          {Title}
-        </button>
-      ) : null}
+      {showButton ? <PresentModalForm /> : null}
     </Link>
   )
 }
