@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { Stepper, Step, StepLabel } from '@mui/material'
 import Box from '@mui/material/Box';
 import Progress from '../components/Stepper/progress/progress';
@@ -10,6 +11,7 @@ const steps = [
     'ใบส่งชิ้นงาน5.0',
     'ส่งปริญญานิพนธ์'
 ];
+
 type Props = {}
 export default function page({}: Props) {
   return (
@@ -34,7 +36,7 @@ export default function page({}: Props) {
                 <button className="bg-primary1 hover:bg-green-500 text-white py-0 px-4 rounded mb-5">คลิกเพื่อส่งเอกสาร</button>
                 <button className="bg-red-500 hover:bg-green-500 text-white py-0 px-4 rounded" style={{ marginRight: "1px", float: "right" }}>ข้อความแนะนำจากอาจารย์</button>
                 <div className="mb-3 border-b border-primary2-500"></div>
-                <h3 className='font-bold'>รายงานความก้าวหน้า</h3>
+                <h3 className='font-bold'>รายงานความก้าวหน้าโครง</h3>
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center',}}>
                 <p>เอกสาร</p>
                 </div>
