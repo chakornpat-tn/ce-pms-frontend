@@ -8,7 +8,7 @@ type FormState = {
 }
 
 export async function login(prevState: FormState, formData: FormData) {
-  const apiUrl = process.env.API_URL || ''
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
   const username = formData.get('username')
   const password = formData.get('password')
   const res = await fetch(apiUrl + '/auth/login', {

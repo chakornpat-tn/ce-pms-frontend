@@ -6,7 +6,7 @@ import { useFormState } from 'react-dom'
 
 type Props = {}
 
-function UserModalForm({}: Props) {
+function CreateUserModalForm({}: Props) {
   const initState = {
     message: '',
   }
@@ -20,10 +20,17 @@ function UserModalForm({}: Props) {
 
   function openModal() {
     setIsOpen(true)
+    state.message = ''
   }
 
   const InputForm = () => (
-    <form className="p-4" action={formAction}>
+    <form
+      className="p-4"
+      action={(formData: FormData) => {
+        formAction(formData)
+        if (state.message === '') closeModal()
+      }}
+    >
       <div className="mb-4 flex">
         <div className="mr-2 w-1/2">
           <label
@@ -99,6 +106,7 @@ function UserModalForm({}: Props) {
             value="3"
             className="mr-1"
             required
+            defaultChecked
           />
           <label htmlFor="general" className="text-md mr-4">
             ทั่วไป
@@ -200,4 +208,4 @@ function UserModalForm({}: Props) {
   )
 }
 
-export { UserModalForm }
+export { CreateUserModalForm }
