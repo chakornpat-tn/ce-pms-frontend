@@ -7,10 +7,13 @@ import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
+import { UpdateUserModalForm } from '@/components/Modals'
 
-type Props = {}
+type Props = {
+  userId: string
+}
 
-function UserMenu({}: Props) {
+function UserMenu(Props: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,15 +39,19 @@ function UserMenu({}: Props) {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        className="z-0"
         MenuListProps={{
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose} className="text-primary1">
-          <EditIcon fontSize="small" className="mr-1" />
-          แก้ไข
-        </MenuItem>
-        <MenuItem onClick={handleClose} className=" text-red-500">
+        <UpdateUserModalForm handleClose={handleClose} userId={Props.userId}>
+          <MenuItem className="text-primary1">
+            <EditIcon fontSize="small" className="mr-1" />
+            แก้ไข
+          </MenuItem>
+        </UpdateUserModalForm>
+
+        <MenuItem className=" text-red-500">
           <DeleteIcon fontSize="small" className="mr-1" />
           ลบ
         </MenuItem>

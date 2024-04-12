@@ -1,14 +1,11 @@
 'use server'
 
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-
 type FormState = {
   message: string
 }
 
 export async function createUser(prevState: FormState, formData: FormData) {
-  const apiUrl = process.env.API_URL || ''
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
 
   const name = `${formData.get('firstName')} ${formData.get('lastName')}`
   const username = formData.get('username')
@@ -21,18 +18,50 @@ export async function createUser(prevState: FormState, formData: FormData) {
     password,
     role,
   }
-  console.log(userData)
-  //   const res = await fetch(apiUrl + '/auth/login', {
-  //     method: 'POST',
-  //     body: JSON.stringify({ username, password }),
-  //     headers: { 'Content-Type': 'application/json' },
-  //   })
 
-  //   if (res.status == 200) {
-  //     const response = await res.json()
-  //     cookies().set('token', response.token, { maxAge: 3 * 60 * 60 })
-  //     redirect('/teacher')
+  const res = await fetch(apiUrl + '/admin/users', {
+    method: 'POST',
+    body: JSON.stringify(userData),
+    headers: { 'Content-Type': 'application/json' },
+  })
+
+  if (res.status != 200) {
+    return {
+      message: 'ชื่อผู้ใช้ซ้ำในระบบ',
+    }
+  }
+
+  return {
+    message: '',
+  }
+}
+
+export async function updateUser(formData: FormData) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+
+  const name = `${formData.get('firstName')} ${formData.get('lastName')}`
+  const password = formData.get('password')
+  const role = Number(formData.get('role'))
+
+  const passwordToSend = password === '' ? undefined : password
+
+  const userData = {
+    name,
+    ...(passwordToSend && { password: passwordToSend }),
+    role,
+  }
+
+  // const res = await fetch(apiUrl + '/admin/users', {
+  //   method: 'POST',
+  //   body: JSON.stringify(userData),
+  //   headers: { 'Content-Type': 'application/json' },
+  // })
+
+  // if (res.status != 200) {
+  //   return {
+  //     message: 'ชื่อผู้ใช้ซ้ำในระบบ',
   //   }
+  // }
 
   return {
     message: '',
