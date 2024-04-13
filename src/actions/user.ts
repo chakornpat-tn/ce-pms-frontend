@@ -8,9 +8,17 @@ export async function createUser(prevState: FormState, formData: FormData) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
 
   const name = `${formData.get('firstName')} ${formData.get('lastName')}`
-  const username = formData.get('username')
-  const password = formData.get('password')
+  const username = String(formData.get('username'))
+  const password = String(formData.get('password'))
   const role = Number(formData.get('role'))
+
+  const usernameRegex = /^[a-zA-Z0-9_-]*$/
+
+  if (!usernameRegex.test(username)) {
+    return {
+      message: '* ไม่สามารถกรอกภาษาไทยหรืออักขระพิเศษได้',
+    }
+  }
 
   const userData = {
     name,
@@ -27,18 +35,19 @@ export async function createUser(prevState: FormState, formData: FormData) {
 
   if (res.status != 200) {
     return {
-      message: 'ชื่อผู้ใช้ซ้ำในระบบ',
+      message: '* ชื่อผู้ใช้ซ้ำในระบบ',
     }
   }
 
   return {
-    message: '',
+    message: '* สร้างบัญชีผู้เสร็จสิ้น',
   }
 }
 
 export async function updateUser(formData: FormData) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
 
+  const id = formData.get('id')
   const name = `${formData.get('firstName')} ${formData.get('lastName')}`
   const password = formData.get('password')
   const role = Number(formData.get('role'))
@@ -51,19 +60,17 @@ export async function updateUser(formData: FormData) {
     role,
   }
 
-  // const res = await fetch(apiUrl + '/admin/users', {
-  //   method: 'POST',
-  //   body: JSON.stringify(userData),
-  //   headers: { 'Content-Type': 'application/json' },
-  // })
+  const res = await fetch(apiUrl + '/admin/users/' + id, {
+    method: 'PUT',
+    body: JSON.stringify(userData),
+    headers: { 'Content-Type': 'application/json' },
+  })
 
-  // if (res.status != 200) {
-  //   return {
-  //     message: 'ชื่อผู้ใช้ซ้ำในระบบ',
-  //   }
-  // }
-
-  return {
-    message: '',
+  if (res.status != 200) {
+    return {
+      message: '* ไม่สามารถอัพเดทบัญชีผู้ใช้ได้',
+    }
   }
+
+  return
 }

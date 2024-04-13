@@ -28,7 +28,6 @@ function CreateUserModalForm({}: Props) {
       className="p-4"
       action={(formData: FormData) => {
         formAction(formData)
-        if (state.message === '') closeModal()
       }}
     >
       <div className="mb-4 flex">
@@ -136,7 +135,17 @@ function CreateUserModalForm({}: Props) {
             โครงงาน
           </label>
         </div>
-        {state.message && <p className="text-red-500">{state.message}</p>}
+        {state.message && (
+          <p
+            className={
+              state.message == '* สร้างบัญชีผู้เสร็จสิ้น'
+                ? 'text-green-500'
+                : 'text-red-500'
+            }
+          >
+            {state.message}
+          </p>
+        )}
       </div>
       <div className="flex items-center justify-around">
         <button

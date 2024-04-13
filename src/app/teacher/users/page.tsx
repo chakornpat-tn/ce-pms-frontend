@@ -10,7 +10,7 @@ function page({}: Props) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const fetcher = (url: string) => fetch(url).then(res => res.json())
   const { data, isLoading } = useSWR(`${apiUrl}/admin/users`, fetcher, {
-    refreshInterval: 5000,
+    refreshInterval: 2000,
   })
 
   return (

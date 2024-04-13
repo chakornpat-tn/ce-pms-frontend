@@ -1,11 +1,11 @@
 'use client'
-import React from 'react';
-import LinearProgress from '@mui/material/LinearProgress';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import React from 'react'
+import LinearProgress from '@mui/material/LinearProgress'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 interface Progress {
-  value: number;
+  value: number
 }
 
 function Progress(props: Progress) {
@@ -20,8 +20,7 @@ function Progress(props: Progress) {
         )}%`}</Typography>
       </Box>
     </Box>
-  );
+  )
 }
 
-export default Progress;
-
+export { Progress }

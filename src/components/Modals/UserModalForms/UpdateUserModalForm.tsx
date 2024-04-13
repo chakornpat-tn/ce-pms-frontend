@@ -1,6 +1,6 @@
 'use client'
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState, useRef } from 'react'
+import { Fragment, useState } from 'react'
 import { updateUser } from '@/actions/user'
 import useSWR from 'swr'
 
@@ -33,6 +33,7 @@ function UpdateUserModalForm({ children, handleClose, userId }: Props) {
           formData.get('password') != ''
         ) {
           updateUser(formData)
+          closeModal()
         }
       }}
     >
@@ -44,6 +45,7 @@ function UpdateUserModalForm({ children, handleClose, userId }: Props) {
           >
             ชื่อ
           </label>
+          <input type="hidden" name="id" value={userId} />
           <input
             type="text"
             name="firstName"
@@ -151,7 +153,7 @@ function UpdateUserModalForm({ children, handleClose, userId }: Props) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const fetcher = (url: string) => fetch(url).then(res => res.json())
   const { data } = useSWR(`${apiUrl}/admin/users/${userId}`, fetcher, {
-    revalidateIfStale: false,
+    revalidateIfStale: true,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   })
