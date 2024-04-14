@@ -4,9 +4,9 @@ type FormState = {
   message: string
 }
 
-export async function createUser(prevState: FormState, formData: FormData) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
 
+export async function createUser(prevState: FormState, formData: FormData) {
   const name = `${formData.get('firstName')} ${formData.get('lastName')}`
   const username = String(formData.get('username'))
   const password = String(formData.get('password'))
@@ -45,8 +45,6 @@ export async function createUser(prevState: FormState, formData: FormData) {
 }
 
 export async function updateUser(formData: FormData) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
-
   const id = formData.get('id')
   const name = `${formData.get('firstName')} ${formData.get('lastName')}`
   const password = formData.get('password')
@@ -72,5 +70,13 @@ export async function updateUser(formData: FormData) {
     }
   }
 
+  return
+}
+
+export async function deleteUser(userId: string) {
+  await fetch(apiUrl + '/admin/users/' + userId, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+  })
   return
 }

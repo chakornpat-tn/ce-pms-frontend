@@ -7,10 +7,11 @@ import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import { UpdateUserModalForm } from '@/components/Modals'
+import { UpdateUserModalForm, DeleteUserModalForm } from '@/components/Modals'
 
 type Props = {
   userId: string
+  userName: string
 }
 
 function UserMenu(Props: Props) {
@@ -51,10 +52,12 @@ function UserMenu(Props: Props) {
           </MenuItem>
         </UpdateUserModalForm>
 
-        <MenuItem className=" text-red-500">
-          <DeleteIcon fontSize="small" className="mr-1" />
-          ลบ
-        </MenuItem>
+        <DeleteUserModalForm handleClose={handleClose} userInfo={Props}>
+          <MenuItem className=" text-red-500">
+            <DeleteIcon fontSize="small" className="mr-1" />
+            ลบ
+          </MenuItem>
+        </DeleteUserModalForm>
       </Menu>
     </div>
   )

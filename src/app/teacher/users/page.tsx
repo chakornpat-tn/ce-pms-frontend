@@ -24,8 +24,6 @@ function page({}: Props) {
             <CreateUserModalForm />
           </div>
 
-          {/* ---------------------------------------------Search Option--------------------------------------------- */}
-
           {/* ---------------------------------------------Users List------------------------------------------------ */}
           {isLoading && (
             <div className="flex h-2/4 w-full items-center  justify-center">
