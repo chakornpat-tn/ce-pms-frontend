@@ -15,13 +15,10 @@ const sidebarGroup = {
     { name: 'ตัวเลือก2', path: '#' },
   ],
   ที่ปรึกษา: [
-    { name: 'ตัวเลือก1', path: '#' },
-    { name: 'ตัวเลือก2', path: '/teacher/present' },
+    { name: 'โครงงานที่เป็นที่ปรีกษา', path: '/teacher/consultant' },
+    { name: 'สอบโครงงาน', path: '/teacher/present' },
   ],
-  ผู้ใช้: [
-    { name: 'ตัวเลือก1', path: '/teacher/users' },
-    { name: 'ตัวเลือก2', path: '#' },
-  ],
+  ผู้ใช้: [{ name: 'จัดการบัญชีผู้ใช้', path: '/teacher/users' }],
 }
 
 const Sidebar: React.FC = () => {
@@ -32,7 +29,7 @@ const Sidebar: React.FC = () => {
   }
 
   return (
-    <aside className="invisible flex h-screen w-[18.125rem] flex-col overflow-y-auto  border-r-2 bg-white px-5 py-8  md:visible">
+    <aside className=" hidden  min-h-dvh w-[18.125rem] flex-col overflow-y-auto rounded-br-md  border-r-2 bg-white px-5 py-8  md:flex">
       <p className="text-font-medium  my-0 font-bold text-primary1">
         นายไปเกาหลี ไปกินเกาเหลา
       </p>

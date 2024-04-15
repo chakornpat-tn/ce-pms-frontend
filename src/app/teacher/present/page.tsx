@@ -16,7 +16,7 @@ export default function selectproject() {
           <div className="mb-4 mt-4 flex flex-wrap justify-end">
             <SmallButtonWithArrow
               Title={'ดูโครงงานที่เป็นกรรมการสอบ'}
-              path={'/teacher/mypresent'}
+              path={'/teacher/present/mypresent'}
             />
           </div>
           <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3">
