@@ -1,9 +1,16 @@
+'use client'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useFormState } from 'react-dom'
+import { login } from '@/actions/auth'
 
 type Props = {}
 
 function page({}: Props) {
+  const initState = {
+    message: '',
+  }
+  const [state, formAction] = useFormState(login, initState)
   return (
     <section className="h-dvh bg-primary2-500 max-sm:grid max-sm:justify-center">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
@@ -21,11 +28,11 @@ function page({}: Props) {
             <h1 className=" mt-6 grid justify-center text-xl font-bold leading-tight tracking-tight text-gray-900 sm:text-3xl md:text-5xl">
               สำหรับนักศึกษา
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" action={formAction}>
               <div>
                 <input
                   type="text"
-                  name="ชื่อผู้ใช้"
+                  name="username"
                   id="username"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm  "
                   placeholder="ชื่อผู้ใช้"
@@ -35,25 +42,20 @@ function page({}: Props) {
               <div>
                 <input
                   type="password"
-                  name="รหัสผ่าน"
+                  name="password"
                   id="password"
                   placeholder="รหัสผ่าน"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50  p-2.5 text-gray-900 sm:text-sm "
-                  required
                 />
+                <input type="hidden" name="asTeacherLogin" value="" />
               </div>
+              {state.message && <p className="text-red-500">{state.message}</p>}
               <div className="flex items-center justify-between">
                 <Link
                   href="/"
                   className="text-sm font-medium  text-gray-500 hover:text-gray-700  hover:underline"
                 >
                   กลับหน้าแรก
-                </Link>
-                <Link
-                  href="#"
-                  className="text-sm font-medium text-gray-500 hover:text-gray-700 hover:underline"
-                >
-                  เปลี่ยนรหัสผ่าน
                 </Link>
               </div>
               <button

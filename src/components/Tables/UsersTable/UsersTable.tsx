@@ -49,7 +49,7 @@ export function UsersTable({ usersData }: Props) {
             <option value="">ทั้งหมด</option>
             <option value="1">อาจารย์โครงงาน</option>
             <option value="2">อาจารย์เตรียมโครงงาน</option>
-            <option value="3">อาจารย์เตรียมโครงงาน</option>
+            <option value="3">อาจารย์ทั่วไป</option>
           </select>
         </div>
       </div>
@@ -72,7 +72,7 @@ export function UsersTable({ usersData }: Props) {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers?.map((user: any) => (
+          {filteredUsers?.map((user: User) => (
             <tr
               key={user._id}
               className=" border-b  transition-colors duration-300 hover:bg-slate-100"

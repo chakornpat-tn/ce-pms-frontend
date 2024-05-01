@@ -49,6 +49,7 @@ function page({}: Props) {
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50  p-2.5 text-gray-900 sm:text-sm "
                   required
                 />
+                <input type="hidden" name="asTeacherLogin" value="true" />
               </div>
 
               {state.message && <p className="text-red-500">{state.message}</p>}
@@ -64,12 +65,6 @@ function page({}: Props) {
                   className="text-sm font-medium  text-gray-500 hover:text-gray-700  hover:underline"
                 >
                   กลับหน้าแรก
-                </Link>
-                <Link
-                  href="#"
-                  className="text-sm font-medium text-gray-500 hover:text-gray-700 hover:underline"
-                >
-                  เปลี่ยนรหัสผ่าน
                 </Link>
               </div>
             </form>
