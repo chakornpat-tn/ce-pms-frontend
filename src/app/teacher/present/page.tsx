@@ -1,5 +1,5 @@
 import { ButtonWithArrow, SmallButtonWithArrow } from '@/components/Buttons'
-import { Selectprojectcard } from '@/components/Cards'
+import { Presentprojectcard, Selectprojectcard } from '@/components/Cards'
 export default function selectproject() {
   return (
     <div className="min-h-screen bg-bg_primary">
@@ -20,42 +20,42 @@ export default function selectproject() {
             />
           </div>
           <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3">
-            <Selectprojectcard
+            <Presentprojectcard
               path="#"
               Title={''}
               showButton={true}
               showStatus={true}
               Status={''}
             />
-            <Selectprojectcard
+            <Presentprojectcard
               path="#"
               Title={''}
               showButton={true}
               showStatus={true}
               Status={''}
             />
-            <Selectprojectcard
+            <Presentprojectcard
               path="#"
               Title={''}
               showButton={true}
               showStatus={true}
               Status={''}
             />
-            <Selectprojectcard
+            <Presentprojectcard
               path="#"
               Title={''}
               showButton={true}
               showStatus={true}
               Status={''}
             />
-            <Selectprojectcard
+            <Presentprojectcard
               path="#"
               Title={''}
               showButton={true}
               showStatus={true}
               Status={''}
             />
-            <Selectprojectcard
+            <Presentprojectcard
               path="#"
               Title={''}
               showButton={true}

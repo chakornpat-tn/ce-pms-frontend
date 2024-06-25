@@ -12,7 +12,7 @@ export default function Home() {
         <div className="flex w-auto justify-center">
           <div className="px-4 py-2">
             <h5 className="mb-4 text-2xl text-gray-900">
-            โครงงานที่เป็นที่ปรึกษาตาม ปีการศึกษา
+            เตรียมโครงงานที่เป็นที่ปรึกษาตาม ปีการศึกษา
             </h5>
             <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3  ">
               <ProjCard path="/teacher/preproject"/>

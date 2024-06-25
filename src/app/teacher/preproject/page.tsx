@@ -14,42 +14,36 @@ export default function selectproject() {
             <Selectprojectcard
               path="#"
               Title={''}
-              showButton={false}
               showStatus={true}
               Status={''}
             />
             <Selectprojectcard
               path="#"
               Title={''}
-              showButton={false}
               showStatus={true}
               Status={''}
             />
             <Selectprojectcard
               path="#"
               Title={''}
-              showButton={false}
               showStatus={true}
               Status={''}
             />
             <Selectprojectcard
               path="#"
               Title={''}
-              showButton={false}
               showStatus={true}
               Status={''}
             />
             <Selectprojectcard
               path="#"
               Title={''}
-              showButton={false}
               showStatus={true}
               Status={''}
             />
             <Selectprojectcard
               path="#"
               Title={''}
-              showButton={false}
               showStatus={true}
               Status={''}
             />
