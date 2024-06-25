@@ -2,6 +2,7 @@ import React from 'react'
 import { Stepper, Step, StepLabel } from '@mui/material'
 import Box from '@mui/material/Box';
 import { Progress } from '@/components/Stepper';
+import Link from 'next/link';
 
 const steps = [
     'ใบขอสอบ2.0',
@@ -32,7 +33,7 @@ export default function page({}: Props) {
     </Box>
   
                 <h3 className='inline-block'style={{ backgroundColor: 'yellow', marginRight:'50px' }}>สถานะโครงงาน</h3>
-                <button className="bg-primary1 hover:bg-green-500 text-white py-0 px-4 rounded mb-5">คลิกเพื่อส่งเอกสาร</button>
+                <button className="bg-primary1 hover:bg-green-500 text-white py-0 px-4 rounded mb-5"><Link href="/project/studentprogress"> คลิกเพื่อส่งเอกสาร </Link></button>
                 <button className="bg-red-500 hover:bg-green-500 text-white py-0 px-4 rounded" style={{ marginRight: "1px", float: "right" }}>ข้อความแนะนำจากอาจารย์</button>
                 <div className="mb-3 border-b border-primary2-500"></div>
                 <h3 className='font-bold'>รายงานความก้าวหน้าโครง</h3>

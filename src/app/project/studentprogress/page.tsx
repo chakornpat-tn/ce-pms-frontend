@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 type Props = {}
@@ -7,7 +8,7 @@ export default function page({}: Props) {
     <div className='bg-bg_primary h-auto md:h-dvh flex justify-center items-start'>
       <div className='flex justify-center items-center flex-col md:mt-[5vh] bg-white w-4/5'>
         <div className='w-4/5'>
-          <button className="bg-primary1 hover:bg-red-500 text-white py-0 px-3 rounded mb-4 ">กลับ</button>
+          <button className="bg-primary1 hover:bg-red-500 text-white py-0 px-3 rounded mb-4 "><Link href='/project'>กลับ </Link> </button>
           <div className="mb-3 border-b border-primary2-500"></div>
         </div>
         <div className='w-4/5 bg-gray-200 p-4 mt-5 text-center'>
