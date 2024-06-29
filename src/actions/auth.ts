@@ -13,21 +13,29 @@ export async function login(prevState: FormState, formData: FormData) {
   const password = formData.get('password')
   const asTeacherLogin = Boolean(formData.get('asTeacherLogin'))
 
-  console.log(username, password, asTeacherLogin)
   const res = await fetch(apiUrl + '/auth/login', {
     method: 'POST',
     body: JSON.stringify({ username, password, asTeacherLogin }),
     headers: { 'Content-Type': 'application/json' },
   })
 
-  if (res.status == 200) {
+  if (res.status === 200) {
     const response = await res.json()
-    cookies().set('token', response.token, { maxAge: 3 * 60 * 60 })
-    if (asTeacherLogin) redirect('/teacher')
-    else redirect('/project')
-  }
+    const expires = new Date(Date.now() + 3 * 60 * 60 * 1000)
+    cookies().set('session', response.token, { expires, httpOnly: true })
 
-  return {
-    message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+    if (asTeacherLogin) {
+      redirect('/teacher')
+    } else {
+      redirect('/project')
+    }
+  } else {
+    return {
+      message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+    }
   }
+}
+
+export async function logout() {
+  cookies().set('session', '', { expires: new Date(0) })
 }
