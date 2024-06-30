@@ -152,7 +152,7 @@ function UpdateUserModalForm({ children, handleClose, userId }: Props) {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const fetcher = (url: string) => fetch(url).then(res => res.json())
-  const { data } = useSWR(`${apiUrl}/admin/users/${userId}`, fetcher, {
+  const { data } = useSWR(`${apiUrl}/user/${userId}`, fetcher, {
     revalidateIfStale: true,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,

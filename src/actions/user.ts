@@ -27,13 +27,13 @@ export async function createUser(prevState: FormState, formData: FormData) {
     role,
   }
 
-  const res = await fetch(apiUrl + '/admin/users', {
+  const res = await fetch(apiUrl + '/user', {
     method: 'POST',
     body: JSON.stringify(userData),
     headers: { 'Content-Type': 'application/json' },
   })
 
-  if (res.status != 200) {
+  if (res.status != 201) {
     return {
       message: '* ชื่อผู้ใช้ซ้ำในระบบ',
     }
@@ -58,13 +58,13 @@ export async function updateUser(formData: FormData) {
     role,
   }
 
-  const res = await fetch(apiUrl + '/admin/users/' + id, {
+  const res = await fetch(apiUrl + '/user/' + id, {
     method: 'PUT',
     body: JSON.stringify(userData),
     headers: { 'Content-Type': 'application/json' },
   })
 
-  if (res.status != 200) {
+  if (res.status != 201) {
     return {
       message: '* ไม่สามารถอัพเดทบัญชีผู้ใช้ได้',
     }
@@ -74,7 +74,7 @@ export async function updateUser(formData: FormData) {
 }
 
 export async function deleteUser(userId: string) {
-  await fetch(apiUrl + '/admin/users/' + userId, {
+  await fetch(apiUrl + '/user/' + userId, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
   })

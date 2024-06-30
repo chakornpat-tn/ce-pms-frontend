@@ -1,7 +1,5 @@
-'use client'
 import { User, getUserRole } from '@/types/User'
 import UserMenu from './UserMenu'
-import { useState } from 'react'
 
 type Props = {
   usersData: User[] | undefined
@@ -10,56 +8,18 @@ type Props = {
 export function UsersTable({ usersData }: Props) {
   const roleColor = [, 'bg-blue-600', 'bg-orange-600', 'bg-green-600']
 
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedRole, setSelectedRole] = useState('')
-
-  const handleSearchChange = (event: any) => {
-    setSearchTerm(String(event.target.value))
-  }
-
-  const handleRoleChange = (event: any) => {
-    setSelectedRole(event.target.value)
-  }
-
-  const filteredUsers = usersData?.filter(user => {
-    const nameMatches = user.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase())
-    const roleMatches =
-      selectedRole === '' || user.role === parseInt(selectedRole)
-    return nameMatches && roleMatches
-  })
-
   return (
     <>
       <div className=" mb-2 flex w-full items-center justify-start  md:justify-center">
-        <div className="flex h-auto w-full flex-col items-start md:w-4/5 md:flex-row md:items-center md:justify-center">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            placeholder="ค้นหาจาก ชื่อ-นามสกุล"
-            className="mr-2 w-full rounded-md border border-gray-300 p-2 focus:border-primary1 focus:outline-none focus:ring md:w-4/5"
-          />
-          <select
-            value={selectedRole}
-            onChange={handleRoleChange}
-            className="my-2 ml-0 w-full rounded-md border border-gray-300 p-2  focus:border-primary1 focus:outline-none focus:ring md:w-1/5 lg:max-w-[150px]"
-          >
-            <option value="">ทั้งหมด</option>
-            <option value="1">อาจารย์โครงงาน</option>
-            <option value="2">อาจารย์เตรียมโครงงาน</option>
-            <option value="3">อาจารย์ทั่วไป</option>
-          </select>
-        </div>
+        <div className="flex h-auto w-full flex-col items-start md:w-4/5 md:flex-row md:items-center md:justify-center"></div>
       </div>
       <table className="mb-5  w-full  text-left text-sm">
-        <thead className=" border-b text-xs uppercase  text-primary1">
+        <thead className="border-b text-xs uppercase text-primary1  max-md:hidden">
           <tr>
             <th scope="col" className="px-6 py-4 text-lg">
               ชื่อ-นามสกุล
             </th>
-            <th scope="col" className="px-6 py-4 text-lg">
+            <th scope="col" className="px-6 py-4 text-lg ">
               ชื่อผู้ใช้
             </th>
 
@@ -72,27 +32,43 @@ export function UsersTable({ usersData }: Props) {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers?.map((user: User) => (
-            <tr
-              key={user._id}
-              className=" border-b  transition-colors duration-300 hover:bg-slate-100"
-            >
-              <td className=" whitespace-nowrap px-6 py-4 text-base text-primary1">
-                {user.name}
-              </td>
-              <td className="px-6 py-4 text-base text-primary1">
-                {user.username}
-              </td>
-              <td className="flex flex-row items-center px-6 py-4 text-base text-primary1">
-                <div
-                  className={`bg-b mr-[4px] rounded-full p-[5px] ${roleColor[user.role]}`}
-                ></div>
-                {getUserRole(user.role)}
-              </td>
-              <td className="px-6 py-4 text-right text-base text-primary1">
-                <UserMenu userId={user._id} userName={user.name} />
-              </td>
-            </tr>
+          {usersData?.map((user: User, i) => (
+            <>
+              <tr
+                key={i}
+                className="border-b transition-colors duration-300 hover:bg-slate-100 max-md:flex max-md:flex-col "
+              >
+                <div className="flex w-full flex-row items-center">
+                  <th
+                    scope="col"
+                    className=" mr-1 p-0 text-xs md:hidden md:p-4"
+                  >
+                    ชื่อ-นามสกุล
+                  </th>
+                  <td className="whitespace-nowrap py-4 text-sm text-primary1 max-md:flex max-md:flex-row md:px-6 md:text-base">
+                    {user.name}
+                  </td>
+                </div>
+
+                <td className="px-0 py-4 text-base text-primary1 max-md:hidden md:px-6">
+                  {user.username}
+                </td>
+                <td className="flex items-center px-6 py-4 text-sm text-primary1 max-md:justify-between max-md:text-base">
+                  <div className="flex items-center p-0  text-sm text-primary1 max-sm:text-xs">
+                    <div
+                      className={`bg-b mr-[4px] rounded-full p-[5px] ${roleColor[user.role]}`}
+                    ></div>
+                    {getUserRole(user.role)}
+                  </div>{' '}
+                  <div className="md:hidden">
+                    <UserMenu userId={user._id} userName={user.name} />
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-right text-base text-primary1 max-md:hidden">
+                  <UserMenu userId={user._id} userName={user.name} />
+                </td>
+              </tr>
+            </>
           ))}
         </tbody>
       </table>

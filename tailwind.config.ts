@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
-        bg_primary: '#F1F5F9',
+        bg_primary: '#f1f1f1',
         primary1: '#0F1035',
         primary2: {
           500: '#1B3053',
