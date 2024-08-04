@@ -6,7 +6,7 @@ import Pagination from '@mui/material/Pagination'
 
 type Props = {}
 
-function page({}: Props) {
+function Page({}: Props) {
   const [usersData, setUsersData] = useState([])
   const [totalResult, setTotalResult] = useState(0)
   const [name, setName] = useState('')
@@ -28,7 +28,7 @@ function page({}: Props) {
 
   useEffect(() => {
     fetchData()
-  }, [page])
+  }, [page, perPage])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,6 +48,9 @@ function page({}: Props) {
     setPerPage(newValue)
     setPage(1)
   }
+
+  // Calculate total number of pages
+  const totalPages = Math.ceil(totalResult / perPage)
 
   return (
     <>
@@ -114,7 +117,7 @@ function page({}: Props) {
 
               {/* Pagination */}
               <Pagination
-                count={totalResult / perPage}
+                count={totalPages}
                 page={page}
                 onChange={handlePageChange}
               />
@@ -126,4 +129,4 @@ function page({}: Props) {
   )
 }
 
-export default page
+export default Page
