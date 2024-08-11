@@ -3,6 +3,8 @@ import React from 'react'
 type Props = {}
 
 function ProjectFilterForm({}: Props) {
+  const currentYear = new Date().getFullYear() + 543
+
   return (
     <form className="mb-4 flex flex-col gap-2 py-2 sm:flex-row sm:flex-wrap sm:gap-4">
       <input
@@ -26,6 +28,7 @@ function ProjectFilterForm({}: Props) {
           type="number"
           name="academicYear"
           placeholder="ปีการศึกษา"
+          defaultValue={currentYear}
           className="w-full rounded border p-2 sm:max-w-[180px] md:w-auto"
         />
       </div>
