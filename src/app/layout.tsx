@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="mytheme">
       <ThemeProvider theme={theme}>
         <body className={prompt.className}>{children}</body>
       </ThemeProvider>
