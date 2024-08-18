@@ -15,7 +15,12 @@ function page({}: Props) {
         <ProjectFilterForm />
 
         {/* Search Results */}
-        <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg"></div>
+        <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
+          <article>
+            <h2 className="mb-4 text-2xl font-bold">ผลลัพธ์การค้นหา</h2>
+            <h3>ภาคเรียน 1/67 </h3>
+          </article>
+        </section>
       </article>
     </div>
   )

@@ -18,7 +18,7 @@ function Page({}: Props) {
 
   const fetchData = async () => {
     const res = await fetch(
-      `${apiUrl}/user?name=${name}&role=${role}&page=${page}&perPage=${perPage}`,
+      `${apiUrl}/v1/user?name=${name}&role=${role}&page=${page}&perPage=${perPage}`,
       { cache: 'no-store' },
     )
     const data = await res.json()

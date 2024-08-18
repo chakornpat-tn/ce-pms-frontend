@@ -13,7 +13,7 @@ export async function login(prevState: FormState, formData: FormData) {
   const password = formData.get('password')
   const asTeacherLogin = Boolean(formData.get('asTeacherLogin'))
 
-  const res = await fetch(apiUrl + '/auth/login', {
+  const res = await fetch(apiUrl + '/v1/auth/login', {
     method: 'POST',
     body: JSON.stringify({ username, password, asTeacherLogin }),
     headers: { 'Content-Type': 'application/json' },

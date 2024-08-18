@@ -27,7 +27,7 @@ export async function createUser(prevState: FormState, formData: FormData) {
     role,
   }
 
-  const res = await fetch(apiUrl + '/user', {
+  const res = await fetch(apiUrl + '/v1/user', {
     method: 'POST',
     body: JSON.stringify(userData),
     headers: { 'Content-Type': 'application/json' },
@@ -58,7 +58,7 @@ export async function updateUser(formData: FormData) {
     role,
   }
 
-  const res = await fetch(apiUrl + '/user/' + id, {
+  const res = await fetch(apiUrl + '/v1/user/' + id, {
     method: 'PUT',
     body: JSON.stringify(userData),
     headers: { 'Content-Type': 'application/json' },
@@ -74,7 +74,7 @@ export async function updateUser(formData: FormData) {
 }
 
 export async function deleteUser(userId: string) {
-  await fetch(apiUrl + '/user/' + userId, {
+  await fetch(apiUrl + '/v1/user/' + userId, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
   })
