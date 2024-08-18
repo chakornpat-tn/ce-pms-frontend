@@ -31,7 +31,7 @@ const DashboardCard = ({}) => {
 const ColumnCard = ({}) => {
   return (
     <div className="mt-4 flex flex-wrap">
-      <div className="mb-12 w-full px-4 xl:mb-0 xl:w-8/12">
+      <div className="mb-12 w-full xl:mb-0 xl:w-8/12">
         <div className="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
           <div className="mb-0 rounded-t border-0 px-4 py-3">
             <div className="flex flex-wrap items-center">
