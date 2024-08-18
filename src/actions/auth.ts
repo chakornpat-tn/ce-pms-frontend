@@ -22,13 +22,9 @@ export async function login(prevState: FormState, formData: FormData) {
   if (res.status === 200) {
     const response = await res.json()
     const expires = new Date(Date.now() + 3 * 60 * 60 * 1000)
-    cookies().set('session', response.token, { expires, httpOnly: true })
+    cookies().set('token', response.token, { expires, httpOnly: true })
 
-    if (asTeacherLogin) {
-      redirect('/teacher')
-    } else {
-      redirect('/project')
-    }
+    redirect('/teacher')
   } else {
     return {
       message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
@@ -37,5 +33,5 @@ export async function login(prevState: FormState, formData: FormData) {
 }
 
 export async function logout() {
-  cookies().set('session', '', { expires: new Date(0) })
+  cookies().set('token', '', { expires: new Date(0) })
 }
