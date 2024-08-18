@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import { CreateUserModalForm } from '@/components/Modals'
 import { UsersTable } from '@/components/Tables'
 import Pagination from '@mui/material/Pagination'
+import Link from 'next/link'
+
 
 type Props = {}
 
@@ -54,13 +56,15 @@ function Page({}: Props) {
 
   return (
     <>
-      <div className="flex min-h-svh justify-center ">
+      <div className="flex min-h-svh justify-center">
         <article className="h-full w-4/5 p-8">
           <div className="mb-2 flex flex-col items-start justify-between md:flex-row md:items-center">
             <h1 className="text-4xl font-bold text-primary1">
               จัดการบัญชีผู้ใช้
             </h1>
-            <CreateUserModalForm />
+            <Link href="users/create" className="mt-2 rounded bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0">
+              เพิ่มผู้ใช้ใหม่
+            </Link>
           </div>
 
           {/* Search Form */}
