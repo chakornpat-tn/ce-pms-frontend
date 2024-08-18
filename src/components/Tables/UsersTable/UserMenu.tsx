@@ -47,18 +47,16 @@ function UserMenu(Props: Props) {
         }}
       >
         <MenuItem className="text-primary1">
-        <EditIcon fontSize="small" className="mr-1" />
-        <Link href="users/update">
-         แก้ไข
-        </Link>
+          <Link href={`users/update/${Props.userId}`}>
+            <EditIcon fontSize="small" className="mr-1" />
+            แก้ไข
+          </Link>
         </MenuItem>
 
         <DeleteUserModalForm handleClose={handleClose} userInfo={Props}>
           <MenuItem className=" text-red-500">
             <DeleteIcon fontSize="small" className="mr-1" />
-            
-             ลบ
-            
+            ลบ
           </MenuItem>
         </DeleteUserModalForm>
       </Menu>

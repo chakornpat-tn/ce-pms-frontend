@@ -1,4 +1,6 @@
 'use server'
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
 type FormState = {
   message: string
@@ -33,7 +35,7 @@ export async function createUser(prevState: FormState, formData: FormData) {
     headers: { 'Content-Type': 'application/json' },
   })
 
-  if (res.status != 201) {
+  if (res.status != 200) {
     return {
       message: '* ชื่อผู้ใช้ซ้ำในระบบ',
     }
@@ -64,13 +66,14 @@ export async function updateUser(formData: FormData) {
     headers: { 'Content-Type': 'application/json' },
   })
 
-  if (res.status != 201) {
-    return {
-      message: '* ไม่สามารถอัพเดทบัญชีผู้ใช้ได้',
-    }
+  if (res.status === 200) {
+    revalidatePath('/teacher/users')
+    redirect('/teacher/users')
   }
 
-  return
+  return {
+    message: '* ไม่สามารถอัพเดทบัญชีผู้ใช้ได้',
+  }
 }
 
 export async function deleteUser(userId: string) {
