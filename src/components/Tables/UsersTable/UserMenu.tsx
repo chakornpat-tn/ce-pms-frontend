@@ -8,6 +8,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { UpdateUserModalForm, DeleteUserModalForm } from '@/components/Modals'
+import Link from 'next/link'
 
 type Props = {
   userId: string
@@ -45,17 +46,19 @@ function UserMenu(Props: Props) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <UpdateUserModalForm handleClose={handleClose} userId={Props.userId}>
-          <MenuItem className="text-primary1">
-            <EditIcon fontSize="small" className="mr-1" />
-            แก้ไข
-          </MenuItem>
-        </UpdateUserModalForm>
+        <MenuItem className="text-primary1">
+        <EditIcon fontSize="small" className="mr-1" />
+        <Link href="users/update">
+         แก้ไข
+        </Link>
+        </MenuItem>
 
         <DeleteUserModalForm handleClose={handleClose} userInfo={Props}>
           <MenuItem className=" text-red-500">
             <DeleteIcon fontSize="small" className="mr-1" />
-            ลบ
+            
+             ลบ
+            
           </MenuItem>
         </DeleteUserModalForm>
       </Menu>

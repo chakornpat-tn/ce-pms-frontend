@@ -1,45 +1,35 @@
 'use client'
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
-import { updateUser } from '@/actions/user'
-import useSWR from 'swr'
+import React, { useState, useEffect } from 'react'
+import { createUser } from '@/actions/user'
+import { useFormState } from 'react-dom'
+import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import useSWR from 'swr'
 
-type Props = {
-  children: React.ReactNode
-  handleClose?: () => void
-
-}
-
-
-function UpdateUserModalForm({ children, handleClose }: Props) {
-  let [isOpen, setIsOpen] = useState(false)
+export default function UpdateUserPage() {
   const params = useParams()
-  const userId = params.id as string
+  const userId = params.id
 
-  function closeModal() {
-    setIsOpen(false)
-    handleClose ? handleClose() : null
-  }
 
-  function openModal() {
-    setIsOpen(true)
-  }
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const fetcher = (url: string) => fetch(url).then(res => res.json())
+  const { data } = useSWR(`${apiUrl}/v1/user/${userId}`, fetcher, {
+    revalidateIfStale: true,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
+   
+  console.log(userId)
 
-  const InputForm = () => (
+  return (
+    <div className="min-h-svh p-4">
+      <h1 className="mb-4 text-2xl font-medium leading-6 text-primary1">
+        แก้ไขบัญชีผู้ใช้ {data?.username}
+      </h1>
+    
     <form
       className="p-4"
-      action={(formData: FormData) => {
-        if (
-          formData.get('firstName') != data?.name.split(' ')[0] ||
-          formData.get('lastName') != data?.name.split(' ')[1] ||
-          formData.get('role') != data?.role ||
-          formData.get('password') != ''
-        ) {
-          updateUser(formData)
-          closeModal()
-        }
-      }}
+     
     >
       <div className="mb-4 flex">
         <div className="mr-2 w-1/2">
@@ -145,71 +135,13 @@ function UpdateUserModalForm({ children, handleClose }: Props) {
         </button>
         <button
           type="button"
-          onClick={closeModal}
+    
           className=" mt-2 w-2/5 rounded-md border-2 border-red-200 bg-white px-4 py-2 text-gray-500 hover:border-red-500 hover:text-primary1"
         >
           ยกเลิก
         </button>
       </div>
     </form>
-  )
-
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-  const fetcher = (url: string) => fetch(url).then(res => res.json())
-  const { data } = useSWR(`${apiUrl}/v1/user/${userId}`, fetcher, {
-    revalidateIfStale: true,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  })
-
-  return (
-    <>
-      <div onClick={openModal}>{children}</div>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10 bg-slate-500"
-          onClose={closeModal}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h1"
-                    className="text-2xl font-medium leading-6 text-primary1"
-                  >
-                    แก้ไขบัญชีผู้ใช้ : {data?.username}
-                  </Dialog.Title>
-                  <InputForm />
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-    </>
+    </div>
   )
 }
-
-export { UpdateUserModalForm }
