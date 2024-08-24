@@ -7,8 +7,8 @@ export default function TeacherLayout({
 }) {
   return (
     <div className="bg-bg_primary">
-        <Navbar />
-      <div className="container min-h-screen  w-full justify-center mx-auto">
+      <Navbar />
+      <div className="container mx-auto  min-h-screen w-full justify-center">
         {children}
       </div>
     </div>
