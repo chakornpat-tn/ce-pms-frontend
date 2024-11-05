@@ -1,8 +1,8 @@
 'use client'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useFormState } from 'react-dom'
-import { login } from '@/actions/auth'
+import { useActionState } from 'react' 
+import { studentlogin } from '@/actions/auth'
 
 type Props = {}
 
@@ -10,7 +10,17 @@ function page({}: Props) {
   const initState = {
     message: '',
   }
-  const [state, formAction] = useFormState(login, initState)
+
+  const [state, formAction] = useActionState(studentlogin, initState)
+
+  const formSubmitHandler = async (event: React.FormEvent) => {
+    event.preventDefault()
+    const form = event.currentTarget as HTMLFormElement
+    const formData = new FormData(form)
+
+    formAction(formData) 
+  }
+
   return (
     <section className="h-dvh bg-primary2-500 max-sm:grid max-sm:justify-center">
       <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
@@ -71,5 +81,4 @@ function page({}: Props) {
     </section>
   )
 }
-
 export default page

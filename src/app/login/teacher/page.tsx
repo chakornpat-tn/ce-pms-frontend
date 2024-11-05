@@ -1,16 +1,15 @@
 'use client'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useActionState } from 'react' 
 import { login } from '@/actions/auth'
-import { useFormState } from 'react-dom'
-
 type Props = {}
 
 function page({}: Props) {
   const initState = {
     message: '',
   }
-  const [state, formAction] = useFormState(login, initState)
+  const [state, formAction] = useActionState(login, initState)
 
   return (
     <section className="h-dvh bg-secondary2-200 max-sm:grid max-sm:justify-center">
