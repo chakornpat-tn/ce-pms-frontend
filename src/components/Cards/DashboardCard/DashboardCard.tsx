@@ -28,72 +28,69 @@ const DashboardCard = ({}) => {
   )
 }
 
+
 const ColumnCard = ({}) => {
   return (
     <div className="mt-4 flex flex-wrap">
-      <div className="mb-12 w-full xl:mb-0 xl:w-8/12">
-        <div className="relative mb-6 flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
+      <div className="mb-6 w-full xl:mb-0 xl:w-6/12">
+        <div className="relative flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
           <div className="mb-0 rounded-t border-0 px-4 py-3">
             <div className="flex flex-wrap items-center">
               <div className="relative w-full max-w-full flex-1 flex-grow px-4">
-                <h3 className="text-2xl font-semibold">ตารางวันสอบ</h3>
+                <h3 className="text-xl font-semibold">ตารางวันสอบ</h3>
               </div>
             </div>
-            {/* ========Title======== */}
             <div className="block w-full overflow-x-auto">
               <table className="w-full border-collapse items-center">
                 <thead>
                   <tr>
-                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-bg_primary px-6 py-3 text-left align-middle text-base font-semibold">
+                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-bg_primary px-4 py-2 text-left align-middle text-sm font-semibold">
                       ชื่อโครงงาน
                     </th>
-                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-bg_primary px-6 py-3 text-left align-middle text-base font-semibold">
+                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-bg_primary px-4 py-2 text-left align-middle text-sm font-semibold">
                       วิชา
                     </th>
-                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-bg_primary px-6 py-3 text-left align-middle text-base font-semibold">
+                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-bg_primary px-4 py-2 text-left align-middle text-sm font-semibold">
                       วันที่
                     </th>
-                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-bg_primary px-6 py-3 text-left align-middle text-base font-semibold">
+                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-bg_primary px-4 py-2 text-left align-middle text-sm font-semibold">
                       เวลา
                     </th>
                   </tr>
                 </thead>
-                {/* ========Body======== */}
                 <tbody>
-                  {/* ========Line1======== */}
                   <tr>
-                    <th className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-4 px-6 text-left align-middle text-sm">
+                    <th className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 text-left align-middle text-xs">
                       ระบบเจาะยางรถอาจารย์
                     </th>
-                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-4 px-6 align-middle text-sm">
+                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
                       โครงงาน
                     </td>
-                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-4 px-6 align-middle text-sm">
+                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
                       25 กพ 2555
                     </td>
-                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-4 px-6 align-middle text-sm">
+                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
                       12:00 น.
                     </td>
                   </tr>
-                  {/* ========Line2======== */}
                   <tr>
-                    <th className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-4 px-6 text-left align-middle text-sm">
+                    <th className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 text-left align-middle text-xs">
                       ชื่อโครงงาน
                     </th>
-                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-4 px-6 align-middle text-sm">
+                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
                       วิชา
                     </td>
-                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-4 px-6 align-middle text-sm">
+                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
                       วันที่
                     </td>
-                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-4 px-6 align-middle text-sm">
+                    <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
                       เวลา
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div className="flex items-center justify-center text-base font-semibold">
+            <div className="flex items-center justify-center text-sm font-semibold">
               <ButtonPrimary2 Title={'ดูทั้งหมด'} path={'#'} />
             </div>
           </div>
@@ -102,4 +99,63 @@ const ColumnCard = ({}) => {
     </div>
   )
 }
-export { DashboardCard, ColumnCard }
+
+const ColumnCard2 = () => {
+  return (
+    <div className="mt-4 flex flex-wrap">
+      <div className="mb-6 w-full xl:mb-0 xl:w-6/12">
+        <div className="relative flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
+          <div className="rounded-t border-0 px-4 py-3">
+            <div className="flex flex-wrap items-center">
+              <div className="relative w-full max-w-full flex-1 flex-grow px-4">
+                <h3 className="text-xl font-semibold">โครงงานทั้งหมดในวิชาเตรียมโครงงาน</h3>
+              </div>
+            </div>
+           
+            <div className="block w-full overflow-x-auto">
+              <table className="w-full border-collapse items-center">
+                <thead>
+                  <tr>
+                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-blue-100 px-4 py-2 text-left align-middle text-sm font-semibold">
+                      ชื่อโครงงาน
+                    </th>
+                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-blue-100 px-4 py-2 text-left align-middle text-sm font-semibold">
+                      วิชา
+                    </th>
+                    <th className="whitespace-nowrap border border-l-0 border-r-0 border-solid bg-blue-100 px-4 py-2 text-left align-middle text-sm font-semibold">
+                      สถานะ
+                    </th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  {[...Array(5)].map((_, index) => (
+                    <tr key={index}>
+                      <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 text-left align-middle text-xs">
+                        xxxxxxxxxxxxxx
+                      </td>
+                      <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
+                        เตรียมโครงงาน
+                      </td>
+                      <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
+                        <span className="rounded bg-yellow-400 px-3 py-1 text-white">
+                          ยื่นส่งCEO2-อนุมัติแล้ว
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="flex items-center justify-center text-sm font-semibold">
+              <ButtonPrimary2 Title={'ดูทั้งหมด'} path={'#'} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+export { DashboardCard, ColumnCard, ColumnCard2 }

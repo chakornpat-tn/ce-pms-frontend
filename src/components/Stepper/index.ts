@@ -1,2 +1,2 @@
 export * from './Pjstepper/Pjstepper'
-export * from './Progress/Progress'
+export * from './Progress/progress'
