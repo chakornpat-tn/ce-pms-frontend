@@ -11,7 +11,7 @@ import { UpdateUserModalForm, DeleteUserModalForm } from '@/components/Modals'
 import Link from 'next/link'
 
 type Props = {
-  userId: string
+  userId: number
   userName: string
 }
 

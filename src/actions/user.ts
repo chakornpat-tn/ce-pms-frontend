@@ -1,6 +1,9 @@
 'use server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { UserQueryRequest, ResListUser } from '@/models/User'
+import { cookies } from 'next/headers'
+import useAPI from '@/utils/useAPI'
 
 type FormState = {
   message: string
@@ -29,13 +32,17 @@ export async function createUser(prevState: FormState, formData: FormData) {
     role,
   }
 
-  const res = await fetch(apiUrl + '/v1/user', {
-    method: 'POST',
-    body: JSON.stringify(userData),
-    headers: { 'Content-Type': 'application/json' },
-  })
+  const res = await useAPI<{ message: string }>(
+    '/v1/user',
+    {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: { 'Content-Type': 'application/json' },
+    },
+  )
 
-  if (res.status != 200) {
+
+  if (res.message === '* ชื่อผู้ใช้ซ้ำในระบบ') {
     return {
       message: '* ชื่อผู้ใช้ซ้ำในระบบ',
     }
@@ -60,13 +67,13 @@ export async function updateUser(formData: FormData) {
     role,
   }
 
-  const res = await fetch(apiUrl + '/v1/user/' + id, {
+  const res = await useAPI('/v1/user/' + id, {
     method: 'PUT',
     body: JSON.stringify(userData),
     headers: { 'Content-Type': 'application/json' },
   })
 
-  if (res.status === 200) {
+  if (res) {
     revalidatePath('/teacher/users')
     redirect('/teacher/users')
   }
@@ -76,10 +83,31 @@ export async function updateUser(formData: FormData) {
   }
 }
 
-export async function deleteUser(userId: string) {
-  await fetch(apiUrl + '/v1/user/' + userId, {
+export async function deleteUser(userId: number) {
+  await useAPI('/v1/user/' + userId, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
   })
   return
+}
+
+export async function listUser(req?: UserQueryRequest): Promise<ResListUser> {
+  const Cookie = await cookies()
+  const token = Cookie.get('token')
+
+  const queryParams = new URLSearchParams()
+  if (req?.name) queryParams.append('search', req.name)
+  if (req?.role) queryParams.append('role', req.role.toString())
+  if (req?.page) queryParams.append('page', req.page.toString())
+  if (req?.perPage) queryParams.append('perPage', req.perPage.toString())
+
+  const url = `/v1/user?${queryParams.toString()}`
+
+  const res = await useAPI<{ data: ResListUser }>(url, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return res.data
 }

@@ -1,41 +1,47 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { CreateUserModalForm } from '@/components/Modals'
 import { UsersTable } from '@/components/Tables'
 import Pagination from '@mui/material/Pagination'
 import Link from 'next/link'
-
+import { listUser } from '@/actions/user'
+import useSWR from 'swr'
+import { ResListUser } from '@/models/User'
+import { Skeleton } from '@mui/material'
 
 type Props = {}
 
 function Page({}: Props) {
-  const [usersData, setUsersData] = useState([])
-  const [totalResult, setTotalResult] = useState(0)
-  const [name, setName] = useState('')
-  const [role, setRole] = useState('')
   const [page, setPage] = useState(1)
   const [perPage, setPerPage] = useState(30)
-
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const [name, setName] = useState('')
+  const [role, setRole] = useState<number | undefined>(undefined)
 
   const fetchData = async () => {
-    const res = await fetch(
-      `${apiUrl}/v1/user?name=${name}&role=${role}&page=${page}&perPage=${perPage}`,
-      { cache: 'no-store' },
-    )
-    const data = await res.json()
-    setUsersData(data.users)
-    setTotalResult(data.totalResult)
+    const res = (await listUser({
+      page,
+      perPage,
+      role,
+      name,
+    })) as ResListUser
+
+    return res
   }
 
-  useEffect(() => {
-    fetchData()
-  }, [page, perPage])
+  const { data, isLoading, mutate } = useSWR('/v1/user', fetchData, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     setPage(1)
-    fetchData()
+    mutate()
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch(e as unknown as React.FormEvent)
+    }
   }
 
   const handlePageChange = (
@@ -43,16 +49,15 @@ function Page({}: Props) {
     value: number,
   ) => {
     setPage(value)
+    mutate()
   }
 
   const handlePerPageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(e.target.value)
     setPerPage(newValue)
     setPage(1)
+    mutate()
   }
-
-  // Calculate total number of pages
-  const totalPages = Math.ceil(totalResult / perPage)
 
   return (
     <>
@@ -62,7 +67,10 @@ function Page({}: Props) {
             <h1 className="text-4xl font-bold text-primary1">
               จัดการบัญชีผู้ใช้
             </h1>
-            <Link href="users/create" className="mt-2 rounded bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0">
+            <Link
+              href="users/create"
+              className="mt-2 rounded bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0"
+            >
               เพิ่มผู้ใช้ใหม่
             </Link>
           </div>
@@ -79,12 +87,13 @@ function Page({}: Props) {
               className="w-full rounded border p-2 md:w-auto"
               value={name}
               onChange={e => setName(e.target.value)}
+              onKeyDown={handleKeyPress}
             />
             <select
               name="role"
               className="w-full rounded border p-2 md:w-auto"
-              value={role}
-              onChange={e => setRole(e.target.value)}
+              value={role === undefined ? '' : role}
+              onChange={e => setRole(parseInt(e.target.value) || undefined)}
             >
               <option value="">ทุกสิทธิ์</option>
               <option value="1">อาจารย์โครงงาน</option>
@@ -112,20 +121,30 @@ function Page({}: Props) {
           </form>
 
           {/* Users List */}
-          <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
-            <UsersTable usersData={usersData} />
-            <div className="flex flex-row justify-between">
-              <p className="text-sm text-gray-500">
-                จำนวนทั้งหมด {totalResult} ผู้ใช้
-              </p>
 
-              {/* Pagination */}
-              <Pagination
-                count={totalPages}
-                page={page}
-                onChange={handlePageChange}
-              />
-            </div>
+          <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
+            {isLoading && (
+              <Skeleton variant="rectangular" width={'100%'} height={640} />
+            )}
+              {data?.users && (
+                <>
+                  <UsersTable usersData={data.users} />
+                  <div className="flex flex-row justify-between">
+                    <p className="text-sm text-gray-500">
+                      จำนวนทั้งหมด {data?.totalCount} ผู้ใช้
+                    </p>
+                
+                    {/* Pagination */}
+                    {data && ( // Conditionally render pagination
+                      <Pagination
+                        count={Math.ceil(data.totalCount / perPage)}
+                        page={page}
+                        onChange={handlePageChange}
+                      />
+                    )}
+                  </div>
+                </>
+              )}
           </div>
         </article>
       </div>
