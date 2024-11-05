@@ -9,7 +9,7 @@ type Props = {
   children: React.ReactNode
   handleClose?: () => void
   userInfo: {
-    userId: string
+    userId: number
     userName: string
   }
 }
