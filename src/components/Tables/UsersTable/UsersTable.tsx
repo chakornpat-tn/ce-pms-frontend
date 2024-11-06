@@ -1,4 +1,4 @@
-import { getUserRole } from '@/types/User'
+import { getUserRole } from '@/models/User'
 import { User } from '@/models/User'
 import UserMenu from './UserMenu'
 
@@ -17,9 +17,15 @@ export function UsersTable({ usersData }: Props) {
       <table className="mb-5 w-full text-left text-sm">
         <thead className="border-b text-xs uppercase text-primary1 max-md:hidden">
           <tr>
-            <th scope="col" className="px-6 py-4 text-lg">ชื่อ-นามสกุล</th>
-            <th scope="col" className="px-6 py-4 text-lg">ชื่อผู้ใช้</th>
-            <th scope="col" className="px-6 py-4 text-lg">สิทธิ์</th>
+            <th scope="col" className="px-6 py-4 text-lg">
+              ชื่อ-นามสกุล
+            </th>
+            <th scope="col" className="px-6 py-4 text-lg">
+              ชื่อผู้ใช้
+            </th>
+            <th scope="col" className="px-6 py-4 text-lg">
+              สิทธิ์
+            </th>
             <th scope="col" className="px-6 py-4">
               <span className="sr-only">Edit</span>
             </th>
@@ -31,30 +37,21 @@ export function UsersTable({ usersData }: Props) {
               key={i}
               className="border-b transition-colors duration-300 hover:bg-slate-100"
             >
-              <th
-                scope="row"
-                className="px-6 py-4 text-sm font-medium text-primary1 md:hidden"
-              >
-                ชื่อ นามสกุล
-              </th>
               <td className="whitespace-nowrap py-4 text-sm text-primary1 md:px-6 md:text-base">
                 {user.name}
               </td>
               <td className="px-0 py-4 text-base text-primary1 max-md:hidden md:px-6">
                 {user.username}
               </td>
-              <td className="flex items-center px-6 py-4 text-sm text-primary1 md:justify-start max-md:justify-between max-md:text-base">
-                <div className="flex items-center p-0 text-sm text-primary1 max-sm:text-xs">
+              <td className="px-0 py-auto  text-base text-primary1  md:px-4">
+                <div className="flex h-full items-center p-0 text-sm text-primary1 max-sm:text-xs">
                   <div
                     className={`mr-[4px] rounded-full p-[5px] ${roleColor[user.role]}`}
                   ></div>
                   {getUserRole(user.role)}
                 </div>
-                <div className="md:hidden">
-                  <UserMenu userId={user.id} userName={user.name} />
-                </div>
               </td>
-              <td className="px-6 py-4 text-right text-base text-primary1 max-md:hidden">
+              <td className="px-2 py-4 tex-right text-base text-primary1">
                 <UserMenu userId={user.id} userName={user.name} />
               </td>
             </tr>

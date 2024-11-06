@@ -1,26 +1,18 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useActionState, useState } from 'react'
 import { createUser } from '@/actions/user'
-import { useFormState } from 'react-dom'
 import Link from 'next/link'
 
 export default function CreateUserPage() {
-  const initState = {
-    message: '',
-  }
-  const [state, formAction] = useFormState(createUser, initState)
+  const [data, action, isPending] = useActionState(createUser, undefined)
 
   return (
-    <div className="min-h-svh  p-4">
+    <div className="min-h-svh p-4">
       <h1 className="mb-4 text-2xl font-medium leading-6 text-primary1">
         สร้างบัญชีผู้ใช้
       </h1>
-      <form
-        className="p-4"
-        action={(formData: FormData) => {
-          formAction(formData)
-        }}
-      >
+
+      <form className="p-4" action={action}>
         <div className="mb-4 flex">
           <div className="mr-2 w-1/2">
             <label
@@ -68,7 +60,6 @@ export default function CreateUserPage() {
             required
           />
         </div>
-
         <div className="mb-4">
           <label
             htmlFor="password"
@@ -126,31 +117,21 @@ export default function CreateUserPage() {
               โครงงาน
             </label>
           </div>
-          {state.message && (
-            <p
-              className={
-                state.message == '* สร้างบัญชีผู้เสร็จสิ้น'
-                  ? 'text-green-500'
-                  : 'text-red-500'
-              }
-            >
-              {state.message}
-            </p>
-          )}
         </div>
         <div className="flex items-center justify-around">
           <button
+            disabled={isPending}
             type="submit"
-            className=" mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
+            className="mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
           >
             สร้าง
           </button>
           <Link
             href="/teacher/users"
-            className="px-auto mt-2 w-2/5 rounded-md border-2 border-red-200 bg-white py-2 text-gray-500 hover:border-red-500 hover:text-primary1 text-center"
+            className="px-auto mt-2 w-2/5 rounded-md border-2 border-red-200 bg-white py-2 text-center text-gray-500 hover:border-red-500 hover:text-primary1"
           >
             กลับ
-          </Link>{' '}
+          </Link>
         </div>
       </form>
     </div>

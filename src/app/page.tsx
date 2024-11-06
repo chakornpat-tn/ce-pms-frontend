@@ -6,12 +6,15 @@ export default function Home() {
     <>
       <div className="min-h-screen bg-bg_primary">
         <Navbar />
-        <div className="container mx-auto hero min-h-40 bg-base-200">
+        <div className="container hero mx-auto min-h-40 bg-base-200">
           <div className="hero-content text-center">
             <div className="max-w-lg">
-              <h1 className="text-4xl font-bold py-2">โครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์</h1>
+              <h1 className="py-2 text-4xl font-bold">
+                โครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์
+              </h1>
               <p className="py-6">
-                เว็บไซต์แสดงข้อมูลโครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์ มหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา เชียงใหม่
+                เว็บไซต์แสดงข้อมูลโครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์
+                มหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา เชียงใหม่
               </p>
             </div>
           </div>
@@ -21,7 +24,7 @@ export default function Home() {
             <h5 className="mb-4 text-2xl text-gray-900">
               เลือกปีการศึกษาที่ต้องการตรวจสอบ
             </h5>
-            <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3  ">
+            <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3">
               <ProjCard path="/2555" />
               <ProjCard path="#" />
               <ProjCard path="#" />
