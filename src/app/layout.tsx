@@ -4,6 +4,7 @@ import { Prompt } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '../theme'
+import { Toaster } from 'sonner'
 
 const prompt = Prompt({
   subsets: ['latin'],
@@ -25,7 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="mytheme">
       <ThemeProvider theme={theme}>
-        <body className={prompt.className}>{children}</body>
+        <body className={prompt.className}>
+          <Toaster position="top-right" />
+          {children}
+        </body>
       </ThemeProvider>
     </html>
   )

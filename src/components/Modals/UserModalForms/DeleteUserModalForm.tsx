@@ -4,6 +4,7 @@ import { Fragment, useState } from 'react'
 import { useTransition } from 'react'
 import { deleteUser } from '@/actions/user'
 import WarningIcon from '@mui/icons-material/Warning'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   children: React.ReactNode
@@ -16,6 +17,7 @@ type Props = {
 
 function DeleteUserModalForm({ children, handleClose, userInfo }: Props) {
   const [_, startTransition] = useTransition()
+  const router = useRouter()
 
   let [isOpen, setIsOpen] = useState(false)
 
@@ -79,7 +81,10 @@ function DeleteUserModalForm({ children, handleClose, userInfo }: Props) {
                       type="submit"
                       className=" mt-2 w-2/5 rounded-md bg-red-300 px-4 py-2 text-white hover:bg-red-500"
                       onClick={() => {
-                        startTransition(() => deleteUser(userInfo.userId))
+                        startTransition(async () => {
+                          await deleteUser(userInfo.userId)
+                          router.refresh()
+                        })
                         closeModal()
                       }}
                     >

@@ -1,40 +1,58 @@
 'use client'
-import { updateUser } from '@/actions/user'
-import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { GetUser, updateUser } from '@/actions/user'
+import userRoles from '@/constants/userRoles/userRoles'
+import { User } from '@/models/User'
+import { useParams, useRouter } from 'next/navigation'
 import useSWR from 'swr'
 
 export default function UpdateUserPage() {
   const params = useParams()
-  const userId = params.id
+  const userId = Number(params.id)
+  const router = useRouter()
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-  const fetcher = (url: string) => fetch(url).then(res => res.json())
-  const { data } = useSWR(`${apiUrl}/v1/user/${userId}`, fetcher, {
-    revalidateIfStale: true,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  })
+  const fetchUser = async (userId: number) => {
+    const res = await GetUser(userId)
+    return res as User
+  }
+
+  const { data, error, isLoading } = useSWR(
+    userId ? `/v1/user?${userId}` : null,
+    () => fetchUser(userId),
+  )
+
+  const handleCancel = () => {
+    router.back()
+  }
+
+  if (error) {
+    handleCancel()
+    return null
+  }
+
+  if (isLoading || !data) {
+    return <div>Loading...</div>
+  }
+
+  const handleSubmit = async (formData: FormData) => {
+    const role = Number(formData.get('role'))
+    if (
+      formData.get('firstName') !== data.name.split(' ')[0] ||
+      formData.get('lastName') !== data.name.split(' ')[1] ||
+      role !== data.role ||
+      formData.get('password') !== ''
+    ) {
+      await updateUser(formData)
+      router.back()
+    }
+  }
 
   return (
     <div className="min-h-svh p-4">
       <h1 className="mb-4 text-2xl font-medium leading-6 text-primary1">
-        แก้ไขบัญชีผู้ใช้ {data?.username}
+        แก้ไขบัญชีผู้ใช้ {data.username}
       </h1>
 
-      <form
-        className="p-4"
-        action={async (formData: FormData) => {
-          if (
-            formData.get('firstName') != data?.name.split(' ')[0] ||
-            formData.get('lastName') != data?.name.split(' ')[1] ||
-            formData.get('role') != data?.role ||
-            formData.get('password') != ''
-          ) {
-            await updateUser(formData)
-          }
-        }}
-      >
+      <form className="p-4" action={handleSubmit}>
         <div className="mb-4 flex">
           <div className="mr-2 w-1/2">
             <label
@@ -50,7 +68,7 @@ export default function UpdateUserPage() {
               id="firstName"
               className="w-full rounded-lg border border-gray-300 p-2"
               required
-              defaultValue={data?.name.split(' ')[0]}
+              defaultValue={data.name.split(' ')[0]}
             />
           </div>
           <div className="ml-2 w-1/2">
@@ -66,7 +84,7 @@ export default function UpdateUserPage() {
               id="lastName"
               className="w-full rounded-lg border border-gray-300 p-2"
               required
-              defaultValue={data?.name.split(' ')[1]}
+              defaultValue={data.name.split(' ')[1]}
             />
           </div>
         </div>
@@ -85,6 +103,7 @@ export default function UpdateUserPage() {
             className="w-full rounded-lg border border-gray-300 p-2"
           />
         </div>
+
         <div className="mb-4">
           <label className="mb-2 block text-sm font-medium text-primary1">
             ตำแหน่งอาจารย์
@@ -97,7 +116,7 @@ export default function UpdateUserPage() {
               value="3"
               className="mr-1"
               required
-              defaultChecked={data?.role === 3}
+              defaultChecked={data.role === userRoles.Teacher}
             />
             <label htmlFor="general" className="text-md mr-4">
               ทั่วไป
@@ -110,7 +129,7 @@ export default function UpdateUserPage() {
               value="2"
               className="mr-1"
               required
-              defaultChecked={data?.role === 2}
+              defaultChecked={data.role === userRoles.preProjectTeacher}
             />
             <label htmlFor="pre" className="text-md mr-4">
               เตรียมโครงงาน
@@ -123,25 +142,27 @@ export default function UpdateUserPage() {
               value="1"
               className="mr-1"
               required
-              defaultChecked={data?.role === 1}
+              defaultChecked={data.role === userRoles.ProjectTeacher}
             />
             <label htmlFor="pro" className="text-md mr-4">
               โครงงาน
             </label>
           </div>
         </div>
+
         <div className="flex items-center justify-around">
           <button
             type="submit"
-            className=" mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
+            className="mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
           >
             อัพเดท
           </button>
           <button
             type="button"
-            className=" mt-2 w-2/5 rounded-md border-2 border-red-200 bg-white px-4 py-2 text-gray-500 hover:border-red-500 hover:text-primary1"
+            onClick={handleCancel}
+            className="mt-2 w-2/5 rounded-md border-2 border-red-200 bg-white px-4 py-2 text-gray-500 hover:border-red-500 hover:text-primary1"
           >
-            <Link href={'/teacher/users'}>ยกเลิก</Link>
+            ยกเลิก
           </button>
         </div>
       </form>
