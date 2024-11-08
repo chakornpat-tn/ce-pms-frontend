@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { CookiesProvider } from 'next-client-cookies/server'
 
 import { Prompt } from 'next/font/google'
 import './globals.css'
@@ -25,12 +26,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="mytheme">
-      <ThemeProvider theme={theme}>
-        <body className={prompt.className}>
-          <Toaster position="top-right" />
-          {children}
-        </body>
-      </ThemeProvider>
+      <CookiesProvider>
+        <ThemeProvider theme={theme}>
+          <body className={prompt.className}>
+            <Toaster position="top-right" />
+            {children}
+          </body>
+        </ThemeProvider>
+      </CookiesProvider>
     </html>
   )
 }

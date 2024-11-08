@@ -1,5 +1,5 @@
 import React from 'react'
-import { DashboardCard, ColumnCard, ColumnCard2, DashboardCard2 ,DashboardCard3 } from '@/components/Cards'
+import { DashboardCard, ColumnCard, ColumnCard2,} from '@/components/Cards'
 
 type Props = {}
 

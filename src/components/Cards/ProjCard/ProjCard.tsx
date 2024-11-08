@@ -32,7 +32,7 @@ const AllpjCard = ({ path }: Props) => {
   )
 }
 
-const Selectprojectcard = ({
+const SelectProjectCard = ({
   Status,
   Title,
   path,
@@ -126,4 +126,4 @@ return (
   </Link>
 )
 }
-export { ProjCard, AllpjCard, Selectprojectcard, Presentprojectcard }
+export { ProjCard, AllpjCard, SelectProjectCard, Presentprojectcard }

@@ -6,11 +6,10 @@ export default function TeacherLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="bg-bg_primary">
+    <div className="bg-bg_primary min-h-screen">
       <Navbar />
-      <div className="container mx-auto  min-h-screen w-full justify-center">
+      <div className="container mx-auto h-full w-full justify-center">
         {children}
       </div>
-    </div>
-  )
+    </div>  )
 }

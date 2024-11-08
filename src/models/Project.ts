@@ -1,3 +1,5 @@
+import { ProjectStatus } from './ProjectStatus'
+
 export type Project = {
   id: number
   username: string
@@ -89,4 +91,34 @@ export type ProjectUser = {
   userProjectRole: number
   projectDocs?: string
   prepDocs?: string
+}
+
+export type ProjectRes = {
+  id: number
+  username: string
+  password?: string | null
+  projectName: string
+  projectNameEng?: string | null
+  abstract?: string | null
+  abstractEng?: string | null
+  detail?: string | null
+  detailEng?: string | null
+  semester: number
+  academicYear: number
+  type?: string | null
+  projectStatusId?: number | null
+  courseStatus: number
+  students: ProjectStudent[]
+  users: ProjectUser[]
+  createdAt: Date
+  updatedAt: Date
+  examDateTime: Date
+  projectStatus: ProjectStatus
+}
+export type ListProjectFilterQuery = {
+  academicYear?: number
+  semester?: number
+  projectName?: string
+  projectStatus?: string
+  courseStatus?: string
 }
