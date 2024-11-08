@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar/Navbar'
 export default function Home() {
   return (
     <>
-      <div className="min-h-screen bg-bg_primary">
+      <div className="min-h-screen">
         <Navbar />
         <div className="container hero mx-auto min-h-40 bg-base-200">
           <div className="hero-content text-center">

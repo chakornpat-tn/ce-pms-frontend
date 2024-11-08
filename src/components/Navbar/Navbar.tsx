@@ -9,7 +9,7 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown'
 
 const NavbarGroup = {
   โครงงาน: [
-    { name: 'จัดการโครงงาน', path: '/teacher/yearproject' },
+    { name: 'จัดการโครงงาน', path: '/teacher/project' },
     { name: 'ตัวเลือก2', path: '#' },
   ],
   เตรียมโครงงาน: [

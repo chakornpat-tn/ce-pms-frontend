@@ -43,7 +43,7 @@ const config: Config = {
           'secondary-content': '#ffffff',
           accent: '#84ABEC',
           neutral: '#0F1035',
-          'base-100': '#f1f1f1',
+          'base-100': '#f9f9f9',
           'base-content': '#0F1035',
           info: '#C1D8FF',
           success: '#7FC7D9',
