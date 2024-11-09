@@ -7,6 +7,7 @@ import { listUser } from '@/actions/user'
 import useSWR from 'swr'
 import { ResListUser } from '@/models/User'
 import { Skeleton } from '@mui/material'
+import { Loader } from '@/components/Loading'
 
 type Props = {}
 
@@ -121,31 +122,32 @@ function Page({}: Props) {
           </form>
 
           {/* Users List */}
+          {isLoading && (
+            <div className="flex h-full items-center justify-center">
+              <Loader />
+            </div>
+          )}
+          {data?.users && (
+            <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
+              <>
+                <UsersTable usersData={data.users} />
+                <div className="flex flex-row justify-between">
+                  <p className="text-sm text-gray-500">
+                    จำนวนทั้งหมด {data?.totalCount} ผู้ใช้
+                  </p>
 
-          <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
-            {isLoading && (
-              <Skeleton variant="rectangular" width={'100%'} height={640} />
-            )}
-              {data?.users && (
-                <>
-                  <UsersTable usersData={data.users} />
-                  <div className="flex flex-row justify-between">
-                    <p className="text-sm text-gray-500">
-                      จำนวนทั้งหมด {data?.totalCount} ผู้ใช้
-                    </p>
-                
-                    {/* Pagination */}
-                    {data && ( // Conditionally render pagination
-                      <Pagination
-                        count={Math.ceil(data.totalCount / perPage)}
-                        page={page}
-                        onChange={handlePageChange}
-                      />
-                    )}
-                  </div>
-                </>
-              )}
-          </div>
+                  {/* Pagination */}
+                  {data && (
+                    <Pagination
+                      count={Math.ceil(data.totalCount / perPage)}
+                      page={page}
+                      onChange={handlePageChange}
+                    />
+                  )}
+                </div>
+              </>
+            </div>
+          )}
         </article>
       </div>
     </>
