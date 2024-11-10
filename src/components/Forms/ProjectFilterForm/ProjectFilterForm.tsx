@@ -79,7 +79,7 @@ const ProjectFilterForm: React.FC<Props> = ({
 
       <button
         type="submit"
-        className="w-full rounded bg-primary1 p-2 text-sm sm:text-base text-secondary1 shadow-md transition hover:bg-primary1/80 sm:mt-2 sm:w-auto md:mt-0"
+        className="w-full rounded bg-primary2-400 p-2 text-sm sm:text-base text-secondary1 shadow-md transition hover:bg-primary2-500 sm:mt-2 sm:w-auto md:mt-0"
       >
         ค้นหา
       </button>

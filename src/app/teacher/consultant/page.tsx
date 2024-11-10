@@ -1,13 +1,12 @@
 'use client'
 import useSWR from 'swr'
-import { ProjectDetail } from '@/types/Project'
+// import { ProjectDetail } from '@/types/Project'
 import { Box, Tab, Tabs } from '@mui/material'
 import React from 'react'
 
 type Props = {}
 
 const page = (props: Props) => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
   const [value, setValue] = React.useState(0)
 
   const CenteredTabs = () => {
@@ -31,19 +30,10 @@ const page = (props: Props) => {
     )
   }
 
-  const fetcher = (url: string) => fetch(url).then(res => res.json())
-  const { data, isLoading } = useSWR<ProjectDetail[], null>(
-    `${apiUrl}/project`,
-    fetcher,
-    {
-      refreshInterval: 2000,
-    },
-  )
 
   return (
     <>
-      <section className="flex min-h-svh w-full justify-center">
-        <article className="h-full w-4/5 p-8">
+
           <div className="mb-2 flex  flex-col items-start justify-between md:flex-row md:items-center">
             <h1 className="text-4xl font-bold text-primary1">
               โครงงานที่เป็นที่ปรีกษา
@@ -97,8 +87,6 @@ const page = (props: Props) => {
                 ))} */}
             </div>
           </div>
-        </article>
-      </section>
     </>
   )
 }

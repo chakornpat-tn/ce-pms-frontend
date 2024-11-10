@@ -1,5 +1,5 @@
-import Navbar from '@/components/Navbar'
-import { LayoutScreenTeacher } from '@/components/Layout'
+import { ContentLayout } from '@/components/Layout'
+import TeacherNavbarWithSideBar from '@/components/Layout/SideBarLayout'
 
 export default function TeacherLayout({
   children,
@@ -7,9 +7,8 @@ export default function TeacherLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-bg_primary">
-      <Navbar />
-      <LayoutScreenTeacher>{children}</LayoutScreenTeacher>
-    </div>
+    <TeacherNavbarWithSideBar>
+      <ContentLayout>{children}</ContentLayout>
+    </TeacherNavbarWithSideBar>
   )
 }

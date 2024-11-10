@@ -4,7 +4,7 @@ interface LayoutProps {
   children: React.ReactNode
 }
 
-const LayoutScreenTeacher = ({ children }: LayoutProps): JSX.Element => {
+const ContentLayout = ({ children }: LayoutProps): JSX.Element => {
   return (
     <div className="container mx-auto h-full w-full justify-center">
       <div className="flex w-full justify-center">
@@ -14,4 +14,4 @@ const LayoutScreenTeacher = ({ children }: LayoutProps): JSX.Element => {
   )
 }
 
-export  {LayoutScreenTeacher}
+export { ContentLayout }
