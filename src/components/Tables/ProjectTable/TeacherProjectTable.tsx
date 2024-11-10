@@ -34,7 +34,7 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
           <h2 className="mb-4 text-xl font-bold md:mb-0 md:text-2xl">
             ผลลัพธ์การค้นหา
           </h2>
-          <button className="w-full rounded-md bg-primary1 px-3 py-1.5 text-sm text-white transition-colors hover:bg-primary1/80 md:w-auto md:px-4 md:py-2 md:text-base">
+          <button className="w-full rounded-md bg-primary2-400 px-3 py-1.5 text-sm text-white transition-colors hover:bg-primary2-500 md:w-auto md:px-4 md:py-2 md:text-base">
             จัดการโครงงาน
           </button>
         </div>

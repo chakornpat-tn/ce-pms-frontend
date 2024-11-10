@@ -7,7 +7,7 @@ export default function CreateUserPage() {
   const [data, action, isPending] = useActionState(createUser, undefined)
 
   return (
-    <div className="min-h-svh p-4">
+    <div className="h-full p-4">
       <h1 className="mb-4 text-2xl font-medium leading-6 text-primary1">
         สร้างบัญชีผู้ใช้
       </h1>

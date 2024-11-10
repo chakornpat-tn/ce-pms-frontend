@@ -6,6 +6,7 @@ import './globals.css'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '../theme'
 import { Toaster } from 'sonner'
+import TeacherNavbarWithSideBar from '@/components/Layout/SideBarLayout'
 
 const prompt = Prompt({
   subsets: ['latin'],

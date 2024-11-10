@@ -1,1 +1,2 @@
-export * from './TeacherLayout/TeacherLayout'
+export * from './ContentLayout'
+export * from './SideBarLayout'

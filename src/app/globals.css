@@ -4,4 +4,7 @@
 
 html {
   font-family: var(--my-font-family), sans-serif;
+  .primary-hover {
+    @apply text-primary2-500 transition-colors duration-200 hover:bg-gray-100 hover:text-primary1;
+  }
 }
