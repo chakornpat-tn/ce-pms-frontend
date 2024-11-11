@@ -1,2 +1,2 @@
 export * from './ContentLayout'
-export * from './SideBarLayout'
+export * from '../Navbar/NavbarWithLayout'

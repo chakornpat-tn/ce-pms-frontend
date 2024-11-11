@@ -16,7 +16,7 @@ const Navbar = () => {
       {token ? (
         <Link href={'/teacher'}>
           <button className="btn btn-square btn-ghost">
-            <Login className="h-5 w-5" />
+          กลับ
           </button>
         </Link>
       ) : (
