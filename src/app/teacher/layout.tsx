@@ -1,5 +1,5 @@
 import { ContentLayout } from '@/components/Layout'
-import TeacherNavbarWithSideBar from '@/components/Layout/SideBarLayout'
+import NavbarWithSideBar from '@/components/Navbar/NavbarWithLayout'
 
 export default function TeacherLayout({
   children,
@@ -7,8 +7,8 @@ export default function TeacherLayout({
   children: React.ReactNode
 }) {
   return (
-    <TeacherNavbarWithSideBar>
+    <NavbarWithSideBar>
       <ContentLayout>{children}</ContentLayout>
-    </TeacherNavbarWithSideBar>
+    </NavbarWithSideBar>
   )
 }

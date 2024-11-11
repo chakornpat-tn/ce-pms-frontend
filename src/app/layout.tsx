@@ -1,12 +1,11 @@
 import type { Metadata } from 'next'
-import { CookiesProvider } from 'next-client-cookies/server'
+import { Toaster } from 'sonner'
 
 import { Prompt } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '../theme'
-import { Toaster } from 'sonner'
-import TeacherNavbarWithSideBar from '@/components/Layout/SideBarLayout'
+import NavbarWithSideBar from '@/components/Navbar/NavbarWithLayout'
 
 const prompt = Prompt({
   subsets: ['latin'],
@@ -27,14 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="mytheme">
-      <CookiesProvider>
         <ThemeProvider theme={theme}>
           <body className={prompt.className}>
             <Toaster position="top-right" />
             {children}
           </body>
         </ThemeProvider>
-      </CookiesProvider>
     </html>
   )
 }
