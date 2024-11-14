@@ -17,6 +17,7 @@ import {
 } from '@mui/icons-material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import userRoles from '@/constants/userRoles/userRoles'
 
 type Props = {
   children: React.ReactNode
@@ -26,8 +27,9 @@ const NavbarWithSideBar = ({ children }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState('')
+  const [role, setRole] = useState(999)
   const [isLoading, setIsLoading] = useState(true)
-  
+
   const router = useRouter()
 
   const toggleSidebar = () => setIsOpen(!isOpen)
@@ -37,7 +39,10 @@ const NavbarWithSideBar = ({ children }: Props) => {
       try {
         const res = await fetch('/api/auth/check')
         const data = await res.json()
-        if (data.user) setUser(data.user.name)
+        if (data.user) {
+          setUser(data.user.name)
+          setRole(Number(data.user.role))
+        }
         setIsAuthenticated(data.isAuthenticated)
       } catch (error) {
         console.error('Auth check failed:', error)
@@ -58,7 +63,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
       if (res.ok) {
         setIsOpen(false)
         setIsAuthenticated(false)
-        router.push('/')
+        router.push('/login')
       }
     } catch (error) {
       console.error('Logout failed:', error)
@@ -66,24 +71,70 @@ const NavbarWithSideBar = ({ children }: Props) => {
   }
 
   const authenticatedItems = [
-    { name: 'หน้าแรก', icon: Home, link: '/teacher' },
-    { name: 'วิชาโครงงาน', icon: Article, link: '/teacher/project' },
-    { name: 'วิชาเตรียมโครงงาน', icon: Book, link: '/teacher/pre-project' },
+    { name: 'หน้าแรก', icon: Home, link: '/teacher', role: userRoles.Teacher },
+    {
+      name: 'วิชาโครงงาน',
+      icon: Article,
+      link: '/teacher/project',
+      role: userRoles.ProjectTeacher,
+    },
+    {
+      name: 'วิชาเตรียมโครงงาน',
+      icon: Book,
+      link: '/teacher/pre-project',
+      role: userRoles.preProjectTeacher,
+    },
     {
       name: 'โครงงานที่เป็นที่ปรึกษา',
       icon: Bookmark,
       link: '/teacher/consultant',
+      role: 3,
     },
-    { name: 'คุมสอบโครงงาน', icon: Group, link: '/teacher/present' },
-    { name: 'จัดการผู้ใช้', icon: Person, link: '/teacher/users' },
-    { name: 'สถานะโครงงาน', icon: Assignment, link: '#' },
-    { name: 'เอกสาร', icon: Description, link: '#' },
+    {
+      name: 'คุมสอบโครงงาน',
+      icon: Group,
+      link: '/teacher/present',
+      role: userRoles.Teacher,
+    },
+    {
+      name: 'จัดการผู้ใช้',
+      icon: Person,
+      link: '/teacher/users',
+      role: userRoles.ProjectTeacher,
+    },
+    {
+      name: 'สถานะโครงงาน',
+      icon: Assignment,
+      link: '#',
+      role: userRoles.preProjectTeacher,
+    },
+    {
+      name: 'เอกสาร',
+      icon: Description,
+      link: '#',
+      role: userRoles.preProjectTeacher,
+    },
+    { name: 'เปลี่ยนรหัสผ่าน', icon: Lock, link: '#', role: userRoles.Teacher },
+  ]
+
+  const projectItems = [
     { name: 'เปลี่ยนรหัสผ่าน', icon: Lock, link: '#' },
+    {
+      name: 'ออกจากระบบ',
+      icon: ExitToApp,
+      onClick: handleLogout,
+      role: userRoles.Teacher,
+    },
   ]
 
   const sidebarItems = [
     ...authenticatedItems,
-    { name: 'ออกจากระบบ', icon: ExitToApp, onClick: handleLogout },
+    {
+      name: 'ออกจากระบบ',
+      icon: ExitToApp,
+      onClick: handleLogout,
+      role: userRoles.Teacher,
+    },
   ]
 
   return (
@@ -95,32 +146,78 @@ const NavbarWithSideBar = ({ children }: Props) => {
       >
         <div className="p-5">
           <nav className="mx-auto mt-8">
-            <p className="mb-4 flex items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-primary2-400 py-4 text-sm text-secondary1 w-full">
+            <p className="mb-4 flex w-full items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-primary2-400 py-4 text-sm text-secondary1">
               {user}
             </p>
             <ul>
-              {sidebarItems.map((item, index) => (
-                <li key={index} className="mb-4">
-                  {'onClick' in item ? (
-                    <button
-                      onClick={item.onClick}
-                      className="primary-hover flex w-full items-center rounded-md p-2"
-                    >
-                      <item.icon className="mr-3" />
+              {(role == userRoles.ProjectTeacher ||
+                role == userRoles.preProjectTeacher ||
+                role == userRoles.Teacher) &&
+                sidebarItems.map((item, index) => {
+                  const commonClasses = 'flex items-center rounded-md p-2'
+                  const IconComponent = <item.icon className="mr-3" />
+                  if (role > item.role) return null
+
+                  const linkContent = (
+                    <>
+                      {IconComponent}
                       <span>{item.name}</span>
-                    </button>
-                  ) : (
-                    <Link
-                      href={'link' in item ? item.link : '#'}
-                      className="primary-hover flex items-center rounded-md p-2"
-                    >
-                      <item.icon className="mr-3" />
+                    </>
+                  )
+
+                  return (
+                    <li key={index} className="mb-4">
+                      {'onClick' in item ? (
+                        <button
+                          onClick={item.onClick}
+                          className={`${commonClasses} primary-hover w-full`}
+                        >
+                          {linkContent}
+                        </button>
+                      ) : (
+                        <Link
+                          href={'link' in item ? item.link : '#'}
+                          className={`${commonClasses} primary-hover`}
+                        >
+                          {linkContent}
+                        </Link>
+                      )}
+                    </li>
+                  )
+                })}
+
+              {role === userRoles.Student &&
+                projectItems.map((item, index) => {
+                  const commonClasses = 'flex items-center rounded-md p-2'
+                  const IconComponent = <item.icon className="mr-3" />
+                  const linkContent = (
+                    <>
+                      {IconComponent}
                       <span>{item.name}</span>
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
+                    </>
+                  )
+
+                  return (
+                    <li key={index} className="mb-4">
+                      {'onClick' in item ? (
+                        <button
+                          onClick={item.onClick}
+                          className={`${commonClasses} primary-hover w-full`}
+                        >
+                          {linkContent}
+                        </button>
+                      ) : (
+                        <Link
+                          href={'link' in item ? item.link : '#'}
+                          className={`${commonClasses} primary-hover`}
+                        >
+                          {linkContent}
+                        </Link>
+                      )}
+                    </li>
+                  )
+                })}
+            </ul>{' '}
           </nav>
         </div>
       </aside>
@@ -130,7 +227,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
       >
         <div className="navbar bg-white shadow-md">
           <div className="flex-none">
-            {(isAuthenticated && !isLoading) && (
+            {isAuthenticated && !isLoading && (
               <button
                 className="btn btn-square btn-ghost"
                 onClick={toggleSidebar}
@@ -145,7 +242,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
             </Link>
           </div>
           <div className="flex-none">
-            {(!isAuthenticated && !isLoading) && (
+            {!isAuthenticated && !isLoading && (
               <Link href={'/login'}>
                 <button className="btn btn-square btn-ghost">
                   <Login className="h-5 w-5" />

@@ -17,7 +17,10 @@ export async function middleware(request: NextRequest) {
 
     const secret = new TextEncoder().encode(config2.TOKEN_SECRET)
     const { payload } = await jwtVerify(token.value, secret)
-
+    if (payload.exp && payload.exp * 1000 < Date.now()) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
+    
     const pathname = request.nextUrl.pathname
 
     const TeacherRole = [
