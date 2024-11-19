@@ -87,7 +87,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
     {
       name: 'โครงงานที่เป็นที่ปรึกษา',
       icon: Bookmark,
-      link: '/teacher/consultant',
+      link: '/teacher/consultant/pre-project',
       role: 3,
     },
     {
