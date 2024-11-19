@@ -78,7 +78,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
     { name: 'จัดการผู้ใช้', icon: Person, link: '/teacher/users' },
     { name: 'สถานะโครงงาน', icon: Assignment, link: '#' },
     { name: 'เอกสาร', icon: Description, link: '#' },
-    { name: 'เปลี่ยนรหัสผ่าน', icon: Lock, link: '#' },
+    { name: 'เปลี่ยนรหัสผ่าน', icon: Lock, link: '/teacher/changepassword' },
   ]
 
   const sidebarItems = [
