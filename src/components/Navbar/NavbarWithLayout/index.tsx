@@ -114,7 +114,12 @@ const NavbarWithSideBar = ({ children }: Props) => {
       link: '#',
       role: userRoles.preProjectTeacher,
     },
-    { name: 'เปลี่ยนรหัสผ่าน', icon: Lock, link: '#', role: userRoles.Teacher },
+    {
+      name: 'เปลี่ยนรหัสผ่าน',
+      icon: Lock,
+      link: '/teacher/change-password',
+      role: userRoles.Teacher,
+    },
   ]
 
   const projectItems = [
