@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { changePassword } from '@/actions/user'
+// import { changePassword } from '@/actions/user'
 
 type Props = {
   userId: number
@@ -23,12 +23,12 @@ const Page = ({ userId }: Props) => {
     const formData = new FormData()
     formData.append('password', password)
 
-    const response = await changePassword(formData)
-    if (response.error) {
-      setMessage(response.error)
-    } else {
-      setMessage('Password changed successfully')
-    }
+    // const response = await changePassword(formData)
+    // if (response.error) {
+    //   setMessage(response.error)
+    // } else {
+    //   setMessage('Password changed successfully')
+    // }
   }
 
   return (
@@ -50,7 +50,7 @@ const Page = ({ userId }: Props) => {
               name="password"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={e => setPassword(e.target.value)}
               className="w-full rounded-lg border border-gray-300 p-2"
               required
             />
@@ -67,7 +67,7 @@ const Page = ({ userId }: Props) => {
               name="confirmPassword"
               id="confirmPassword"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={e => setConfirmPassword(e.target.value)}
               className="w-full rounded-lg border border-gray-300 p-2"
               required
             />
@@ -75,7 +75,7 @@ const Page = ({ userId }: Props) => {
           {message && <p className="text-sm text-red-500">{message}</p>}
           <button
             type="submit"
-            className="hover:bg-primary2 w-full rounded-md bg-primary1 px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-primary1 focus:ring-offset-2"
+            className="w-full rounded-lg bg-primary2-400 p-2 text-secondary1 shadow-md transition duration-200 hover:bg-primary2-500"
           >
             เปลี่ยนรหัสผ่าน
           </button>
