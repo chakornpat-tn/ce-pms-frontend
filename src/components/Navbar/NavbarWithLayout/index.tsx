@@ -154,7 +154,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
             <p className="mb-4 flex w-full items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-primary2-400 py-4 text-sm text-secondary1">
               {user}
             </p>
-            <ul>
+            <ul className="cursor-pointer">
               {(role == userRoles.ProjectTeacher ||
                 role == userRoles.preProjectTeacher ||
                 role == userRoles.Teacher) &&
@@ -171,7 +171,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
                   )
 
                   return (
-                    <li key={index} className="mb-4">
+                    <li key={index} className="mb-4" draggable="false">
                       {'onClick' in item ? (
                         <button
                           onClick={item.onClick}
@@ -183,6 +183,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
                         <Link
                           href={'link' in item ? item.link : '#'}
                           className={`${commonClasses} primary-hover`}
+                          draggable="false"
                         >
                           {linkContent}
                         </Link>
@@ -203,7 +204,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
                   )
 
                   return (
-                    <li key={index} className="mb-4">
+                    <li key={index} className="mb-4" draggable="false">
                       {'onClick' in item ? (
                         <button
                           onClick={item.onClick}
@@ -215,6 +216,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
                         <Link
                           href={'link' in item ? item.link : '#'}
                           className={`${commonClasses} primary-hover`}
+                          draggable="false"
                         >
                           {linkContent}
                         </Link>
@@ -222,7 +224,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
                     </li>
                   )
                 })}
-            </ul>{' '}
+            </ul>
           </nav>
         </div>
       </aside>
