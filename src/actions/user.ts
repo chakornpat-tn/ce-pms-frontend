@@ -1,9 +1,10 @@
 'use server'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 import { UserQueryRequest, ResListUser, User } from '@/models/User'
 import { cookies } from 'next/headers'
+import config from  '@/config'
 import useAPI from '@/utils/useAPI'
+import { jwtVerify } from 'jose'
 
 export async function createUser(previousState: unknown, formData: FormData) {
   try {
@@ -78,15 +79,24 @@ export async function updateUser(formData: FormData) {
 }
 export async function changePassword(formData: FormData) {
   try {
-    const Cookie = await cookies();
-    const token = Cookie.get('token');
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
 
-    const id = formData.get('id');
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.')
+    }
+
     const password = formData.get('password');
 
     const userData = { password };
 
-    const res = await useAPI('/v1/user/' + id, {
+    const res = await useAPI('/v1/user/' + payload.id, {
       method: 'PUT',
       body: JSON.stringify(userData),
       headers: {
