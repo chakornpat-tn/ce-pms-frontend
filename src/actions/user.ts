@@ -2,7 +2,9 @@
 import { revalidatePath } from 'next/cache'
 import { UserQueryRequest, ResListUser, User } from '@/models/User'
 import { cookies } from 'next/headers'
+import config from  '@/config'
 import useAPI from '@/utils/useAPI'
+import { jwtVerify } from 'jose'
 
 export async function createUser(previousState: unknown, formData: FormData) {
   try {
@@ -39,7 +41,7 @@ export async function createUser(previousState: unknown, formData: FormData) {
       return { message: 'สร้างผู้ใช้เสร็จสิ้น' }
     }
   } catch (error) {
-    return { error: 'เกิดข้อ' }
+    return { error: 'เกิดข้อผิดพลาด' }
   }
 }
 
@@ -75,6 +77,44 @@ export async function updateUser(formData: FormData) {
     return error
   }
 }
+export async function changePassword(formData: FormData) {
+  try {
+    const Cookie = await cookies();
+    const token = Cookie.get('token');
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.');
+    }
+
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET);
+    const { payload } = await jwtVerify(token.value, secret);
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.');
+    }
+
+    const password = formData.get('password');
+    const userData = { password };
+
+    const res = await useAPI('/v1/user/' + payload.id, {
+      method: 'PUT',
+      body: JSON.stringify(userData),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    revalidatePath('/');
+
+    return { success: true, message: 'เปลี่ยนรหัสผ่านสำเร็จ' };
+  } catch (error) {
+    // Ensure a consistent response structure
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'เกิดข้อผิดพลาด ',
+    };
+  }
+}
+
 export async function deleteUser(userId: number) {
   try {
     const Cookie = await cookies()

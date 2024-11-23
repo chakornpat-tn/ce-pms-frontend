@@ -1,35 +1,34 @@
 'use client'
 
 import { useState } from 'react'
-// import { changePassword } from '@/actions/user'
+import { changePassword } from '@/actions/user'
 
-type Props = {
-  userId: number
-}
-
-const Page = ({ userId }: Props) => {
+const Page = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState<string | null>(null)
 
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
-
+    event.preventDefault();
+  
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match')
-      return
+      setMessage('รหัสผ่านไม่ตรงกัน');
+      return;
     }
-
-    const formData = new FormData()
-    formData.append('password', password)
-
-    // const response = await changePassword(formData)
-    // if (response.error) {
-    //   setMessage(response.error)
-    // } else {
-    //   setMessage('Password changed successfully')
-    // }
-  }
+  
+    const formData = new FormData();
+    formData.append('password', password);
+  
+    const response = await changePassword(formData);
+  
+    if (!response.success) {
+      setMessage(response.error || 'เกิดข้อผิดพลาด');
+    } else {
+      setMessage(response.message || 'เปลี่ยนรหัสผ่านสำเร็จ');
+      setPassword('');
+      setConfirmPassword('');
+    }
+  };
 
   return (
     <>
@@ -72,7 +71,7 @@ const Page = ({ userId }: Props) => {
               required
             />
           </div>
-          {message && <p className="text-sm text-red-500">{message}</p>}
+          {message && <p className="text-sm">{message}</p>}
           <button
             type="submit"
             className="w-full rounded-lg bg-primary2-400 p-2 text-secondary1 shadow-md transition duration-200 hover:bg-primary2-500"

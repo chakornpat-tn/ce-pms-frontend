@@ -1,5 +1,5 @@
 import { ButtonWithArrow, SmallButtonWithArrow } from '@/components/Buttons'
-import { Presentprojectcard, Selectprojectcard } from '@/components/Cards'
+import { Presentprojectcard } from '@/components/Cards'
 export default function selectproject() {
   return (
     <div className="min-h-screen bg-bg_primary">
