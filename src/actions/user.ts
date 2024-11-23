@@ -79,21 +79,20 @@ export async function updateUser(formData: FormData) {
 }
 export async function changePassword(formData: FormData) {
   try {
-    const Cookie = await cookies()
-    const token = Cookie.get('token')
+    const Cookie = await cookies();
+    const token = Cookie.get('token');
     if (!token?.value) {
-      throw new Error('Authentication token is missing.')
+      throw new Error('Authentication token is missing.');
     }
 
-    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
-    const { payload } = await jwtVerify(token.value, secret)
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET);
+    const { payload } = await jwtVerify(token.value, secret);
 
     if (!payload.id) {
-      throw new Error('Token payload is invalid or missing user ID.')
+      throw new Error('Token payload is invalid or missing user ID.');
     }
 
     const password = formData.get('password');
-
     const userData = { password };
 
     const res = await useAPI('/v1/user/' + payload.id, {
@@ -105,11 +104,17 @@ export async function changePassword(formData: FormData) {
     });
 
     revalidatePath('/');
-    return { message: 'Password updated successfully' };
+
+    return { success: true, message: 'เปลี่ยนรหัสผ่านสำเร็จ' };
   } catch (error) {
-    return error;
+    // Ensure a consistent response structure
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'เกิดข้อผิดพลาด ',
+    };
   }
 }
+
 export async function deleteUser(userId: number) {
   try {
     const Cookie = await cookies()
