@@ -21,7 +21,7 @@ export default function PresentModalForm() {
           onClick={openModal}
           className="rounded-md bg-green-500 px-3 py-1 text-sm text-white hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
         >
-          Open dialog
+          ส่งแบบประเมิน
         </button>
       </div>
 

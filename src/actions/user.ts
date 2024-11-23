@@ -40,7 +40,7 @@ export async function createUser(previousState: unknown, formData: FormData) {
       return { message: 'สร้างผู้ใช้เสร็จสิ้น' }
     }
   } catch (error) {
-    return { error: 'เกิดข้อ' }
+    return { error: 'เกิดข้อผิดพลาด' }
   }
 }
 
@@ -74,6 +74,30 @@ export async function updateUser(formData: FormData) {
     return { message: 'แก้ไขผู้ใช้เสร็จสิ้น' }
   } catch (error) {
     return error
+  }
+}
+export async function changePassword(formData: FormData) {
+  try {
+    const Cookie = await cookies();
+    const token = Cookie.get('token');
+
+    const id = formData.get('id');
+    const password = formData.get('password');
+
+    const userData = { password };
+
+    const res = await useAPI('/v1/user/' + id, {
+      method: 'PUT',
+      body: JSON.stringify(userData),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    revalidatePath('/');
+    return { message: 'Password updated successfully' };
+  } catch (error) {
+    return error;
   }
 }
 export async function deleteUser(userId: number) {
