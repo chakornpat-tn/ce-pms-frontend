@@ -22,9 +22,9 @@ const ProjectPage = () => {
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Validate that the uploaded file is a PDF
+      
       if (file.type === 'application/pdf') {
-        // Handle file upload
+        
         console.log('Uploaded PDF:', file);
       } else {
         alert('กรุณาอัพโหลดไฟล์ PDF เท่านั้น');
