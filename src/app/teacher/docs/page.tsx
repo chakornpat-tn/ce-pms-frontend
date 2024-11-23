@@ -17,17 +17,20 @@ import {
 
 const TableComponent: React.FC = () => {
   const initialRows: GridRowsProp = [
-    { id: 1, name: 'ขาดใจ', textcolor: '#000000', bgcolor: '#ff0000', isActive: false },
-    { id: 2, name: 'ส่งแล้ว', textcolor: '#000000', bgcolor: '#00ff00', isActive: false },
-    { id: 3, name: 'ยังไม่ส่ง', textcolor: '#000000', bgcolor: '#ffff00', isActive: false },
-    { id: 4, name: 'แก้ไข', textcolor: '#000000', bgcolor: '#0000ff', isActive: false },
+    { id: 1, name: 'ce02-1', submissionOpen: false, isActive: false },
+    { id: 2, name: 'ce02-2', submissionOpen: false, isActive: false },
+    { id: 3, name: 'ce02-3', submissionOpen: false, isActive: false },
+    { id: 4, name: 'ce02-4', submissionOpen: false, isActive: false },
+    { id: 5, name: 'ce02-4', submissionOpen: false, isActive: false },
+    { id: 6, name: 'ce02-4', submissionOpen: false, isActive: false },
+    { id: 7, name: 'ce02-4', submissionOpen: false, isActive: false },
   ];
 
   const alternativeRows: GridRowsProp = [
-    { id: 1, name: 'มึง', textcolor: '#000000', bgcolor: '#ff0000', isActive: false },
-    { id: 2, name: 'กำลัง', textcolor: '#000000', bgcolor: '#00ff00', isActive: false },
-    { id: 3, name: 'อ่าน', textcolor: '#000000', bgcolor: '#ffff00', isActive: false },
-    { id: 4, name: 'อะไร', textcolor: '#000000', bgcolor: '#0000ff', isActive: false },
+    { id: 1, name: 'ce03-1', submissionOpen: false, isActive: false },
+    { id: 2, name: 'ce03-2', submissionOpen: false, isActive: false },
+    { id: 3, name: 'ce03-3', submissionOpen: false, isActive: false },
+    { id: 4, name: 'ce03-4', submissionOpen: false, isActive: false },
   ];
 
   const [rows, setRows] = useState<GridRowsProp>(initialRows);
@@ -36,43 +39,30 @@ const TableComponent: React.FC = () => {
     setRows(type === 'initial' ? initialRows : alternativeRows);
   };
 
-  const handleIsActiveToggle = (id: number) => {
+  const handleSwitchToggle = (
+    id: number,
+    field: 'submissionOpen' | 'isActive'
+  ) => {
     setRows((prevRows) =>
       prevRows.map((row) =>
-        row.id === id ? { ...row, isActive: !row.isActive } : row
+        row.id === id ? { ...row, [field]: !row[field] } : row
       )
     );
   };
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ลำดับ', width: 100 },
-    { field: 'name', headerName: 'สถานะ', flex: 1 },
+    { field: 'name', headerName: 'ชื่อ', flex: 1 },
     {
-      field: 'textcolor',
-      headerName: 'สีข้อความ',
-      flex: 1,
-      renderCell: (params) => (
-        <Typography style={{ color: params.row.textcolor }}>
-          {params.row.textcolor}
-        </Typography>
-      ),
-    },
-    {
-      field: 'bgcolor',
-      headerName: 'สีพื้นหลัง',
-      flex: 1,
-      renderCell: (params) => (
-        <Box
-          style={{
-            backgroundColor: params.row.bgcolor,
-            padding: '4px 8px',
-            borderRadius: '4px',
-          }}
-        >
-          <Typography style={{ color: params.row.textcolor }}>
-            {params.row.bgcolor}
-          </Typography>
-        </Box>
+      field: 'submissionOpen',
+      headerName: 'เปิด/ปิดส่ง',
+      width: 150,
+      renderCell: (params: GridRenderCellParams) => (
+        <Switch
+          checked={!!params.value}
+          onChange={() => handleSwitchToggle(params.id as number, 'submissionOpen')}
+          color="primary"
+        />
       ),
     },
     {
@@ -81,15 +71,15 @@ const TableComponent: React.FC = () => {
       width: 150,
       renderCell: (params: GridRenderCellParams) => (
         <Switch
-          checked={params.row.isActive}
-          onChange={() => handleIsActiveToggle(params.id as number)}
+          checked={!!params.value}
+          onChange={() => handleSwitchToggle(params.id as number, 'isActive')}
           color="primary"
         />
       ),
     },
     {
       field: 'actions',
-      headerName: '',
+      headerName: 'การจัดการ',
       width: 100,
       renderCell: () => <Button variant="text">≡</Button>,
     },
@@ -106,7 +96,10 @@ const TableComponent: React.FC = () => {
       })}
     >
       <Box style={{ padding: '20px' }}>
-        <Box style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}>
+        <Box
+          className="flex space-x-4 mb-4"
+          style={{ display: 'flex', gap: '16px', marginBottom: '16px' }}
+        >
           <Button
             variant="contained"
             color="primary"
@@ -129,10 +122,10 @@ const TableComponent: React.FC = () => {
             columns={columns}
             initialState={{
               pagination: {
-                paginationModel: { pageSize: 5, page: 0 },
+                paginationModel: { pageSize: 100, page: 0 },
               },
             }}
-            pageSizeOptions={[5]}
+            pageSizeOptions={[100]}
             disableRowSelectionOnClick
           />
         </Box>

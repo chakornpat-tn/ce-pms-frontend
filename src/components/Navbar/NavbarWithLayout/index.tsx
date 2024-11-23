@@ -105,13 +105,13 @@ const NavbarWithSideBar = ({ children }: Props) => {
     {
       name: 'สถานะโครงงาน',
       icon: Assignment,
-      link: '#',
+      link: '/teacher/status',
       role: userRoles.preProjectTeacher,
     },
     {
       name: 'เอกสาร',
       icon: Description,
-      link: '#',
+      link: '/teacher/docs',
       role: userRoles.preProjectTeacher,
     },
     {
