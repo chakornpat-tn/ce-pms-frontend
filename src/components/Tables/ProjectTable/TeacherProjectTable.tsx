@@ -87,7 +87,7 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
                       </span>
                     </td>
                     <td className="tex-right relative whitespace-nowrap px-6 py-4 text-right text-base text-primary1">
-                      <ProjectMenu projectId={project.id} projectName={''} />
+                      <TeacherProjectMenu projectId={project.id} projectName={''} />
                     </td>
                   </tr>
                 ))}

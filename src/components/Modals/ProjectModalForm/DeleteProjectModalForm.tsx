@@ -82,10 +82,11 @@ function DeleteProjectModalForm({ children, handleClose, projectInfo }: Props) {
                       className="mt-2 w-2/5 rounded-md bg-red-300 px-4 py-2 text-white hover:bg-red-500"
                       onClick={() => {
                         startTransition(async () => {
+                          console.log(projectInfo.projectId)
                           await deleteProject(projectInfo.projectId)
-                          router.refresh()
+                          closeModal()
+                          window.location.reload()
                         })
-                        closeModal()
                       }}
                     >
                       ลบ
@@ -95,7 +96,7 @@ function DeleteProjectModalForm({ children, handleClose, projectInfo }: Props) {
                       onClick={closeModal}
                       className="mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
                     >
-                      กลับ
+                      ยกเลิก
                     </button>
                   </div>
                 </Dialog.Panel>
