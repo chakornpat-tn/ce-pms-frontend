@@ -2,6 +2,8 @@
 import React from 'react'
 import { CheckBox } from '@/components/CheckBox'
 import { Loader } from '@/components/Loading'
+import TeacherProjectMenu from './TeacherProjectMenu'
+import ProjectMenu from './TeacherProjectMenu'
 
 type Project = {
   id: number
@@ -43,14 +45,17 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="divide-y bg-gray-50">
               <tr>
-                <th className="whitespace-nowrap px-4 py-2 text-sm md:text-base w-[20%]">
+                <th className="w-[20%] whitespace-nowrap px-4 py-2 text-sm md:text-base">
                   เลือก
                 </th>
-                <th className="whitespace-nowrap px-4 py-2 text-start text-sm md:text-base w-[40%]">
+                <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
                   ชื่อโครงงาน
                 </th>
-                <th className="whitespace-nowrap px-4 py-2 text-start text-sm md:text-base w-[40%]">
+                <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
                   สถานะ
+                </th>
+                <th scope="col" className="relative px-6 py-4 text-right">
+                  <span className="sr-only">Edit</span>
                 </th>
               </tr>
             </thead>
@@ -80,6 +85,9 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
                       >
                         {project.projectStatus?.name || 'ปกติ'}
                       </span>
+                    </td>
+                    <td className="tex-right relative whitespace-nowrap px-6 py-4 text-right text-base text-primary1">
+                      <ProjectMenu projectId={project.id} projectName={''} />
                     </td>
                   </tr>
                 ))}

@@ -7,6 +7,7 @@ import { ListProjectFilterQuery } from '@/models/Project'
 import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
 import { Loader } from '@/components/Loading'
+import ProjectMenu from '@/components/Tables/ProjectTable/TeacherProjectMenu'
 
 type Props = {}
 
@@ -93,6 +94,9 @@ function page({}: Props) {
                   <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
                     สถานะ
                   </th>
+                  <th scope="col" className="relative px-6 py-4 text-right">
+                    <span className="sr-only">Edit</span>
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
@@ -119,6 +123,9 @@ function page({}: Props) {
                         >
                           {project.projectStatus?.name || 'ปกติ'}
                         </span>
+                      </td>
+                      <td className="tex-right relative whitespace-nowrap px-6 py-4 text-right text-base text-primary1">
+                        <ProjectMenu projectId={project.id} projectName={project.projectName} />
                       </td>
                     </tr>
                   ))}

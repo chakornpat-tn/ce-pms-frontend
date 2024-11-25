@@ -12,7 +12,7 @@ function layout({ children }: Props) {
     <>
       <div className="mb-2 flex flex-col items-start justify-between md:flex-row md:items-center">
         <h1 className="text-4xl font-bold text-primary1">
-          โครงงานที่เป็นที่ปรีกษา
+          โครงงานที่เป็นที่ปรึกษา
         </h1>
       </div>
 

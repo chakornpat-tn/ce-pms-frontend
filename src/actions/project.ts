@@ -2,6 +2,7 @@
 
 import { ListProjectFilterQuery, ProjectRes } from '@/models/Project'
 import useAPI from '@/utils/useAPI'
+import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 export async function ListProjects(req: ListProjectFilterQuery) {
   try {
@@ -27,5 +28,22 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     return res.data
   } catch (error) {
     throw error
+  }
+}
+export async function deleteProject(projectId: number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    await useAPI('/v1/project/' + projectId, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token?.value}`,
+      },
+    })
+
+    revalidatePath('/')
+    return
+  } catch (error) {
+    return error
   }
 }
