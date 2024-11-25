@@ -1,7 +1,7 @@
 'use server'
 
 import userProjectRole from '@/constants/userProjectRole/userProjectRole'
-import { ListProjectFilterQuery, ProjectRes } from '@/models/Project'
+import { ListProjectFilterQuery, Project, ProjectRes } from '@/models/Project'
 import useAPI from '@/utils/useAPI'
 import { error } from 'console'
 import { revalidatePath } from 'next/cache'
@@ -32,8 +32,25 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     throw error
   }
 }
+export async function deleteProject(projectId: number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    
+    await useAPI(`/v1/project/${projectId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
 
-export async function CreateProject(
+    revalidatePath('/project')
+    return { success: true }
+  } catch (error) {
+    throw error
+  }
+}export async function CreateProject(
   previousState: unknown,
   formData: FormData,
 ) {
@@ -92,5 +109,51 @@ export async function CreateProject(
     
   } catch (error) {
     return 'เกิดข้อผิดพลาดในการสร้างโครงงาน'
+  }
+}
+export async function GetProject(Id: number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    const url = `/v1/project/${Id}`
+
+    const res = await useAPI<{ data: Project }>(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    return res.data
+  } catch (error) {
+    return error
+  }
+}
+
+export async function updateProject(formData: FormData) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    const id = formData.get('id')?.toString()
+    const projectName = formData.get('projectName')?.toString()
+    const password = formData.get('password')?.toString()
+
+    const projectData = {
+      ...(projectName && { projectName }),
+      ...(password && { password })
+    }
+
+    const res = await useAPI('/v1/project/' + id, {
+      method: 'PUT',
+      body: JSON.stringify(projectData),
+      headers: {
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
+
+    revalidatePath('/')
+    return { message: 'แก้ไขข้อมูลโปรเจกต์เสร็จสิ้น' }
+  } catch (error) {
+    return { error: 'เกิดข้อผิดพลาดในการแก้ไขข้อมูลโปรเจกต์' }
   }
 }
