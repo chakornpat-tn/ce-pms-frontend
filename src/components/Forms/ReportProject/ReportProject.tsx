@@ -91,7 +91,7 @@ function ReportProject({ reportType, onClose }: Props) {
           <div>
             <h3 className="font-bold">ด้านชิ้นงาน</h3>
             <div className="flex items-center space-x-2 my-2">
-              <span>ภาพรวมเกี่ยวกับขอบเขตโครงการ (100%)</span>
+              <span>ภาพรวมเกี่ยวกับขอบเขตโครงงาน (100%)</span>
               <input
                 type="text"
                 value={percentages.projectPart}

@@ -1,7 +1,9 @@
 'use server'
 
+import userProjectRole from '@/constants/userProjectRole/userProjectRole'
 import { ListProjectFilterQuery, ProjectRes } from '@/models/Project'
 import useAPI from '@/utils/useAPI'
+import { error } from 'console'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 export async function ListProjects(req: ListProjectFilterQuery) {
@@ -45,5 +47,67 @@ export async function deleteProject(projectId: number) {
     return
   } catch (error) {
     return error
+  }
+}
+
+export async function CreateProject(
+  previousState: unknown,
+  formData: FormData,
+) {
+  try {
+    const projectName = formData.get('projectName')?.toString()
+    const semester = Number(formData.get('semester'))
+    const academicYear = Number(formData.get('academicYear'))
+
+    const students = []
+    let index = 0
+    while (formData.get(`students[${index}].studentId`)) {
+      students.push({
+        studentId: formData.get(`students[${index}].studentId`)?.toString(),
+        name: formData.get(`students[${index}].name`)?.toString(),
+      })
+      index++
+    }
+
+    const users = []
+    index = 0
+    while (formData.get(`users[${index}].userId`)) {
+      users.push({
+        userId: Number(formData.get(`users[${index}].userId`)),
+        userProjectRole: userProjectRole.CO_ADVISOR,
+      })
+      index++
+    }
+
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+
+    const requestBody: any = {
+      projectName,
+      semester,
+      academicYear,
+    }
+
+    if (students.length > 0) {
+      requestBody.students = students
+    }
+
+    if (users.length > 0) {
+      requestBody.users = users
+    }
+
+    await useAPI<{ message: string }>('/v1/project', {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      headers: {
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    
+    revalidatePath('/')
+    
+  } catch (error) {
+    return 'เกิดข้อผิดพลาดในการสร้างโครงงาน'
   }
 }
