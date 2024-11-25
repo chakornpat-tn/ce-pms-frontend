@@ -32,14 +32,14 @@ function DeleteUserModalForm({ children, handleClose, userInfo }: Props) {
 
   return (
     <>
-      <div onClick={openModal}>{children}</div>
+      <div onClick={openModal} className="rounded-md">{children}</div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10 bg-slate-500"
           onClose={closeModal}
         >
-          <Transition.Child
+          <Transition
             as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
@@ -49,11 +49,11 @@ function DeleteUserModalForm({ children, handleClose, userInfo }: Props) {
             leaveTo="opacity-0"
           >
             <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
+          </Transition>
 
           <div className="fixed inset-0 cursor-default overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
+              <Transition
                 as={Fragment}
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 scale-95"
@@ -99,7 +99,7 @@ function DeleteUserModalForm({ children, handleClose, userInfo }: Props) {
                     </button>
                   </div>
                 </Dialog.Panel>
-              </Transition.Child>
+              </Transition>
             </div>
           </div>
         </Dialog>
