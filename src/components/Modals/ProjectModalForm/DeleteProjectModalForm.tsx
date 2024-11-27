@@ -1,13 +1,20 @@
 'use client'
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
-import { useTransition } from 'react'
-import { deleteProject } from '@/actions/project'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import WarningIcon from '@mui/icons-material/Warning'
 import { useRouter } from 'next/navigation'
+import { deleteProject } from '@/actions/project'
+import { useState } from 'react'
+import { useTransition } from 'react'
 
 type Props = {
-  children: React.ReactNode
+  trigger: React.ReactNode
   handleClose?: () => void
   projectInfo: {
     projectId: number
@@ -15,97 +22,67 @@ type Props = {
   }
 }
 
-function DeleteProjectModalForm({ children, handleClose, projectInfo }: Props) {
+const DeleteProjectModalForm: React.FC<Props> = ({
+  trigger,
+  handleClose,
+  projectInfo,
+}: Props) => {
   const [_, startTransition] = useTransition()
   const router = useRouter()
+  const [isDialogOpen, setDialogOpen] = useState(false)
 
-  let [isOpen, setIsOpen] = useState(false)
-
-  function closeModal() {
-    setIsOpen(false)
-    handleClose ? handleClose() : null
+  const closeModal = () => {
+    setDialogOpen(false)
+    handleClose?.()
   }
 
-  function openModal() {
-    setIsOpen(true)
+  const handleDelete = () => {
+    startTransition(async () => {
+      await deleteProject(projectInfo.projectId)
+      closeModal()
+      router.refresh() // Refresh to reflect changes
+    })
   }
 
   return (
-    <>
-      <div onClick={openModal}>{children}</div>
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10 bg-slate-500"
-          onClose={closeModal}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+    <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger asChild>
+        <div onClick={() => setDialogOpen(true)}>{trigger}</div>
+      </DialogTrigger>
+      <DialogContent className="max-w-md rounded-2xl bg-white p-6 shadow-xl">
+        <div className="flex flex-col items-center">
+          <WarningIcon className="text-9xl text-red-500" />
+          <DialogHeader className="flex items-center w-full text-center mt-4">
+            <DialogTitle className="text-3xl font-medium text-primary1">
+              ลบโปรเจกต์
+            </DialogTitle>
+          </DialogHeader>
+          <DialogDescription className="mt-2">
+              คุณต้องการลบโปรเจกต์{' '}
+              <span className="font-bold underline">
+                {projectInfo.projectName}
+              </span>{' '}
+              ใช่หรือไม่?
+          </DialogDescription>
+        </div>
+        <div className="mt-4 flex justify-around">
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="w-2/5 rounded bg-red-400 px-4 py-2 text-white hover:bg-red-600"
           >
-            <div className="fixed inset-0 bg-black/25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 cursor-default overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="flex w-full max-w-md transform flex-col items-center justify-center overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <WarningIcon className="text-9xl text-red-500" />
-                  <Dialog.Title
-                    as="h1"
-                    className="py-2 text-3xl font-medium leading-6 text-primary1"
-                  >
-                    ลบโปรเจกต์
-                  </Dialog.Title>
-                  <p>
-                    ลบโปรเจกต์{' '}
-                    <span className="text-lg font-bold text-primary1 underline">
-                      {projectInfo.projectName}
-                    </span>
-                  </p>
-                  <div className="flex w-full items-center justify-around pt-2">
-                    <button
-                      type="submit"
-                      className="mt-2 w-2/5 rounded-md bg-red-300 px-4 py-2 text-white hover:bg-red-500"
-                      onClick={() => {
-                        startTransition(async () => {
-                          console.log(projectInfo.projectId)
-                          await deleteProject(projectInfo.projectId)
-                          closeModal()
-                          window.location.reload()
-                        })
-                      }}
-                    >
-                      ลบ
-                    </button>
-                    <button
-                      type="button"
-                      onClick={closeModal}
-                      className="mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
-                    >
-                      ยกเลิก
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-    </>
+            ลบ
+          </button>
+          <button
+            type="button"
+            onClick={closeModal}
+            className="w-2/5 rounded bg-primary2-200 px-4 py-2 text-white hover:bg-primary2-500"
+          >
+            ยกเลิก
+          </button>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 
