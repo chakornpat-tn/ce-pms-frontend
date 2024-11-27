@@ -3,11 +3,11 @@ import React from 'react'
 import { CheckBox } from '@/components/CheckBox'
 import { Loader } from '@/components/Loading'
 import TeacherProjectMenu from './TeacherProjectMenu'
-import ProjectMenu from './TeacherProjectMenu'
 
 type Project = {
   id: number
   projectName: string
+  username: string
   projectStatus: {
     name: string
     bgColor: string
@@ -52,6 +52,9 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
                   ชื่อโครงงาน
                 </th>
                 <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
+                  ชื่อผู้ใช้งาน
+                </th>
+                <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
                   สถานะ
                 </th>
                 <th scope="col" className="relative px-6 py-4 text-right">
@@ -65,6 +68,9 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
                   <tr key={project.id} className="hover:bg-gray-100">
                     <td className="flex justify-center whitespace-nowrap px-4 py-2">
                       <CheckBox id={project.id} name={project.projectName} />
+                    </td>
+                    <td className="whitespace-nowrap px-4 py-2">
+                      {project.username}
                     </td>
                     <td className="whitespace-nowrap px-4 py-2">
                       <label
@@ -87,11 +93,10 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
                       </span>
                     </td>
                     <td className="tex-right relative whitespace-nowrap px-6 py-4 text-right text-base text-primary1">
-                      <TeacherProjectMenu projectId={project.id} projectName={''} />
+                      <TeacherProjectMenu projectId={project.id} projectName={project.projectName} />
                     </td>
                   </tr>
-                ))}
-            </tbody>
+                ))}            </tbody>
           </table>
         </div>
       </article>

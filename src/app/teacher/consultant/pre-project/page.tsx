@@ -13,6 +13,7 @@ type Props = {}
 
 type Project = {
   id: number
+  username: string
   projectName: string
   projectStatus: {
     name: string
@@ -89,6 +90,9 @@ function page({}: Props) {
                     ชื่อโครงงาน
                   </th>
                   <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
+                    ชื่อผู้ใช้งาน
+                  </th>
+                  <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
                     สถานะ
                   </th>
                   <th scope="col" className="relative px-6 py-4 text-right">
@@ -109,6 +113,9 @@ function page({}: Props) {
                         </label>
                       </td>
                       <td className="whitespace-nowrap px-4 py-2">
+                      {project.username}
+                    </td>
+                      <td className="whitespace-nowrap px-4 py-2">
                         <span
                           style={{
                             backgroundColor:
@@ -122,7 +129,10 @@ function page({}: Props) {
                         </span>
                       </td>
                       <td className="tex-right relative whitespace-nowrap px-6 py-4 text-right text-base text-primary1">
-                        <ProjectMenu projectId={project.id} projectName={project.projectName} />
+                        <ProjectMenu
+                          projectId={project.id}
+                          projectName={project.projectName}
+                        />
                       </td>
                     </tr>
                   ))}

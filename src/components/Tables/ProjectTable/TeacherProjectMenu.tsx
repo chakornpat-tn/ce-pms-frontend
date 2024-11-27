@@ -15,12 +15,14 @@ type Props = {
   projectName: string
 }
 
-function TeacherProjectMenu(Props: Props) {
+function TeacherProjectMenu({ projectId, projectName }: Props) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -46,19 +48,23 @@ function TeacherProjectMenu(Props: Props) {
           'aria-labelledby': 'project-menu-button',
         }}
       >
-        <MenuItem className="text-primary1">
-          <Link href={`pre-project/update/${Props.projectId}`}>
+        <MenuItem className="text-primary1" onClick={handleClose}>
+          <Link href={`pre-project/update/${projectId}`}>
             <EditIcon fontSize="small" className="mr-1" />
             แก้ไข
           </Link>
         </MenuItem>
 
-        <DeleteProjectModalForm handleClose={handleClose} projectInfo={Props}>
-          <MenuItem className="text-red-500">
-            <DeleteIcon fontSize="small" className="mr-1" />
-            ลบ
-          </MenuItem>
-        </DeleteProjectModalForm>
+        <DeleteProjectModalForm
+          trigger={
+            <MenuItem className="text-red-500">
+              <DeleteIcon fontSize="small" className="mr-1" />
+              ลบ
+            </MenuItem>
+          }
+          handleClose={handleClose}
+          projectInfo={{ projectId, projectName }}
+        />
       </Menu>
     </div>
   )
