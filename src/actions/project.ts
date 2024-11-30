@@ -133,9 +133,10 @@ export async function updateProject(formData: FormData) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
-    const id = formData.get('id')?.toString()
-    const projectName = formData.get('projectName')?.toString()
-    const password = formData.get('password')?.toString()
+
+    const id = formData.get('id')
+    const projectName = formData.get('projectName')
+    const password = formData.get('password')
 
     const projectData = {
       ...(projectName && { projectName }),
@@ -143,10 +144,10 @@ export async function updateProject(formData: FormData) {
     }
 
     const res = await useAPI('/v1/project/' + id, {
-      method: 'PUT',
+      method: 'PATCH',
       body: JSON.stringify(projectData),
       headers: {
-        Authorization: `Bearer ${token?.value}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     })
