@@ -5,14 +5,16 @@ import { useState } from 'react'
 import { ListProjectFilterQuery } from '@/models/Project'
 import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
-import TeacherProjectTable from '@/components/Tables/ProjectTable/TeacherProjectTable'
 import { ListProjectByUserID } from '@/actions/projectUser'
 import { Loader } from '@/components/Loading'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import ProjectMenu from '@/components/Tables/ProjectTable/TeacherProjectMenu'
 
 type Props = {}
 
 type Project = {
   id: number
+  username: string
   projectName: string
   projectStatus: {
     name: string
@@ -23,6 +25,11 @@ type Project = {
 
 function page({}: Props) {
   const currentYear = new Date().getFullYear() + 543
+
+  const handleCopyUsername = (username: string) => {
+    navigator.clipboard.writeText(username)
+    toast.success(`คัดลอก"${username}"เสร็จสิ้น`, { duration: 1000 })
+  }
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
     projectName: '',
     semester: 0,
@@ -37,15 +44,11 @@ function page({}: Props) {
     return res
   }
 
-  const { data, isLoading, mutate } = useSWR(
-    `/v1/pre-project`,
-    fetchData,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+  const { data, isLoading, mutate } = useSWR(`/v1/pre-project`, fetchData, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -58,7 +61,7 @@ function page({}: Props) {
     }
   }
 
-    const ProjectTable = ({
+  const ProjectTable = ({
     data,
     loading,
   }: {
@@ -74,7 +77,7 @@ function page({}: Props) {
     }
 
     return (
-      <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
+    <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
         <article>
           <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
             <h2 className="mb-4 text-xl font-bold md:mb-0 md:text-2xl">
@@ -86,11 +89,17 @@ function page({}: Props) {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="divide-y bg-gray-50">
                 <tr>
-                  <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
                     ชื่อโครงงาน
                   </th>
-                  <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
+                    ชื่อผู้ใช้งาน
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
                     สถานะ
+                  </th>
+                  <th scope="col" className="relative px-6 py-3">
+                    <span className="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
@@ -98,15 +107,19 @@ function page({}: Props) {
                 {data &&
                   data.map(project => (
                     <tr key={project.id} className="hover:bg-gray-100">
-                      <td className="whitespace-nowrap px-4 py-2">
-                        <label
-                          htmlFor={`project${project.id}`}
-                          className="text-base md:text-lg"
-                        >
-                          {project.projectName}
-                        </label>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        {project.projectName}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-2">
+                      <td className="flex items-center whitespace-nowrap px-6 py-4">
+                        {project.username}
+                        <button
+                          onClick={() => handleCopyUsername(project.username)}
+                          className="ml-2 rounded-full p-1 transition-colors hover:bg-gray-200"
+                        >
+                          <ContentCopyIcon className="text-gray-500" />
+                        </button>
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
                         <span
                           style={{
                             backgroundColor:
@@ -114,10 +127,16 @@ function page({}: Props) {
                             color:
                               project.projectStatus?.textColor || '#FFFFFF',
                           }}
-                          className="inline-block rounded-md px-2 py-1 text-xs md:text-sm"
+                          className="inline-flex rounded-full px-3 py-1 text-sm font-semibold"
                         >
                           {project.projectStatus?.name || 'ปกติ'}
                         </span>
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-primary1">
+                        <ProjectMenu
+                          projectId={project.id}
+                          projectName={project.projectName}
+                        />
                       </td>
                     </tr>
                   ))}
