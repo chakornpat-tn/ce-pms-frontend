@@ -3,6 +3,8 @@ import React from 'react'
 import { CheckBox } from '@/components/CheckBox'
 import { Loader } from '@/components/Loading'
 import TeacherProjectMenu from './TeacherProjectMenu'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import { toast } from 'sonner'
 
 type Project = {
   id: number
@@ -21,6 +23,11 @@ type Props = {
 }
 
 const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
+  const handleCopyUsername = (username: string) => {
+    navigator.clipboard.writeText(username)
+    toast.success(`คัดลอก"${username}"เสร็จสิ้น`, { duration: 1000 })
+  }
+
   if (loading) {
     return (
       <div className="flex h-full items-center justify-center">
@@ -45,19 +52,19 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="divide-y bg-gray-50">
               <tr>
-                <th className="w-[20%] whitespace-nowrap px-4 py-2 text-sm md:text-base">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
                   เลือก
                 </th>
-                <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
                   ชื่อโครงงาน
                 </th>
-                <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
                   ชื่อผู้ใช้งาน
                 </th>
-                <th className="w-[40%] whitespace-nowrap px-4 py-2 text-start text-sm md:text-base">
+                <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
                   สถานะ
                 </th>
-                <th scope="col" className="relative px-6 py-4 text-right">
+                <th scope="col" className="relative px-6 py-3">
                   <span className="sr-only">Edit</span>
                 </th>
               </tr>
@@ -66,37 +73,42 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
               {data &&
                 data.map(project => (
                   <tr key={project.id} className="hover:bg-gray-100">
-                    <td className="flex justify-center whitespace-nowrap px-4 py-2">
+                    <td className="whitespace-nowrap px-6 py-4">
                       <CheckBox id={project.id} name={project.projectName} />
                     </td>
-                    <td className="whitespace-nowrap px-4 py-2">
+                    <td className="whitespace-nowrap px-6 py-4">
+                      {project.projectName}
+                    </td>
+                    <td className="flex items-center whitespace-nowrap px-6 py-4">
                       {project.username}
-                    </td>
-                    <td className="whitespace-nowrap px-4 py-2">
-                      <label
-                        htmlFor={`project${project.id}`}
-                        className="text-base md:text-lg"
+                      <button
+                        onClick={() => handleCopyUsername(project.username)}
+                        className="ml-2 rounded-full p-1 transition-colors hover:bg-gray-200"
                       >
-                        {project.projectName}
-                      </label>
+                        <ContentCopyIcon className="text-gray-500" />
+                      </button>
                     </td>
-                    <td className="whitespace-nowrap px-4 py-2">
+                    <td className="whitespace-nowrap px-6 py-4">
                       <span
                         style={{
                           backgroundColor:
                             project.projectStatus?.bgColor || '#0f1035',
                           color: project.projectStatus?.textColor || '#FFFFFF',
                         }}
-                        className="inline-block rounded-md px-2 py-1 text-xs md:text-sm"
+                        className="inline-flex rounded-full px-3 py-1 text-sm font-semibold"
                       >
                         {project.projectStatus?.name || 'ปกติ'}
                       </span>
                     </td>
-                    <td className="tex-right relative whitespace-nowrap px-6 py-4 text-right text-base text-primary1">
-                      <TeacherProjectMenu projectId={project.id} projectName={project.projectName} />
+                    <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-primary1">
+                      <TeacherProjectMenu
+                        projectId={project.id}
+                        projectName={project.projectName}
+                      />
                     </td>
                   </tr>
-                ))}            </tbody>
+                ))}
+            </tbody>
           </table>
         </div>
       </article>
