@@ -1,5 +1,5 @@
 export type ProjectStatus =  {
-  id: number
+  id?: number
   name: string
   course: number
   textColor: string

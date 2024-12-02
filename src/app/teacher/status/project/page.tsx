@@ -15,8 +15,8 @@ import { toast } from 'sonner'
 
 const TableComponent: React.FC = () => {
   const { data, mutate, isLoading } = useSWR(
-    '/v1/project-status?course=1',
-    () => ListProjectStatus({ course: 1 }),
+    '/v1/project-status?course=2',
+    () => ListProjectStatus({ course: 2 }),
   )
 
   const [tableData, setTableData] = useState<ProjectStatus[]>(data || [])
@@ -29,7 +29,7 @@ const TableComponent: React.FC = () => {
     textColor: '#000000',
     bgColor: '#FFFFFF',
     isActive: false,
-    course: 1,
+    course: 2,
   })
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const TableComponent: React.FC = () => {
       textColor: '#000000',
       bgColor: '#FFFFFF',
       isActive: false,
-      course: 1,
+      course: 2,
     })
   }
 
@@ -267,7 +267,7 @@ const TableComponent: React.FC = () => {
           )}
         </div>
       </article>
-    </section>
+      </section>
   )
 }
 
@@ -415,3 +415,4 @@ const DraggableRow: React.FC<{
 )
 
 export default TableComponent
+
