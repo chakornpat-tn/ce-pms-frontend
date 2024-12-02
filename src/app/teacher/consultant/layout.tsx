@@ -3,11 +3,6 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import AddIcon from '@mui/icons-material/Add'
-import {
-  AddCircleRounded,
-  IndeterminateCheckBoxRounded,
-} from '@mui/icons-material'
-import { ProjectStudentRequest } from '@/models/Project'
 import { CreateProjectDialog } from '@/components/Dialog'
 
 

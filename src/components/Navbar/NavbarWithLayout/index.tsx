@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState, useEffect } from 'react'
 import {
   Home,
@@ -105,7 +104,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
     {
       name: 'สถานะโครงงาน',
       icon: Assignment,
-      link: '/teacher/status',
+      link: role === userRoles.ProjectTeacher ? '/teacher/status/project' : '/teacher/status',
       role: userRoles.preProjectTeacher,
     },
     {
