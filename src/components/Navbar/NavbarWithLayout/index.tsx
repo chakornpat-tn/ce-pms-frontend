@@ -104,7 +104,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
     {
       name: 'สถานะโครงงาน',
       icon: Assignment,
-      link: role === userRoles.ProjectTeacher ? '/teacher/status/project' : '/teacher/status',
+      link: '/teacher/status',
       role: userRoles.preProjectTeacher,
     },
     {
@@ -243,7 +243,16 @@ const NavbarWithSideBar = ({ children }: Props) => {
             )}
           </div>
           <div className="flex-1">
-            <Link href={'/'} className="btn btn-ghost text-xl">
+            <Link 
+              href={
+                [userRoles.ProjectTeacher, userRoles.preProjectTeacher, userRoles.Teacher].includes(role)
+                  ? '/teacher' 
+                  : role === userRoles.Student 
+                    ? '/project' 
+                    : '/'
+              } 
+              className="btn btn-ghost text-xl"
+            >
               Project Management System
             </Link>
           </div>
