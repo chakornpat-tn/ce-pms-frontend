@@ -35,8 +35,6 @@ export async function middleware(request: NextRequest) {
     }
 
     if (TeacherAccess(payload, pathname)) {
-      if (payload.role === userRoles.Student)
-        NextResponse.redirect(new URL('/project', request.url))
       return NextResponse.redirect(new URL('/teacher', request.url))
     }
 

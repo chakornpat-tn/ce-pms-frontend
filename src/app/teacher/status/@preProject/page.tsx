@@ -12,11 +12,12 @@ import AddIcon from '@mui/icons-material/Add'
 import { Loader } from '@/components/Loading'
 import { ProjectStatus } from '@/models/ProjectStatus'
 import { toast } from 'sonner'
+import { ProjectStatusBadge } from '@/components/Badge'
 
-const TableComponent: React.FC = () => {
+const PreProject: React.FC = () => {
   const { data, mutate, isLoading } = useSWR(
-    '/v1/project-status?course=2',
-    () => ListProjectStatus({ course: 2 }),
+    '/v1/project-status?course=1',
+    () => ListProjectStatus({ course: 1 }),
   )
 
   const [tableData, setTableData] = useState<ProjectStatus[]>(data || [])
@@ -29,7 +30,7 @@ const TableComponent: React.FC = () => {
     textColor: '#000000',
     bgColor: '#FFFFFF',
     isActive: false,
-    course: 2,
+    course: 1,
   })
 
   useEffect(() => {
@@ -110,7 +111,7 @@ const TableComponent: React.FC = () => {
       textColor: '#000000',
       bgColor: '#FFFFFF',
       isActive: false,
-      course: 2,
+      course: 1,
     })
   }
 
@@ -195,7 +196,7 @@ const TableComponent: React.FC = () => {
                   'สถานะ',
                   'สีข้อความ',
                   'สีพื้นหลัง',
-                  'สถานะใช้งาน',
+                  'เปิดใช้งาน',
                   '',
                 ].map((header, index) => (
                   <th
@@ -267,7 +268,7 @@ const TableComponent: React.FC = () => {
           )}
         </div>
       </article>
-      </section>
+    </section>
   )
 }
 
@@ -365,7 +366,9 @@ const DraggableRow: React.FC<{
     className={`primary-hover ${draggingRowIndex === index ? 'bg-gray-200' : ''} cursor-grab`}
   >
     <td className="whitespace-nowrap px-6 py-4">{index + 1}</td>
-    <td className="whitespace-nowrap px-6 py-4">{row.name}</td>
+    <td className="whitespace-nowrap px-6 py-4">
+      <ProjectStatusBadge bgColor={row.bgColor} textColor={row.textColor} name={row.name} />
+    </td>
     <td className="whitespace-nowrap px-6 py-4">
       <div className="flex items-center gap-2">
         <div
@@ -414,5 +417,4 @@ const DraggableRow: React.FC<{
   </tr>
 )
 
-export default TableComponent
-
+export default PreProject

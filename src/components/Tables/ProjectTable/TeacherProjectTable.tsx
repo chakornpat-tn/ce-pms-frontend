@@ -5,6 +5,7 @@ import { Loader } from '@/components/Loading'
 import TeacherProjectMenu from './TeacherProjectMenu'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { toast } from 'sonner'
+import { ProjectStatusBadge } from '@/components/Badge'
 
 type Project = {
   id: number
@@ -89,16 +90,7 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
                       </button>
                     </td>
                     <td className="whitespace-nowrap px-6 py-4">
-                      <span
-                        style={{
-                          backgroundColor:
-                            project.projectStatus?.bgColor || '#0f1035',
-                          color: project.projectStatus?.textColor || '#FFFFFF',
-                        }}
-                        className="inline-flex rounded-full px-3 py-1 text-sm font-semibold"
-                      >
-                        {project.projectStatus?.name || 'ปกติ'}
-                      </span>
+                      <ProjectStatusBadge textColor={project.projectStatus?.textColor} bgColor={project.projectStatus?.bgColor} name={project.projectStatus?.name} />
                     </td>
                     <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-primary1">
                       <TeacherProjectMenu

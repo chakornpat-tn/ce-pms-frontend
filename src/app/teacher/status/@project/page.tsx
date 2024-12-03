@@ -12,11 +12,12 @@ import AddIcon from '@mui/icons-material/Add'
 import { Loader } from '@/components/Loading'
 import { ProjectStatus } from '@/models/ProjectStatus'
 import { toast } from 'sonner'
+import { ProjectStatusBadge } from '@/components/Badge'
 
 const TableComponent: React.FC = () => {
   const { data, mutate, isLoading } = useSWR(
-    '/v1/project-status?course=1',
-    () => ListProjectStatus({ course: 1 }),
+    '/v1/project-status?course=2',
+    () => ListProjectStatus({ course: 2 }),
   )
 
   const [tableData, setTableData] = useState<ProjectStatus[]>(data || [])
@@ -29,7 +30,7 @@ const TableComponent: React.FC = () => {
     textColor: '#000000',
     bgColor: '#FFFFFF',
     isActive: false,
-    course: 1,
+    course: 2,
   })
 
   useEffect(() => {
@@ -110,7 +111,7 @@ const TableComponent: React.FC = () => {
       textColor: '#000000',
       bgColor: '#FFFFFF',
       isActive: false,
-      course: 1,
+      course: 2,
     })
   }
 
@@ -184,7 +185,7 @@ const TableComponent: React.FC = () => {
   }
 
   return (
-    <section className="relative overflow-x-auto w-full bg-white px-4 shadow-md sm:rounded-lg">
+    <section className="relative w-full overflow-x-auto bg-white px-4 shadow-md sm:rounded-lg">
       <article>
         <div className="mt-4 overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -365,7 +366,9 @@ const DraggableRow: React.FC<{
     className={`primary-hover ${draggingRowIndex === index ? 'bg-gray-200' : ''} cursor-grab`}
   >
     <td className="whitespace-nowrap px-6 py-4">{index + 1}</td>
-    <td className="whitespace-nowrap px-6 py-4">{row.name}</td>
+    <td className="whitespace-nowrap px-6 py-4">
+      <ProjectStatusBadge bgColor={row.bgColor} textColor={row.textColor} name={row.name} />
+    </td>
     <td className="whitespace-nowrap px-6 py-4">
       <div className="flex items-center gap-2">
         <div

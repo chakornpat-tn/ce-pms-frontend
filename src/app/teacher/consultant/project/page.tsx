@@ -9,6 +9,7 @@ import { ListProjectByUserID } from '@/actions/projectUser'
 import { Loader } from '@/components/Loading'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import ProjectMenu from '@/components/Tables/ProjectTable/TeacherProjectMenu'
+import { ProjectStatusBadge } from '@/components/Badge'
 
 type Props = {}
 
@@ -120,17 +121,7 @@ function page({}: Props) {
                         </button>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        <span
-                          style={{
-                            backgroundColor:
-                              project.projectStatus?.bgColor || '#0f1035',
-                            color:
-                              project.projectStatus?.textColor || '#FFFFFF',
-                          }}
-                          className="inline-flex rounded-full px-3 py-1 text-sm font-semibold"
-                        >
-                          {project.projectStatus?.name || 'ปกติ'}
-                        </span>
+                        <ProjectStatusBadge textColor={project.projectStatus?.textColor} bgColor={project.projectStatus?.bgColor} name={project.projectStatus?.name} />
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-primary1">
                         <ProjectMenu
