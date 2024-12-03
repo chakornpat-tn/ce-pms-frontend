@@ -1,5 +1,5 @@
 export type Document = {
-  id: number
+  id?: number
   name: string
   course: number
   isActive: boolean
