@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProjectStatusBadge = ({ bgColor, textColor, name }: { bgColor: string, textColor: string, name?: string }) => {
+const ProjectStatusBadge = ({ bgColor, textColor, name }: { bgColor?: string, textColor?: string, name?: string }) => {
   return (
     <span
       style={{

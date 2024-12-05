@@ -1,4 +1,5 @@
-import Navbar from '@/components/Navbar'
+import { ContentLayout } from '@/components/Layout'
+import NavbarWithSideBar from '@/components/Navbar/NavbarWithLayout'
 
 export default function ProjectLayout({
   children,
@@ -6,9 +7,8 @@ export default function ProjectLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <Navbar />
-      {children}
-    </>
+    <NavbarWithSideBar>
+      <ContentLayout>{children}</ContentLayout>
+    </NavbarWithSideBar>
   )
 }
