@@ -1,9 +1,10 @@
 'use server'
 
+import config from '@/config'
 import userProjectRole from '@/constants/userProjectRole/userProjectRole'
-import { ListProjectFilterQuery, Project, ProjectRes } from '@/models/Project'
+import { ListProjectFilterQuery, Project, ProjectByIDRes, ProjectRes } from '@/models/Project'
 import useAPI from '@/utils/useAPI'
-import { error } from 'console'
+import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 export async function ListProjects(req: ListProjectFilterQuery) {
@@ -156,5 +157,34 @@ export async function updateProject(formData: FormData) {
     return { message: 'แก้ไขข้อมูลโปรเจกต์เสร็จสิ้น' }
   } catch (error) {
     return { error: 'เกิดข้อผิดพลาดในการแก้ไขข้อมูลโปรเจกต์' }
+  }
+}
+
+export async function GetProjectFormToken(): Promise<ProjectByIDRes> {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+     if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+      const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.')
+    }
+
+    const url = `/v1/project/${payload.id}`
+
+    const res = await useAPI<{ data: ProjectByIDRes }>(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+
+    return res.data
+  } catch (error) {
+    throw error
   }
 }

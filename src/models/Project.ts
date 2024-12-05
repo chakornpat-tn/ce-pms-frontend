@@ -84,7 +84,6 @@ export type ProjectStudent = {
   projectId: number
   studentId: number
 }
-
 export type ProjectUser = {
   projectId?: number
   userId: number
@@ -121,4 +120,43 @@ export type ListProjectFilterQuery = {
   projectName?: string
   projectStatus?: string
   courseStatus?: string
+}
+
+export type ProjectByIDRes = {
+  id: number
+  username: string
+  password?: string | null
+  projectName: string
+  projectNameEng?: string | null
+  abstract?: string | null
+  abstractEng?: string | null
+  detail?: string | null
+  detailEng?: string | null
+  semester: number
+  academicYear: number
+  type?: string | null
+  projectStatusId?: number | null
+  courseStatus: number
+  students: StudentEntry[]
+  users: UserEntry[]
+  createdAt: Date
+  updatedAt: Date
+  examDateTime: Date
+  projectStatus: ProjectStatus
+}
+
+type StudentEntry = {
+  student: {
+    id: number
+    studentId: string
+    name: string
+  }
+}
+
+type UserEntry = {
+  userProjectRole: number
+  user: {
+    id: number
+    name: string
+  }
 }
