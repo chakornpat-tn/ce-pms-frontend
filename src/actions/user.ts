@@ -2,7 +2,7 @@
 import { revalidatePath } from 'next/cache'
 import { UserQueryRequest, ResListUser, User } from '@/models/User'
 import { cookies } from 'next/headers'
-import config from  '@/config'
+import config from '@/config'
 import useAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 
@@ -33,7 +33,8 @@ export async function createUser(previousState: unknown, formData: FormData) {
       method: 'POST',
       body: JSON.stringify(userData),
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
 
@@ -67,7 +68,8 @@ export async function updateUser(formData: FormData) {
       method: 'PUT',
       body: JSON.stringify(userData),
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
 
@@ -79,39 +81,40 @@ export async function updateUser(formData: FormData) {
 }
 export async function changePassword(formData: FormData) {
   try {
-    const Cookie = await cookies();
-    const token = Cookie.get('token');
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
     if (!token?.value) {
-      throw new Error('Authentication token is missing.');
+      throw new Error('Authentication token is missing.')
     }
 
-    const secret = new TextEncoder().encode(config.TOKEN_SECRET);
-    const { payload } = await jwtVerify(token.value, secret);
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
 
     if (!payload.id) {
-      throw new Error('Token payload is invalid or missing user ID.');
+      throw new Error('Token payload is invalid or missing user ID.')
     }
 
-    const password = formData.get('password');
-    const userData = { password };
+    const password = formData.get('password')
+    const userData = { password }
 
     const res = await useAPI('/v1/user/' + payload.id, {
       method: 'PUT',
       body: JSON.stringify(userData),
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
       },
-    });
+    })
 
-    revalidatePath('/');
+    revalidatePath('/')
 
-    return { success: true, message: 'เปลี่ยนรหัสผ่านสำเร็จ' };
+    return { success: true, message: 'เปลี่ยนรหัสผ่านสำเร็จ' }
   } catch (error) {
     // Ensure a consistent response structure
     return {
       success: false,
       error: error instanceof Error ? error.message : 'เกิดข้อผิดพลาด ',
-    };
+    }
   }
 }
 
@@ -122,7 +125,8 @@ export async function deleteUser(userId: number) {
     await useAPI('/v1/user/' + userId, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
 
@@ -147,7 +151,8 @@ export async function listUser(req?: UserQueryRequest) {
 
     const res = await useAPI<{ data: ResListUser }>(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
 
@@ -165,7 +170,8 @@ export async function GetUser(Id: number) {
 
     const res = await useAPI<{ data: User }>(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
 

@@ -122,6 +122,8 @@ const NavbarWithSideBar = ({ children }: Props) => {
   ]
 
   const projectItems = [
+    { name: 'หน้าแรก', icon: Home, link: '/project' },
+    { name: 'ส่งเอกสาร', icon: Description, link: '/project/docs' },
     { name: 'เปลี่ยนรหัสผ่าน', icon: Lock, link: '#' },
     {
       name: 'ออกจากระบบ',
@@ -243,14 +245,18 @@ const NavbarWithSideBar = ({ children }: Props) => {
             )}
           </div>
           <div className="flex-1">
-            <Link 
+            <Link
               href={
-                [userRoles.ProjectTeacher, userRoles.preProjectTeacher, userRoles.Teacher].includes(role)
-                  ? '/teacher' 
-                  : role === userRoles.Student 
-                    ? '/project' 
+                [
+                  userRoles.ProjectTeacher,
+                  userRoles.preProjectTeacher,
+                  userRoles.Teacher,
+                ].includes(role)
+                  ? '/teacher'
+                  : role === userRoles.Student
+                    ? '/project'
                     : '/'
-              } 
+              }
               className="btn btn-ghost text-xl"
             >
               Project Management System
