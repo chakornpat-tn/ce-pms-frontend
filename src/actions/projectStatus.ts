@@ -19,6 +19,7 @@ export async function ListProjectStatus(req: ListProjectStatusRequest) {
     const res = await useAPI<{ data: ProjectStatus[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json'
       },
     })
     return res.data
@@ -38,6 +39,7 @@ export async function UpdateProjectStatus(req: ProjectStatus[]) {
       body: JSON.stringify(req),
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json'
       },
     })
   } catch (error) {
@@ -53,6 +55,7 @@ export async function DeleteProjectStatus(id: number) {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json'
       },
     })
   } catch (error) {

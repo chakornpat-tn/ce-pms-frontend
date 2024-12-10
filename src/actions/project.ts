@@ -2,7 +2,12 @@
 
 import config from '@/config'
 import userProjectRole from '@/constants/userProjectRole/userProjectRole'
-import { ListProjectFilterQuery, Project, ProjectByIDRes, ProjectRes } from '@/models/Project'
+import {
+  ListProjectFilterQuery,
+  Project,
+  ProjectByIDRes,
+  ProjectRes,
+} from '@/models/Project'
 import useAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
@@ -25,6 +30,7 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     const res = await useAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
 
@@ -37,7 +43,7 @@ export async function deleteProject(projectId: number) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
-    
+
     await useAPI(`/v1/project/${projectId}`, {
       method: 'DELETE',
       headers: {
@@ -51,7 +57,8 @@ export async function deleteProject(projectId: number) {
   } catch (error) {
     throw error
   }
-}export async function CreateProject(
+}
+export async function CreateProject(
   previousState: unknown,
   formData: FormData,
 ) {
@@ -105,9 +112,8 @@ export async function deleteProject(projectId: number) {
         'Content-Type': 'application/json',
       },
     })
-    
+
     revalidatePath('/')
-    
   } catch (error) {
     return 'เกิดข้อผิดพลาดในการสร้างโครงงาน'
   }
@@ -120,7 +126,8 @@ export async function GetProject(Id: number) {
 
     const res = await useAPI<{ data: Project }>(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
 
@@ -141,14 +148,14 @@ export async function updateProject(formData: FormData) {
 
     const projectData = {
       ...(projectName && { projectName }),
-      ...(password && { password })
+      ...(password && { password }),
     }
 
     const res = await useAPI('/v1/project/' + id, {
       method: 'PATCH',
       body: JSON.stringify(projectData),
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
       },
     })
@@ -164,22 +171,23 @@ export async function GetProjectFormToken(): Promise<ProjectByIDRes> {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
-     if (!token?.value) {
+    if (!token?.value) {
       throw new Error('Authentication token is missing.')
     }
 
-      const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
     const { payload } = await jwtVerify(token.value, secret)
 
     if (!payload.id) {
       throw new Error('Token payload is invalid or missing user ID.')
     }
 
-    const url = `/v1/project/${payload.id}`
+    const url = `/v1/project/${Number(payload.id)}`
 
     const res = await useAPI<{ data: ProjectByIDRes }>(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
       },
     })
 

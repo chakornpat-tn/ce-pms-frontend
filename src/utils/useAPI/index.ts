@@ -13,7 +13,6 @@ async function useAPI<T>(
     const response = await fetch(`${baseURL}${endpoint}`, {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
         ...options.headers,
       },
     })

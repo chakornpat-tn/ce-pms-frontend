@@ -22,6 +22,7 @@ export async function ListDocument(req: ListDocumentRequest) {
     const res = await useAPI<{ data: Document[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
     return res.data
@@ -41,6 +42,7 @@ export async function UpdateDocument(req: Document[]) {
       body: JSON.stringify(req),
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
   } catch (error) {
@@ -56,6 +58,7 @@ export async function DeleteDocument(id: number) {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
       },
     })
   } catch (error) {

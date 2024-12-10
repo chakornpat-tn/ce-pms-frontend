@@ -23,6 +23,7 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     const res = await useAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json'
       },
     })
 
@@ -61,6 +62,7 @@ export async function ListProjectByUserID(req: ListProjectFilterQuery) {
     const res = await useAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json'
       },
     })
 
