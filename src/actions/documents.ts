@@ -30,12 +30,29 @@ export async function ListDocument(req: ListDocumentRequest) {
     throw error
   }
 }
-
-export async function UpdateDocument(req: Document[]) {
+export async function ListDocumentInProject(projectID: number) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
 
+    const res = await useAPI<{ data: Document[] }>(
+      `/v1/document/in-project/${projectID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token?.value}`,
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+export async function UpdateDocument(req: Document[]) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
 
     await useAPI('/v1/document', {
       method: 'PUT',

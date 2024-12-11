@@ -213,36 +213,6 @@ const ProjectPage = () => {
           )}
         </div>
 
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-            <div className="w-full max-w-md rounded-lg bg-white p-4 sm:p-6">
-              <h2 className="mb-4 text-lg font-bold">อัพโหลดเอกสาร</h2>
-              <p className="mb-4 text-sm sm:text-base">
-                กรุณาอัพโหลดไฟล์ PDF สำหรับเอกสาร {selectedItem}
-              </p>
-              <input
-                type="file"
-                accept="application/pdf"
-                onChange={handleUpload}
-                className="mb-4 w-full text-sm sm:text-base"
-              />
-              <div className="flex justify-end space-x-2">
-                <button
-                  onClick={handleCloseModal}
-                  className="rounded bg-gray-300 px-3 py-1.5 text-sm font-bold text-black hover:bg-gray-400 sm:px-4 sm:py-2 sm:text-base"
-                >
-                  ปิด
-                </button>
-                <button
-                  onClick={handleCloseModal}
-                  className="rounded bg-indigo-600 px-3 py-1.5 text-sm font-bold text-white hover:bg-indigo-700 sm:px-4 sm:py-2 sm:text-base"
-                >
-                  อัพโหลด
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </article>
     </section>
   )
