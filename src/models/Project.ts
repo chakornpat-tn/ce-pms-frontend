@@ -40,9 +40,9 @@ export type CreateProjectRequest = {
 }
 
 export type UpdateProjectRequest = {
-  id: number
+  id?: number
   password?: string
-  projectName: string
+  projectName?: string
   projectNameEng?: string
   abstract?: string
   abstractEng?: string
@@ -55,7 +55,7 @@ export type UpdateProjectRequest = {
   courseStatus?: number
   students?: ProjectStudentRequest[]
   users?: ProjectUser[]
-  examDateTime: Date
+  examDateTime?: Date
 }
 
 export type UpdateProjectsRequest = {

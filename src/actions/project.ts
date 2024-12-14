@@ -7,6 +7,7 @@ import {
   Project,
   ProjectByIDRes,
   ProjectRes,
+  UpdateProjectRequest,
 } from '@/models/Project'
 import useAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
@@ -151,6 +152,10 @@ export async function updateProject(formData: FormData) {
       ...(password && { password }),
     }
 
+    if (Object.keys(projectData).length === 0) {
+      return { error: 'ไม่มีข้อมูลที่ต้องการแก้ไข' }
+    }
+
     const res = await useAPI('/v1/project/' + id, {
       method: 'PATCH',
       body: JSON.stringify(projectData),
@@ -192,6 +197,73 @@ export async function GetProjectFormToken(): Promise<ProjectByIDRes> {
     })
 
     return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function UpdateProjectFormToken(
+  previousState: unknown,
+  formData: FormData,
+) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const projectName = formData.get('projectName')
+    const projectNameEng = formData.get('projectNameEng')
+    const abstract = formData.get('abstract')
+    const abstractEng = formData.get('abstractEng')
+    const detail = formData.get('detail')
+    const detailEng = formData.get('detailEng')
+    const semester = formData.get('semester')
+    const academicYear = formData.get('academicYear')
+    const type = formData.get('type')
+    const projectStatusId = formData.get('projectStatusId')
+    const courseStatus = formData.get('courseStatus')
+    const password = formData.get('password')
+    const examDateTime = formData.get('examDateTime')
+
+    const projectData: UpdateProjectRequest = {
+      ...(projectName && { projectName: projectName as string }),
+      ...(projectNameEng && { projectNameEng: projectNameEng as string }),
+      ...(abstract && { abstract: abstract as string }),
+      ...(abstractEng && { abstractEng: abstractEng as string }),
+      ...(detail && { detail: detail as string }),
+      ...(detailEng && { detailEng: detailEng as string }),
+      ...(semester && { semester: Number(semester) }),
+      ...(academicYear && { academicYear: Number(academicYear) }),
+      ...(type && { type: type as string }),
+      ...(projectStatusId && { projectStatusId: Number(projectStatusId) }),
+      ...(courseStatus && { courseStatus: Number(courseStatus) }),
+      ...(password && { password: password as string }),
+      ...(examDateTime && { examDateTime: new Date(examDateTime as string) }),
+    }
+
+    if (Object.keys(projectData).length === 0) {
+      throw new Error('No data to update')
+    }
+
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.')
+    }
+
+    const url = `/v1/project/${Number(payload.id)}`
+
+    await useAPI(url, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(projectData),
+    })
   } catch (error) {
     throw error
   }
