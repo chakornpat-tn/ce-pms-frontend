@@ -71,3 +71,36 @@ export async function CreateProjectDocs(
     throw error
   }
 }
+
+export async function UpdateProjectDocStatus(
+  documentId: number,
+  status: number,
+) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const form = new FormData()
+    form.append(
+      'data',
+      JSON.stringify({
+        status,
+      }),
+    )
+
+    await useAPI(`/v1/project-document/${documentId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      body: form,
+    })
+    revalidatePath('/')
+    return
+  } catch (error) {
+    throw error
+  }
+}

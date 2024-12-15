@@ -62,7 +62,7 @@ function DeleteUserModalForm({ children, handleClose, userInfo }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="flex w-full  max-w-md transform flex-col items-center justify-center overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="flex w-full  max-w-md transform flex-col items-center justify-center overflow-hidden rounded-md-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <WarningIcon className=" text-9xl text-red-500" />
                   <Dialog.Title
                     as="h1"

@@ -85,7 +85,7 @@ const ProjectPage = () => {
       revalidateOnReconnect: false,
     },
   )
-  
+
   const DocsSelection = useSWR(
     findCourse
       ? [
@@ -119,14 +119,14 @@ const ProjectPage = () => {
     (Array.isArray(DocsSelection.data) && DocsSelection.data.length === 0)
   )
     return (
-      <div className="relative mt-0 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg sm:p-10">
+      <div className="relative mt-0 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md sm:p-10">
         <article className="mx-auto text-center">
           ยังไม่สามารถส่งเอกสารได้
         </article>
       </div>
     )
   return (
-    <section className="relative mt-0 h-full overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg sm:p-10">
+    <section className="relative mt-0 min-h-[calc(100dvh-10dvh)] overflow-x-auto bg-white p-4 shadow-md sm:rounded-md sm:p-10">
       <article className="flex flex-col items-center">
         <div className="my-4 flex w-full flex-col items-center justify-center px-2 sm:px-0">
           <label
@@ -156,7 +156,7 @@ const ProjectPage = () => {
             }}
           >
             <div className="relative mx-auto mt-1 w-full max-w-screen-md px-4 sm:px-0">
-              <ComboboxButton className="relative w-full cursor-default rounded border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:bg-primary2-400 focus:outline-none focus:ring-1 sm:text-sm">
+              <ComboboxButton className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:bg-primary2-400 focus:outline-none focus:ring-1 sm:text-sm">
                 <span className="block truncate">
                   {selectedItem || 'เลือกหัวข้อ'}
                 </span>
@@ -176,7 +176,7 @@ const ProjectPage = () => {
                   </svg>
                 </span>
               </ComboboxButton>
-              <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {DocsSelection.data &&
                   Array.isArray(DocsSelection.data) &&
                   DocsSelection.data.map((item: Document) => (
@@ -212,7 +212,6 @@ const ProjectPage = () => {
             />
           )}
         </div>
-
       </article>
     </section>
   )

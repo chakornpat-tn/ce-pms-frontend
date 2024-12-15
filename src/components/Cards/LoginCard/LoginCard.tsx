@@ -17,7 +17,7 @@ const LoginCard = ({
   urlPath,
 }: Props) => {
   return (
-    <div className="m-5  h-auto min-w-[220px] rounded-lg bg-white shadow-2xl md:mt-0 md:min-h-[280px]  md:min-w-[320px] lg:m-[15%]">
+    <div className="m-5  h-auto min-w-[220px] rounded-md bg-white shadow-2xl md:mt-0 md:min-h-[280px]  md:min-w-[320px] lg:m-[15%]">
       <div className="flex h-full flex-col items-center justify-around py-2">
         {!!pathImage && (
           <div className={`rounded-full ${bgColor} h-auto w-auto`}>

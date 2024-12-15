@@ -22,7 +22,7 @@ export default async function Page({}: Props) {
   let data: ProjectByIDRes = await GetProjectFormToken()
   if (!data) return
   return (
-    <section className="relative mt-0 overflow-x-auto bg-white p-10 shadow-md sm:rounded-lg">
+    <section className="relative mt-0 overflow-x-auto bg-white p-10 shadow-md sm:rounded-md">
       <article className="container">
         <h1 className="text-center text-xl md:text-3xl">{data.projectName}</h1>
         <h2 className="mb-5 text-center text-lg text-gray-400 md:text-2xl">
@@ -46,7 +46,7 @@ export default async function Page({}: Props) {
               name={data.projectStatus?.name}
             />
           </div>
-          <button className="mb-4 rounded bg-primary1 px-3 py-1 text-xs text-white md:px-4 md:text-base">
+          <button className="mb-4 rounded-md bg-primary1 px-3 py-1 text-xs text-white md:px-4 md:text-base">
             <Link href="/project/studentdocs">คลิกเพื่อส่งเอกสาร</Link>
           </button>
           <br></br>
@@ -64,7 +64,7 @@ export default async function Page({}: Props) {
           </div>
           <Progress value={1} />
           <div className="mt-4 flex w-full flex-col items-center justify-center">
-            <button className="mb-4 rounded bg-primary1 px-3 py-2 text-xs text-white md:px-4 md:text-base">
+            <button className="mb-4 rounded-md bg-primary1 px-3 py-2 text-xs text-white md:px-4 md:text-base">
               <Link href="/project/studentprogress">รายงานความก้าวหน้า</Link>
             </button>
           </div>

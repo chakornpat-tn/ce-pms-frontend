@@ -35,7 +35,7 @@ const ProjectFilterForm: React.FC<Props> = ({
         type="text"
         name="projectName"
         placeholder="ค้นหาชื่อโครงงาน"
-        className="w-full rounded border p-2 text-sm sm:text-base md:w-auto"
+        className="w-full rounded-md border p-2 text-sm sm:text-base md:w-auto"
         value={filters.projectName}
         onChange={e => setFilters({ ...filters, projectName: e.target.value })}
         onKeyDown={handleKeyPress}
@@ -48,7 +48,7 @@ const ProjectFilterForm: React.FC<Props> = ({
           min={1}
           max={3}
           placeholder="ทุกภาคเรียน"
-          className="w-full min-w-[113px] rounded border p-2 text-sm sm:text-base"
+          className="w-full min-w-[113px] rounded-md border p-2 text-sm sm:text-base"
           value={filters.semester || ''}
           onChange={e =>
             setFilters({
@@ -71,14 +71,14 @@ const ProjectFilterForm: React.FC<Props> = ({
                 Math.max(0, parseInt(e.target.value)) || currentYear,
             })
           }
-          className="w-full rounded border p-2 text-sm sm:max-w-[180px] sm:text-base md:w-auto"
+          className="w-full rounded-md border p-2 text-sm sm:max-w-[180px] sm:text-base md:w-auto"
         />
       </div>
 
       {data && data.length > 0 && (
         <select
           name="projectStatus"
-          className="w-full rounded border p-2 text-sm sm:mt-2 sm:w-auto sm:text-base md:mt-0"
+          className="w-full rounded-md border p-2 text-sm sm:mt-2 sm:w-auto sm:text-base md:mt-0"
           value={filters.projectStatus}
           onChange={e =>
             setFilters({ ...filters, projectStatus: e.target.value })
@@ -94,7 +94,7 @@ const ProjectFilterForm: React.FC<Props> = ({
       )}
       <button
         type="submit"
-        className="w-full rounded bg-primary2-400 p-2 text-sm text-secondary1 shadow-md transition duration-200 hover:bg-primary2-500 sm:mt-2 sm:w-auto sm:text-base md:mt-0"
+        className="w-full rounded-md bg-primary2-400 p-2 text-sm text-secondary1 shadow-md transition duration-200 hover:bg-primary2-500 sm:mt-2 sm:w-auto sm:text-base md:mt-0"
       >
         ค้นหา
       </button>

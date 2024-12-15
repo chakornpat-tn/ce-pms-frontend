@@ -20,7 +20,9 @@ function CreateUserModalForm({}: Props) {
 
   function openModal() {
     setIsOpen(true)
-    state.message = ''
+    if (state) {
+      state.message = ''
+    }
   }
 
   const InputForm = () => (
@@ -42,7 +44,7 @@ function CreateUserModalForm({}: Props) {
             type="text"
             name="firstName"
             id="firstName"
-            className="w-full rounded-lg border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-300 p-2"
             required
           />
         </div>
@@ -57,7 +59,7 @@ function CreateUserModalForm({}: Props) {
             type="text"
             name="lastName"
             id="lastName"
-            className="w-full rounded-lg border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-300 p-2"
             required
           />
         </div>
@@ -73,7 +75,7 @@ function CreateUserModalForm({}: Props) {
           type="text"
           name="username"
           id="username"
-          className="w-full rounded-lg border border-gray-300 p-2"
+          className="w-full rounded-md border border-gray-300 p-2"
           required
         />
       </div>
@@ -89,7 +91,7 @@ function CreateUserModalForm({}: Props) {
           type="password"
           name="password"
           id="password"
-          className="w-full rounded-lg border border-gray-300 p-2"
+          className="w-full rounded-md border border-gray-300 p-2"
           required
         />
       </div>
@@ -135,7 +137,7 @@ function CreateUserModalForm({}: Props) {
             โครงงาน
           </label>
         </div>
-        {state.message && (
+        {state?.message && (
           <p
             className={
               state.message == '* สร้างบัญชีผู้เสร็จสิ้น'
@@ -150,14 +152,14 @@ function CreateUserModalForm({}: Props) {
       <div className="flex items-center justify-around">
         <button
           type="submit"
-          className=" mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
+          className="mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
         >
           สร้าง
         </button>
         <button
           type="button"
           onClick={closeModal}
-          className=" mt-2 w-2/5 rounded-md border-2 border-red-200 bg-white px-4 py-2 text-gray-500 hover:border-red-500 hover:text-primary1"
+          className="mt-2 w-2/5 rounded-md border-2 border-red-200 bg-white px-4 py-2 text-gray-500 hover:border-red-500 hover:text-primary1"
         >
           ยกเลิก
         </button>
@@ -169,7 +171,7 @@ function CreateUserModalForm({}: Props) {
     <>
       <button
         type="button"
-        className=" my-2 scale-100 rounded-md bg-primary2-400 px-2 py-3 text-secondary1 shadow-md transition hover:bg-primary2-500 focus:scale-90"
+        className="my-2 scale-100 rounded-md bg-primary2-400 px-2 py-3 text-secondary1 shadow-md transition hover:bg-primary2-500 focus:scale-90"
         onClick={openModal}
       >
         เพิ่มบัญชีผู้ใช้
@@ -199,7 +201,7 @@ function CreateUserModalForm({}: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h1"
                     className="text-2xl font-medium leading-6 text-primary1"

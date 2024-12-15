@@ -92,7 +92,7 @@ const ProjectPage = () => {
     (Array.isArray(DocsSelection.data) && DocsSelection.data.length === 0)
   )
     return (
-      <div className="relative mt-0 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg sm:p-10">
+      <div className="relative mt-0 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md sm:p-10">
         <article className="mx-auto text-center">
           ไม่สามารถตรวจสอบเอกสารได้ในขณะนี้
         </article>
@@ -100,10 +100,10 @@ const ProjectPage = () => {
     )
 
   return (
-    <section className="relative mt-0 h-full overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg sm:p-10">
+    <section className="relative mt-0 min-h-[calc(100dvh-10dvh)] overflow-x-auto bg-white p-4 shadow-md sm:rounded-md sm:p-10">
       <article className="flex flex-col items-center">
-        <div className="my-4 flex w-full flex-col items-center justify-center space-y-4 px-2 sm:my-8 sm:space-y-6 sm:px-0">
-          <div className="w-full max-w-screen-md px-2 sm:px-0">
+        <div className="flex w-full flex-col items-center justify-center space-y-4 px-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-4">
+          <div className="w-full max-w-screen-md px-2 sm:w-1/2 sm:px-0">
             <label
               id="course-listbox-label"
               className="mb-2 block text-sm font-semibold text-gray-700 sm:text-base"
@@ -119,7 +119,7 @@ const ProjectPage = () => {
               }}
             >
               <div className="relative">
-                <ComboboxButton className="relative w-full cursor-default rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-8 text-left text-xs shadow-sm transition-colors hover:border-primary2-400 focus:border-primary2-400 focus:outline-none focus:ring-2 focus:ring-primary2-400/20 sm:py-3 sm:pl-4 sm:pr-10 sm:text-sm">
+                <ComboboxButton className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 text-left text-xs shadow-sm transition-colors hover:border-primary2-400 focus:border-primary2-400 focus:outline-none focus:ring-2 focus:ring-primary2-400/20 sm:py-3 sm:pl-4 sm:pr-10 sm:text-sm">
                   <span className="block truncate">
                     {Number(selectedCourse) === course.PreProject
                       ? 'เอกสารวิชาเตรียมโครงงาน'
@@ -143,7 +143,7 @@ const ProjectPage = () => {
                     </svg>
                   </span>
                 </ComboboxButton>
-                <ComboboxOptions className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-lg bg-white py-1 text-xs shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:max-h-60 sm:text-sm">
+                <ComboboxOptions className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-md bg-white py-1 text-xs shadow-xl ring-1 ring-black ring-opacity-5 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 focus:outline-none sm:max-h-60 sm:text-sm">
                   <ComboboxOption
                     value={course.PreProject}
                     className={({ active }) =>
@@ -181,10 +181,10 @@ const ProjectPage = () => {
             </Combobox>
           </div>
           {selectedCourse && (
-            <div className="w-full max-w-screen-md px-2 sm:px-0">
+            <div className="w-full max-w-screen-md px-2 sm:w-1/2 sm:px-0">
               <label
                 id="listbox-label"
-                className="mb-2 block text-base font-semibold text-gray-700 sm:text-lg"
+                className="mb-2 block text-sm font-semibold text-gray-700 sm:text-base"
               >
                 เลือกเอกสารที่ต้องการตรวจสอบ
               </label>
@@ -209,7 +209,7 @@ const ProjectPage = () => {
                 }}
               >
                 <div className="relative">
-                  <ComboboxButton className="relative w-full cursor-default rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-8 text-left text-sm shadow-sm transition-colors hover:border-primary2-400 focus:border-primary2-400 focus:outline-none focus:ring-2 focus:ring-primary2-400/20 sm:py-3 sm:pl-4 sm:pr-10 sm:text-base">
+                  <ComboboxButton className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 text-left text-xs shadow-sm transition-colors hover:border-primary2-400 focus:border-primary2-400 focus:outline-none focus:ring-2 focus:ring-primary2-400/20 sm:py-3 sm:pl-4 sm:pr-10 sm:text-sm">
                     <span className="block truncate">
                       {selectedItem || 'เลือกหัวข้อ'}
                     </span>
@@ -229,7 +229,7 @@ const ProjectPage = () => {
                       </svg>
                     </span>
                   </ComboboxButton>
-                  <ComboboxOptions className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-lg bg-white py-1 text-sm shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:max-h-60 sm:text-base">
+                  <ComboboxOptions className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-md bg-white py-1 text-xs shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:max-h-60 sm:text-sm">
                     {DocsSelection.data &&
                       Array.isArray(DocsSelection.data) &&
                       DocsSelection.data

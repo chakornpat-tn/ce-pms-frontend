@@ -46,7 +46,7 @@ function ReportProject({ reportType, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 overflow-y-auto">
-      <div className="relative bg-white p-6 rounded-lg w-full max-w-lg mx-auto my-6 max-h-[80vh] overflow-y-auto">
+      <div className="relative bg-white p-6 rounded-md w-full max-w-lg mx-auto my-6 max-h-[80vh] overflow-y-auto">
         <button
           className="absolute top-2 right-2 text-2xl text-gray-500"
           onClick={handleClose}
@@ -72,7 +72,7 @@ function ReportProject({ reportType, onClose }: Props) {
                     handleChange(e, `part${index}`);
                   }}
                   placeholder="คิดเป็น... %"
-                  className="ml-2 p-1 border rounded w-1/2"
+                  className="ml-2 p-1 border rounded-md w-1/2"
                 />
               </div>
             ))}
@@ -82,7 +82,7 @@ function ReportProject({ reportType, onClose }: Props) {
                 type="text"
                 value={percentages.total}
                 placeholder="คิดเป็น... %"
-                className="ml-2 p-1 border rounded w-1/2"
+                className="ml-2 p-1 border rounded-md w-1/2"
                 readOnly
               />
             </div>
@@ -97,14 +97,14 @@ function ReportProject({ reportType, onClose }: Props) {
                 value={percentages.projectPart}
                 onChange={(e) => handleChange(e, 'projectPart')}
                 placeholder="คิดเป็น... %"
-                className="ml-2 p-1 border rounded w-1/2"
+                className="ml-2 p-1 border rounded-md w-1/2"
               />
             </div>
             <textarea
               placeholder="รายละเอียดของผลการดำเนินงาน"
               value={percentages.workDetails}
               onChange={(e) => handleChange(e, 'workDetails')}
-              className="w-full p-2 border rounded h-20"
+              className="w-full p-2 border rounded-md h-20"
             />
           </div>
 
@@ -130,7 +130,7 @@ function ReportProject({ reportType, onClose }: Props) {
               />
               <button
                 onClick={() => document.getElementById('fileInput')?.click()}
-                className="px-4 py-1 bg-blue-500 text-white rounded"
+                className="px-4 py-1 bg-blue-500 text-white rounded-md"
               >
                 เลือกไฟล์
               </button>
@@ -144,7 +144,7 @@ function ReportProject({ reportType, onClose }: Props) {
                         (document.getElementById('fileInput') as HTMLInputElement).value = '';
                       }
                     }}
-                    className="ml-2 px-4 py-1 bg-red-500 text-white rounded"
+                    className="ml-2 px-4 py-1 bg-red-500 text-white rounded-md"
                   >
                     ลบไฟล์
                   </button>
@@ -155,17 +155,17 @@ function ReportProject({ reportType, onClose }: Props) {
 
           <div className="mt-4">
             <h3 className="font-bold">ความคิดเห็นของอาจารย์ที่ปรึกษา</h3>
-            <input type="text" placeholder="ความคิดเห็น" className="w-full p-1 border rounded" />
+            <input type="text" placeholder="ความคิดเห็น" className="w-full p-1 border rounded-md" />
           </div>
 
           <div className="mt-4">
             <h3 className="font-bold">ความคิดเห็นเพิ่มเติม</h3>
-            <textarea placeholder="ความคิดเห็นเพิ่มเติม" className="w-full p-2 border rounded h-20" />
+            <textarea placeholder="ความคิดเห็นเพิ่มเติม" className="w-full p-2 border rounded-md h-20" />
           </div>
         </div>
         <button
           onClick={handleClose}
-          className="mt-6 px-4 py-2 bg-green-500 text-white rounded w-full"
+          className="mt-6 px-4 py-2 bg-green-500 text-white rounded-md w-full"
         >
           บันทึก
         </button>

@@ -35,7 +35,7 @@ const Page = () => {
       <div className="mb-2 flex flex-col items-start justify-between md:flex-row md:items-center">
         <h1 className="text-4xl font-bold text-primary1">เปลี่ยนรหัสผ่าน</h1>
       </div>
-      <div className="block rounded-lg border border-gray-200 p-8">
+      <div className="block rounded-md border border-gray-200 p-8">
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label
@@ -50,7 +50,7 @@ const Page = () => {
               id="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
               required
             />
           </div>
@@ -67,14 +67,14 @@ const Page = () => {
               id="confirmPassword"
               value={confirmPassword}
               onChange={e => setConfirmPassword(e.target.value)}
-              className="w-full rounded-lg border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
               required
             />
           </div>
           {message && <p className="text-sm">{message}</p>}
           <button
             type="submit"
-            className="w-full rounded-lg bg-primary2-400 p-2 text-secondary1 shadow-md transition duration-200 hover:bg-primary2-500"
+            className="w-full rounded-md bg-primary2-400 p-2 text-secondary1 shadow-md transition duration-200 hover:bg-primary2-500"
           >
             เปลี่ยนรหัสผ่าน
           </button>

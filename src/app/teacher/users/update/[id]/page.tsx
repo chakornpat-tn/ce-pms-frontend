@@ -66,7 +66,7 @@ export default function UpdateUserPage() {
               type="text"
               name="firstName"
               id="firstName"
-              className="w-full rounded-lg border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
               required
               defaultValue={data.name.split(' ')[0]}
             />
@@ -82,7 +82,7 @@ export default function UpdateUserPage() {
               type="text"
               name="lastName"
               id="lastName"
-              className="w-full rounded-lg border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
               required
               defaultValue={data.name.split(' ')[1]}
             />
@@ -100,7 +100,7 @@ export default function UpdateUserPage() {
             type="password"
             name="password"
             id="password"
-            className="w-full rounded-lg border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-300 p-2"
           />
         </div>
 

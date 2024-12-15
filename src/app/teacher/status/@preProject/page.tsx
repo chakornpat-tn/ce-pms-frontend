@@ -185,7 +185,7 @@ const PreProject: React.FC = () => {
   }
 
   return (
-    <section className="relative overflow-x-auto w-full bg-white px-4 shadow-md sm:rounded-lg">
+    <section className="relative overflow-x-auto w-full bg-white px-4 shadow-md sm:rounded-md">
       <article>
         <div className="mt-4 overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -261,7 +261,7 @@ const PreProject: React.FC = () => {
           {!isAddingNewStatus && (
             <button
               onClick={handleAddRowStart}
-              className="mb-4 mt-2 rounded bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
+              className="mb-4 mt-2 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
             >
               <AddIcon />
             </button>
@@ -294,7 +294,7 @@ const EditableRow: React.FC<{
           onChange={e => onStatusChange('name', e.target.value)}
           placeholder="ชื่อสถานะ"
           onKeyDown={handleKeyDown}
-          className="w-full rounded border px-1 py-1"
+          className="w-full rounded-md border px-1 py-1"
         />
       </td>
       <td className="whitespace-nowrap px-6 py-4">
@@ -319,13 +319,13 @@ const EditableRow: React.FC<{
       <td className="flex gap-2 whitespace-nowrap px-6 py-4">
         <button
           onClick={onConfirm}
-          className="rounded bg-primary2-400 px-2 py-1 text-white hover:bg-primary2-500"
+          className="rounded-md bg-primary2-400 px-2 py-1 text-white hover:bg-primary2-500"
         >
           ยืนยัน
         </button>
         <button
           onClick={onCancel}
-          className="rounded bg-red-500 px-2 py-1 text-white hover:bg-red-600"
+          className="rounded-md bg-red-500 px-2 py-1 text-white hover:bg-red-600"
         >
           ยกเลิก
         </button>

@@ -62,7 +62,7 @@ export default function UpdateProjectPage() {
             type="password"
             name="password"
             id="password"
-            className="w-full rounded-lg border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-300 p-2"
             required
           />
         </div>

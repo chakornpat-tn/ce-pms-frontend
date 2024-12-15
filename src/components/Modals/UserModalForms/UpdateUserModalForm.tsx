@@ -54,7 +54,7 @@ function UpdateUserModalForm({ children, handleClose }: Props) {
             type="text"
             name="firstName"
             id="firstName"
-            className="w-full rounded-lg border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-300 p-2"
             required
             defaultValue={data?.name.split(' ')[0]}
           />
@@ -70,7 +70,7 @@ function UpdateUserModalForm({ children, handleClose }: Props) {
             type="text"
             name="lastName"
             id="lastName"
-            className="w-full rounded-lg border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-300 p-2"
             required
             defaultValue={data?.name.split(' ')[1]}
           />
@@ -88,7 +88,7 @@ function UpdateUserModalForm({ children, handleClose }: Props) {
           type="password"
           name="password"
           id="password"
-          className="w-full rounded-lg border border-gray-300 p-2"
+          className="w-full rounded-md border border-gray-300 p-2"
         />
       </div>
       <div className="mb-4">
@@ -194,7 +194,7 @@ function UpdateUserModalForm({ children, handleClose }: Props) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-md-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h1"
                     className="text-2xl font-medium leading-6 text-primary1"

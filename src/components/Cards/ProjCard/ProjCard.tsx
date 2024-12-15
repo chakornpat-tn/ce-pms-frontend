@@ -10,7 +10,7 @@ const ProjCard = ({ path }: Props) => {
   return (
     <Link
       href={path}
-      className="block max-w-sm rounded-lg border bg-white p-6 shadow-sm hover:border-primary2-500  hover:bg-gray-100 hover:shadow-md"
+      className="block max-w-sm rounded-md border bg-white p-6 shadow-sm hover:border-primary2-500  hover:bg-gray-100 hover:shadow-md"
     >
       <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
         ปีการศึกษา 2xxx
@@ -23,7 +23,7 @@ const AllpjCard = ({ path }: Props) => {
   return (
     <Link
       href={path}
-      className="flex max-w-sm items-center justify-center rounded-lg border bg-white p-6 shadow-sm hover:border-primary2-500  hover:bg-gray-100 hover:shadow-md"
+      className="flex max-w-sm items-center justify-center rounded-md border bg-white p-6 shadow-sm hover:border-primary2-500  hover:bg-gray-100 hover:shadow-md"
     >
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 md:text-3xl">
         ดูทั้งหมด
@@ -48,7 +48,7 @@ const SelectProjectCard = ({
   return (
     <Link
       href={path}
-      className="max-h-auto relative block max-w-sm rounded-lg border bg-white p-6 shadow-sm hover:border-primary2-500 hover:bg-gray-100"
+      className="max-h-auto relative block max-w-sm rounded-md border bg-white p-6 shadow-sm hover:border-primary2-500 hover:bg-gray-100"
     >
       <div className="flex-1 truncate">
         <div className="flex items-center justify-between">
@@ -96,7 +96,7 @@ const Presentprojectcard = ({
 return (
   <Link
     href={path}
-    className="max-h-auto relative block max-w-sm rounded-lg border bg-white p-6 shadow-sm hover:border-primary2-500 hover:bg-gray-100"
+    className="max-h-auto relative block max-w-sm rounded-md border bg-white p-6 shadow-sm hover:border-primary2-500 hover:bg-gray-100"
   >
     <div className="flex-1 truncate">
       <div className="flex items-center justify-between">

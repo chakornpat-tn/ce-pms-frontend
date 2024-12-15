@@ -58,13 +58,13 @@ export default function LoginPage() {
           />
         </div>
 
-        <div className="relative bottom-12 w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
+        <div className="relative bottom-12 w-full rounded-md bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
 
             <div className="mt-6 grid justify-center text-lg leading-tight tracking-tight text-gray-900 sm:text-2xl md:text-3xl">
               {/* Toggle Switch */}
 
-              <div className="flex w-full gap-4 rounded-lg bg-white p-2 shadow">
+              <div className="flex w-full gap-4 rounded-md bg-white p-2 shadow">
                 <button
                   onClick={() => setIsTeacher(false)}
                   className={`rounded-md px-4 py-2 transition-colors ${
@@ -94,7 +94,7 @@ export default function LoginPage() {
                   type="text"
                   name="username"
                   id="username"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
+                  className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                   placeholder="ชื่อผู้ใช้"
                   required
                   onKeyDown={handleKeyPress}
@@ -106,7 +106,7 @@ export default function LoginPage() {
                   name="password"
                   id="password"
                   placeholder="รหัสผ่าน"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
+                  className="block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                   onKeyDown={handleKeyPress}
                 />
                 <input
@@ -123,7 +123,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="focus:ring-primary-300 w-full rounded-lg bg-primary2-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none focus:ring-4"
+                className="focus:ring-primary-300 w-full rounded-md bg-primary2-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none focus:ring-4"
               >
                 {isSubmitting ? (
                   <span className="loading loading-ring loading-xs sm:loading-sm md:loading-md lg:loading-lg"></span>
