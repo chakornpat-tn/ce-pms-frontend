@@ -7,6 +7,7 @@ import { ListProjectFilterQuery } from '@/models/Project'
 import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
 import TeacherProjectTable from '@/components/Tables/ProjectTable/TeacherProjectTable'
+import Course from '@/constants/course/course'
 
 type Props = {}
 
@@ -26,7 +27,7 @@ function page({}: Props) {
     return res
   }
 
-  const { data, isLoading, mutate } = useSWR([`/v1/project`, []], fetchData, {
+  const { data, isLoading, mutate } = useSWR([`/v1/pre-project`, []], fetchData, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
@@ -57,6 +58,7 @@ function page({}: Props) {
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
         currentYear={currentYear}
+        course={Course.PreProject}
       />
       {/* Search Results */}
       <TeacherProjectTable data={data} loading={isLoading} />

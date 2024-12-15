@@ -40,16 +40,13 @@ function page({}: Props) {
   })
 
   const fetchData = async () => {
+    console.log(filters)
     const res = await ListProjectByUserID(filters)
     toast.success('ค้นหาสำเร็จ', { duration: 1000 })
     return res
   }
 
-  const { data, isLoading, mutate } = useSWR(`/v1/pre-project`, fetchData, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  })
+  const { data, isLoading, mutate } = useSWR(`consultant-project`, fetchData)
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -148,6 +145,7 @@ function page({}: Props) {
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
         currentYear={currentYear}
+        course={2}
       />
       {/* Search Results */}
       <ProjectTable data={data} loading={isLoading} />

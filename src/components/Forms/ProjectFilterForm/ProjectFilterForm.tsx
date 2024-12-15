@@ -1,4 +1,6 @@
+import { ListProjectStatus } from '@/actions/projectStatus'
 import React, { useState } from 'react'
+import useSWR from 'swr'
 
 type Props = {
   filters: any
@@ -6,6 +8,7 @@ type Props = {
   handleSearch: (e: React.FormEvent) => void
   handleKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void
   currentYear: number
+  course: number
 }
 
 const ProjectFilterForm: React.FC<Props> = ({
@@ -14,8 +17,14 @@ const ProjectFilterForm: React.FC<Props> = ({
   handleSearch,
   handleKeyPress,
   currentYear,
+  course,
 }) => {
   const [value, setValue] = useState<number | ''>(0)
+
+  const { data, mutate, isLoading } = useSWR(
+    `/v1/project-status?course=${course}`,
+    () => ListProjectStatus({ course: course, isActive: true }),
+  )
 
   return (
     <form
@@ -66,19 +75,23 @@ const ProjectFilterForm: React.FC<Props> = ({
         />
       </div>
 
-      <select
-        name="projectStatus"
-        className="w-full rounded border p-2 text-sm sm:mt-2 sm:w-auto sm:text-base md:mt-0"
-        value={filters.projectStatus}
-        onChange={e =>
-          setFilters({ ...filters, projectStatus: e.target.value })
-        }
-      >
-        <option value="">สถานะเอกสาร</option>
-        <option value="draft">ร่าง</option>
-        <option value="submitted">ส่งแล้ว</option>
-      </select>
-
+      {data && data.length > 0 && (
+        <select
+          name="projectStatus"
+          className="w-full rounded border p-2 text-sm sm:mt-2 sm:w-auto sm:text-base md:mt-0"
+          value={filters.projectStatus}
+          onChange={e =>
+            setFilters({ ...filters, projectStatus: e.target.value })
+          }
+        >
+          <option value="">สถานะเอกสาร</option>
+          {data?.map(status => (
+            <option key={status.id} value={status.id}>
+              {status.name}
+            </option>
+          ))}
+        </select>
+      )}
       <button
         type="submit"
         className="w-full rounded bg-primary2-400 p-2 text-sm text-secondary1 shadow-md transition duration-200 hover:bg-primary2-500 sm:mt-2 sm:w-auto sm:text-base md:mt-0"

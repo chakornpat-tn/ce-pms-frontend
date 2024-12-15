@@ -7,6 +7,7 @@ import { useState } from 'react'
 
 export default function LoginPage() {
   const [isTeacher, setIsTeacher] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const initState = {
     message: '',
@@ -20,6 +21,25 @@ export default function LoginPage() {
 
   const currentState = isTeacher ? teacherState : studentState
   const currentFormAction = isTeacher ? teacherFormAction : studentFormAction
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      const form = e.currentTarget.closest('form')
+      if (form) {
+        form.requestSubmit()
+      }
+    }
+  }
+
+  const handleSubmit = async (formData: FormData) => {
+    setIsSubmitting(true)
+    try {
+      await currentFormAction(formData)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <section
@@ -68,7 +88,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <form className="space-y-2 md:space-y-4" action={currentFormAction}>
+            <form className="space-y-2 md:space-y-4" action={handleSubmit}>
               <div>
                 <input
                   type="text"
@@ -77,6 +97,7 @@ export default function LoginPage() {
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
                   placeholder="ชื่อผู้ใช้"
                   required
+                  onKeyDown={handleKeyPress}
                 />
               </div>
               <div>
@@ -86,6 +107,7 @@ export default function LoginPage() {
                   id="password"
                   placeholder="รหัสผ่าน"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm"
+                  onKeyDown={handleKeyPress}
                 />
                 <input
                   type="hidden"
@@ -100,9 +122,14 @@ export default function LoginPage() {
 
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="focus:ring-primary-300 w-full rounded-lg bg-primary2-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none focus:ring-4"
               >
-                เข้าสู่ระบบ
+                {isSubmitting ? (
+                  <span className="loading loading-ring loading-xs sm:loading-sm md:loading-md lg:loading-lg"></span>
+                ) : (
+                  'เข้าสู่ระบบ'
+                )}
               </button>
 
               <div className="flex items-center justify-between">

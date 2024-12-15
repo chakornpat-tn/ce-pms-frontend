@@ -73,7 +73,7 @@ export async function updateUser(formData: FormData) {
       },
     })
 
-    revalidatePath('/')
+    revalidatePath('/teacher/users')
     return { message: 'แก้ไขผู้ใช้เสร็จสิ้น' }
   } catch (error) {
     return error
