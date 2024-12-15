@@ -45,13 +45,8 @@ function page({}: Props) {
   }
 
   const { data, isLoading, mutate } = useSWR(
-    [`/v1/project-user`, []],
+    [`consultant-pre-project`, []],
     fetchData,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
   )
 
   const handleSearch = (e: React.FormEvent) => {
@@ -124,7 +119,11 @@ function page({}: Props) {
                         </button>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        <ProjectStatusBadge textColor={project.projectStatus?.textColor} bgColor={project.projectStatus?.bgColor} name={project.projectStatus?.name} />
+                        <ProjectStatusBadge
+                          textColor={project.projectStatus?.textColor}
+                          bgColor={project.projectStatus?.bgColor}
+                          name={project.projectStatus?.name}
+                        />
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-primary1">
                         <ProjectMenu
@@ -151,6 +150,7 @@ function page({}: Props) {
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
         currentYear={currentYear}
+        course={1}
       />
 
       {/* Search Results */}

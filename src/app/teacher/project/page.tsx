@@ -7,6 +7,7 @@ import { ListProjectFilterQuery } from '@/models/Project'
 import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
 import TeacherProjectTable from '@/components/Tables/ProjectTable/TeacherProjectTable'
+import Course from '@/constants/course/course'
 
 type Props = {}
 
@@ -60,6 +61,7 @@ function page({}: Props) {
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
         currentYear={currentYear}
+        course={Course.Project}
       />
       {/* Search Results */}
       <TeacherProjectTable data={data} loading={isLoading} />
