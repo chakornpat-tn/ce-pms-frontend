@@ -50,17 +50,17 @@ export default function PresentModalForm() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-md-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
                   ส่งแบบประเมินการสอบ
-                  <hr className="mx-auto h-1 w-11/12 rounded border-0 bg-primary2-500 py-0" />
+                  <hr className="mx-auto h-1 w-11/12 rounded-md border-0 bg-primary2-500 py-0" />
                   </Dialog.Title>
                   <div className="flex justify-center py-4">
                   <input
-                    className="inline-block mb-5 w-lg cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
+                    className="inline-block mb-5 w-lg cursor-pointer rounded-md border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
                     id="default_size"
                     type="file"
                   />

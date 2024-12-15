@@ -38,13 +38,13 @@ const TeacherProjectTable: React.FC<Props> = ({ data, loading }) => {
   }
 
   return (
-    <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
+    <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md">
       <article>
         <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
           <h2 className="mb-4 text-xl font-bold md:mb-0 md:text-2xl">
             ผลลัพธ์การค้นหา
           </h2>
-          <button className="w-full rounded bg-primary2-400 px-3 py-1.5 text-sm text-white transition-colors hover:bg-primary2-500 md:w-auto md:px-4 md:py-2 md:text-base">
+          <button className="w-full rounded-md bg-primary2-400 px-3 py-1.5 text-sm text-white transition-colors hover:bg-primary2-500 md:w-auto md:px-4 md:py-2 md:text-base">
             จัดการโครงงาน
           </button>
         </div>

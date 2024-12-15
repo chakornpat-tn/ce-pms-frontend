@@ -10,7 +10,7 @@ const DocsCard: React.FC<DocsCardProps> = ({ title, description, onCardClick }) 
   return (
     <div 
       onClick={onCardClick} // เพิ่มการจัดการการคลิก
-      className="bg-white p-6 shadow rounded-lg cursor-pointer hover:bg-gray-100 transition duration-200"
+      className="bg-white p-6 shadow rounded-md cursor-pointer hover:bg-gray-100 transition duration-200"
     >
       <div className="flex items-center">
         <svg

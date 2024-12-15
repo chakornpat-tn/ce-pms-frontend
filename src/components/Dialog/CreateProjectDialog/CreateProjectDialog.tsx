@@ -112,7 +112,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
               <input
                 type="text"
                 name="projectName"
-                className="w-[100%] rounded border px-3 py-2"
+                className="w-[100%] rounded-md border px-3 py-2"
                 required
               />
             </div>
@@ -124,7 +124,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
               <input
                 type="number"
                 name="semester"
-                className="w-[100%] rounded border px-3 py-2"
+                className="w-[100%] rounded-md border px-3 py-2"
                 min={1}
                 max={3}
                 defaultValue={1}
@@ -139,7 +139,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
               <input
                 type="number"
                 name="academicYear"
-                className="w-[100%] rounded border px-3 py-2"
+                className="w-[100%] rounded-md border px-3 py-2"
                 defaultValue={new Date().getFullYear() + 543}
                 required
               />
@@ -154,7 +154,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
                   <button
                     type="button"
                     onClick={addStudent}
-                    className="ml-2 rounded p-1 text-primary2-400 transition-all duration-200 hover:text-primary2-500"
+                    className="ml-2 rounded-md p-1 text-primary2-400 transition-all duration-200 hover:text-primary2-500"
                   >
                     <AddCircleRounded />
                   </button>
@@ -166,20 +166,20 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
                     type="text"
                     name={`students[${index}].studentId`}
                     placeholder="รหัสนักศึกษา"
-                    className="w-[100%] rounded border px-3 py-2"
+                    className="w-[100%] rounded-md border px-3 py-2"
                     required
                   />
                   <input
                     type="text"
                     name={`students[${index}].name`}
                     placeholder="ชื่อ นามสกุล"
-                    className="w-[100%] rounded border px-3 py-2"
+                    className="w-[100%] rounded-md border px-3 py-2"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => removeStudent(index)}
-                    className="rounded px-2 text-red-300 transition-all duration-200 hover:text-red-500"
+                    className="rounded-md px-2 text-red-300 transition-all duration-200 hover:text-red-500"
                   >
                     <IndeterminateCheckBoxRounded />
                   </button>
@@ -196,7 +196,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
                   <button
                     type="button"
                     onClick={addUser}
-                    className="ml-2 rounded p-1 text-primary2-400 transition-all duration-200 hover:text-primary2-500"
+                    className="ml-2 rounded-md p-1 text-primary2-400 transition-all duration-200 hover:text-primary2-500"
                   >
                     <AddCircleRounded />
                   </button>
@@ -206,7 +206,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
                 <div key={index} className="mb-2 flex space-x-2">
                   <select
                     name={`users[${index}].userId`}
-                    className="w-[100%] rounded border px-3 py-2"
+                    className="w-[100%] rounded-md border px-3 py-2"
                     defaultValue=""
                     required
                   >
@@ -227,7 +227,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
                   <button
                     type="button"
                     onClick={() => removeUser(index)}
-                    className="rounded px-2 text-red-300 transition-all duration-200 hover:text-red-500"
+                    className="rounded-md px-2 text-red-300 transition-all duration-200 hover:text-red-500"
                   >
                     <IndeterminateCheckBoxRounded />
                   </button>
@@ -238,7 +238,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
             <button
               disabled={isPending}
               type="submit"
-              className="w-[100%] rounded bg-primary2-400 px-4 py-2 text-secondary1 hover:bg-primary2-500"
+              className="w-[100%] rounded-md bg-primary2-400 px-4 py-2 text-secondary1 hover:bg-primary2-500"
             >
               {isPending ? 'กำลังสร้างโครงงาน' : 'สร้างโปรเจค'}
             </button>

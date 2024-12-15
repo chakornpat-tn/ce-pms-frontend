@@ -49,7 +49,7 @@ const DeleteProjectModalForm: React.FC<Props> = ({
       <DialogTrigger asChild>
         <div onClick={() => setDialogOpen(true)}>{trigger}</div>
       </DialogTrigger>
-      <DialogContent className="max-w-md rounded-2xl bg-white p-6 shadow-xl">
+      <DialogContent className="max-w-md rounded-md-2xl bg-white p-6 shadow-xl">
         <div className="flex flex-col items-center">
           <WarningIcon className="text-9xl text-red-500" />
           <DialogHeader className="flex items-center w-full text-center mt-4">
@@ -69,14 +69,14 @@ const DeleteProjectModalForm: React.FC<Props> = ({
           <button
             type="button"
             onClick={handleDelete}
-            className="w-2/5 rounded bg-red-400 px-4 py-2 text-white hover:bg-red-600"
+            className="w-2/5 rounded-md bg-red-400 px-4 py-2 text-white hover:bg-red-600"
           >
             ลบ
           </button>
           <button
             type="button"
             onClick={closeModal}
-            className="w-2/5 rounded bg-primary2-200 px-4 py-2 text-white hover:bg-primary2-500"
+            className="w-2/5 rounded-md bg-primary2-200 px-4 py-2 text-white hover:bg-primary2-500"
           >
             ยกเลิก
           </button>

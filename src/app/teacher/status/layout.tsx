@@ -39,7 +39,7 @@ function Layout({ children, project, preProject }: Props) {
             <li className="me-2">
               <button
                 onClick={() => setActiveTab('project')}
-                className={`inline-block rounded-t-lg border-b-2 p-4 text-primary1 ${activeTab === 'project' ? 'border-primary1' : 'border-transparent'}`}
+                className={`inline-block rounded-md-t-lg border-b-2 p-4 text-primary1 ${activeTab === 'project' ? 'border-primary1' : 'border-transparent'}`}
               >
                 โครงงาน
               </button>
@@ -50,7 +50,7 @@ function Layout({ children, project, preProject }: Props) {
             <li className="me-2">
               <button
                 onClick={() => setActiveTab('preProject')}
-                className={`primary-hover inline-block rounded-t-lg border-b-2 p-4 text-primary1 ${activeTab === 'preProject' ? 'border-primary1' : 'border-transparent'}`}
+                className={`primary-hover inline-block rounded-md-t-lg border-b-2 p-4 text-primary1 ${activeTab === 'preProject' ? 'border-primary1' : 'border-transparent'}`}
               >
                 เตรียมโครงงาน
               </button>

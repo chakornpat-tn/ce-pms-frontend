@@ -25,7 +25,7 @@ export default function CreateUserPage() {
               type="text"
               name="firstName"
               id="firstName"
-              className="w-full rounded-lg border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
               required
             />
           </div>
@@ -40,7 +40,7 @@ export default function CreateUserPage() {
               type="text"
               name="lastName"
               id="lastName"
-              className="w-full rounded-lg border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
               required
             />
           </div>
@@ -56,7 +56,7 @@ export default function CreateUserPage() {
             type="text"
             name="username"
             id="username"
-            className="w-full rounded-lg border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-300 p-2"
             required
           />
         </div>
@@ -71,7 +71,7 @@ export default function CreateUserPage() {
             type="password"
             name="password"
             id="password"
-            className="w-full rounded-lg border border-gray-300 p-2"
+            className="w-full rounded-md border border-gray-300 p-2"
             required
           />
         </div>

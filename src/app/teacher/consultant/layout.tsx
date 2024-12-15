@@ -21,7 +21,7 @@ function layout({ children }: Props) {
         </h1>
         <CreateProjectDialog
           trigger={
-            <button className="mt-2 flex items-center gap-2 rounded bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0">
+            <button className="mt-2 flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0">
               <AddIcon /> สร้างโครงงาน
             </button>
           }
@@ -32,7 +32,7 @@ function layout({ children }: Props) {
           <li className="me-2">
             <Link
               href="/teacher/consultant/pre-project"
-              className={`primary-hover inline-block rounded-t-lg border-b-2 p-4 text-primary1 ${pathname === '/teacher/consultant/pre-project' ? 'border-primary1' : 'border-transparent'}`}
+              className={`primary-hover inline-block rounded-md-t-lg border-b-2 p-4 text-primary1 ${pathname === '/teacher/consultant/pre-project' ? 'border-primary1' : 'border-transparent'}`}
             >
               เตรียมโครงงาน
             </Link>
@@ -40,7 +40,7 @@ function layout({ children }: Props) {
           <li className="me-2">
             <Link
               href="/teacher/consultant/project"
-              className={`inline-block rounded-t-lg border-b-2 p-4 text-primary1 ${pathname === '/teacher/consultant/project' ? 'border-primary1' : 'border-transparent'}`}
+              className={`inline-block rounded-md-t-lg border-b-2 p-4 text-primary1 ${pathname === '/teacher/consultant/project' ? 'border-primary1' : 'border-transparent'}`}
             >
               โครงงาน
             </Link>

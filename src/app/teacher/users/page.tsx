@@ -65,7 +65,7 @@ function Page({}: Props) {
         <h1 className="text-4xl font-bold text-primary1">จัดการบัญชีผู้ใช้</h1>
         <Link
           href="users/create"
-          className="mt-2 rounded bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0"
+          className="mt-2 rounded-md bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0"
         >
           เพิ่มผู้ใช้ใหม่
         </Link>
@@ -80,14 +80,14 @@ function Page({}: Props) {
           type="text"
           name="name"
           placeholder="ค้นหาชื่อ"
-          className="w-full rounded border p-2 md:w-auto"
+          className="w-full rounded-md border p-2 md:w-auto"
           value={name}
           onChange={e => setName(e.target.value)}
           onKeyDown={handleKeyPress}
         />
         <select
           name="role"
-          className="w-full rounded border p-2 md:w-auto"
+          className="w-full rounded-md border p-2 md:w-auto"
           value={role === undefined ? '' : role}
           onChange={e => setRole(parseInt(e.target.value) || undefined)}
         >
@@ -102,7 +102,7 @@ function Page({}: Props) {
             type="number"
             name="perPage"
             placeholder="จำนวนต่อหน้า"
-            className="ml-2 max-w-[75px] rounded border p-2 sm:max-w-[100px]"
+            className="ml-2 max-w-[75px] rounded-md border p-2 sm:max-w-[100px]"
             value={perPage}
             onChange={handlePerPageChange}
           />
@@ -110,7 +110,7 @@ function Page({}: Props) {
 
         <button
           type="submit"
-          className="w-full rounded bg-primary2-400 p-2 text-secondary1 shadow-md transition hover:bg-primary2-500 sm:w-auto"
+          className="w-full rounded-md bg-primary2-400 p-2 text-secondary1 shadow-md transition hover:bg-primary2-500 sm:w-auto"
         >
           ค้นหา
         </button>
@@ -123,7 +123,7 @@ function Page({}: Props) {
         </div>
       )}
       {data?.users && (
-        <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-lg">
+        <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md">
           <>
             <UsersTable usersData={data.users} />
             <div className="flex flex-row justify-between">

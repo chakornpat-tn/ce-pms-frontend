@@ -91,7 +91,7 @@ export function UploadDocsWithCommentsDialog(props: Props) {
                             setSelectedComments(selectedComments.filter(id => id !== comment.id))
                           }
                         }}
-                        className="rounded border-gray-300"
+                        className="rounded-md border-gray-300"
                       />
                       <span className="text-sm">{comment.content}</span>
                     </label>

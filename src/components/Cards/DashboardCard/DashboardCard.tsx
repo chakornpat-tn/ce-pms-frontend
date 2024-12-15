@@ -7,7 +7,7 @@ type Props = {
 
 const DashboardCard = ({}) => {
   return (
-    <div className="block max-w-sm rounded-lg border bg-white p-6">
+    <div className="block max-w-sm rounded-md border bg-white p-6">
       <div className="flex-1 truncate">
         <div className="flex items-center justify-between">
           <h3 className="max-w-48 truncate text-sm font-bold text-gray-800">
@@ -33,8 +33,8 @@ const ColumnCard = ({}) => {
   return (
     <div className="mt-4 flex flex-wrap">
       <div className="mb-6 w-full xl:mb-0 xl:w-6/12">
-        <div className="relative flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
-          <div className="mb-0 rounded-t border-0 px-4 py-3">
+        <div className="relative flex w-full min-w-0 flex-col break-words rounded-md bg-white shadow-lg">
+          <div className="mb-0 rounded-md-t border-0 px-4 py-3">
             <div className="flex flex-wrap items-center">
               <div className="relative w-full max-w-full flex-1 flex-grow px-4">
                 <h3 className="text-xl font-semibold">ตารางวันสอบ</h3>
@@ -104,8 +104,8 @@ const ColumnCard2 = () => {
   return (
     <div className="mt-4 flex flex-wrap">
       <div className="mb-6 w-full xl:mb-0 xl:w-6/12">
-        <div className="relative flex w-full min-w-0 flex-col break-words rounded bg-white shadow-lg">
-          <div className="rounded-t border-0 px-4 py-3">
+        <div className="relative flex w-full min-w-0 flex-col break-words rounded-md bg-white shadow-lg">
+          <div className="rounded-md-t border-0 px-4 py-3">
             <div className="flex flex-wrap items-center">
               <div className="relative w-full max-w-full flex-1 flex-grow px-4">
                 <h3 className="text-xl font-semibold">โครงงานทั้งหมดในวิชาเตรียมโครงงาน</h3>
@@ -138,7 +138,7 @@ const ColumnCard2 = () => {
                         เตรียมโครงงาน
                       </td>
                       <td className="whitespace-nowrap border-l-0 border-r-0 border-t-0 p-3 px-4 align-middle text-xs">
-                        <span className="rounded bg-yellow-400 px-3 py-1 text-white">
+                        <span className="rounded-md bg-yellow-400 px-3 py-1 text-white">
                           ยื่นส่งCEO2-อนุมัติแล้ว
                         </span>
                       </td>
