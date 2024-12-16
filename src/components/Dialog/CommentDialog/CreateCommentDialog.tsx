@@ -29,7 +29,7 @@ export function CreateCommentsDialog({
   const [comments, setComments] = useState<CreateCommentReq[]>([
     { content: '', projectDocumentId: projectDocsId },
   ])
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const [error, action, isPending] = useActionState(
     async (previousState: unknown, formData: FormData) => {
       try {

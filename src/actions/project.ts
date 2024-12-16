@@ -268,3 +268,54 @@ export async function UpdateProjectFormToken(
     throw error
   }
 }
+
+export async function updateMultipleProjects(
+  previousState: unknown,
+  formData: FormData,
+) {
+  try {
+    const idsString = formData.get('ids')?.toString()
+    if (!idsString) throw new Error('No data to update')
+    const ids = JSON.parse(idsString) as number[]
+    if (!Array.isArray(ids) || !ids.every(id => typeof id === 'number')) {
+      throw new Error('Invalid ids format. Expected array of numbers')
+    }
+    const semester = formData.get('semester')
+    const academicYear = formData.get('academicYear')
+    const type = formData.get('type')
+    const projectStatusId = formData.get('projectStatusId')
+    const courseStatus = formData.get('courseStatus')
+
+    const projectData = {
+      ids,
+      ...(semester && { semester: Number(semester) }),
+      ...(academicYear && { academicYear: Number(academicYear) }),
+      ...(type && { type: type as string }),
+      ...(projectStatusId && { projectStatusId: Number(projectStatusId) }),
+      ...(courseStatus && { courseStatus: Number(courseStatus) }),
+    }
+
+    if (Object.keys(projectData).length === 0) {
+      throw new Error('No data to update')
+    }
+
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    await useAPI('/v1/project', {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(projectData),
+    })
+
+    revalidatePath('/')
+  } catch (error) {
+    throw error
+  }
+}
