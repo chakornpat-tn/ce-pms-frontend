@@ -12,3 +12,8 @@ export type UpdateCommentsRequest = {
   content: string
   projectDocumentEditId: number | null
 }
+
+export type CreateCommentReq = {
+  content: string
+  projectDocumentId: number
+}
