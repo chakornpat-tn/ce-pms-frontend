@@ -7,14 +7,8 @@ import {
   UpdateProjectDocStatus,
 } from '@/actions/projectDocuments'
 import { Loader } from '@/components/Loading'
-import { UploadDocsDialog } from '@/components/Dialog'
-import {
-  CloudDownload as DownloadIcon,
-  Comment as CommentIcon,
-  CloudUpload as UploadIcon,
-  Description as DocumentIcon,
-  Message,
-} from '@mui/icons-material'
+import { CreateCommentsDialog } from '@/components/Dialog/CommentDialog/CreateCommentDialog'
+import { CloudDownload as DownloadIcon, Message } from '@mui/icons-material'
 import dayjs from 'dayjs'
 import { ListComment } from '@/actions/comment'
 import { CheckIcon } from 'lucide-react'
@@ -36,15 +30,11 @@ const DocsList = (props: Props) => {
     return []
   }
 
-  const projectComments = useSWR(
-    ['project-comment', projectId, documentId],
-    () => ListComment(projectId, documentId),
-  )
   const { data, isLoading, error, mutate } = useSWR(
     projectId && documentId
       ? [`/v1/project-document`, projectId, documentId]
       : null,
-    fetchDocs
+    fetchDocs,
   )
   if (isLoading)
     return (
@@ -93,32 +83,48 @@ const DocsList = (props: Props) => {
                 </div>
                 {index === 0 && (
                   <div className="mt-3 flex flex-row gap-2 md:ml-auto md:mt-0">
-                    <button
-                      className={`group rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.status === projectDocumentStatus.APPROVED ? 'bg-green-300' : 'bg-white hover:bg-green-300 hover:text-primary1'}`}
-                      disabled={doc.status === projectDocumentStatus.APPROVED}
-                      onClick={() =>
+                    {![
+                      projectDocumentStatus.REJECTED,
+                      projectDocumentStatus.APPROVED,
+                    ].includes(doc.status) && (
+                      <button
+                        className={`group rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.status === projectDocumentStatus.APPROVED ? 'bg-green-300' : 'bg-white hover:bg-green-300 hover:text-primary1'}`}
+                        disabled={doc.status === projectDocumentStatus.APPROVED}
+                        onClick={() =>
+                          UpdateProjectDocStatus(
+                            doc.id,
+                            projectDocumentStatus.APPROVED,
+                          ).then(() => {
+                            mutate()
+                          })
+                        }
+                      >
+                        <div className="flex flex-row items-center">
+                          <CheckIcon className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
+                          อนุมัติผ่าน
+                        </div>
+                      </button>
+                    )}
+
+                    <CreateCommentsDialog
+                      projectDocsId={doc.id}
+                      onSuccess={() =>
                         UpdateProjectDocStatus(
                           doc.id,
-                          projectDocumentStatus.APPROVED,
+                          projectDocumentStatus.REJECTED,
                         ).then(() => {
                           mutate()
                         })
                       }
-                    >
-                      <div className="flex flex-row items-center">
-                        <CheckIcon className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
-                        อนุมัติผ่าน
-                      </div>
-                    </button>{' '}
-                    <button
-                      className="primary-hover group rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-700 shadow-sm md:px-4 md:py-2 md:text-sm"
-                      onClick={() => {}}
-                    >
-                      <div className="flex flex-row items-center">
-                        <Message className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
-                        แนะนำเอกสาร
-                      </div>
-                    </button>
+                      trigger={
+                        <button className="primary-hover group rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-700 shadow-sm md:px-4 md:py-2 md:text-sm">
+                          <div className="flex flex-row items-center">
+                            <Message className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
+                            แนะนำเอกสาร
+                          </div>
+                        </button>
+                      }
+                    />
                   </div>
                 )}
               </div>
@@ -152,13 +158,13 @@ const DocsList = (props: Props) => {
                 </div>
                 {doc.CommentBasedEdits && doc.CommentBasedEdits.length > 0 && (
                   <div className="rounded-md bg-gray-100 p-3 md:p-4">
-                    <p className="mb-2 text-xs font-semibold text-gray-700 md:text-sm">
+                    <p className="mb-2 text-sm font-semibold text-gray-700 md:text-base">
                       หัวข้อที่ทำการแก้ไข
                     </p>
                     {doc.CommentBasedEdits.map((editComment, index) => (
                       <p
                         key={index}
-                        className="ml-3 text-xs text-gray-600 md:ml-4 md:text-sm"
+                        className="ml-3 text-sm text-gray-600 md:ml-4 md:text-base"
                       >
                         - {editComment.content}
                       </p>
@@ -168,20 +174,20 @@ const DocsList = (props: Props) => {
                 {doc.comments && doc.comments.length > 0 && (
                   <div className="border-t pt-3 md:pt-4">
                     <div>
-                      <p className="mb-2 text-xs font-semibold text-gray-700 md:text-sm">
+                      <p className="mb-2 text-sm font-semibold text-gray-700 md:text-base">
                         ความคิดเห็น
                       </p>
                       {doc.comments.map((comment, index) => (
                         <p
                           key={index}
-                          className="ml-3 text-xs text-gray-600 md:ml-4 md:text-sm"
+                          className="ml-3 text-sm text-gray-600 md:ml-4 md:text-base"
                         >
                           - {comment.content}
                         </p>
                       ))}
                     </div>
                   </div>
-                )}
+                )}{' '}
               </div>
             </div>
           ))}
