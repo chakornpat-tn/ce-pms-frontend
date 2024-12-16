@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
 import TeacherProjectTable from '@/components/Tables/ProjectTable/TeacherProjectTable'
 import Course from '@/constants/course/course'
+import course from '@/constants/course/course'
 
 type Props = {}
 
@@ -28,15 +29,11 @@ function page({}: Props) {
     return res
   }
 
-  const { data, isLoading, mutate } = useSWR(
-    `/v1/project`,
-    fetchData,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  )
+  const { data, isLoading, mutate } = useSWR(`/v1/project`, fetchData, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  })
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -64,7 +61,12 @@ function page({}: Props) {
         course={Course.Project}
       />
       {/* Search Results */}
-      <TeacherProjectTable data={data} loading={isLoading} />
+      <TeacherProjectTable
+        courseList={course.Project}
+        data={data}
+        loading={isLoading}
+        mutate={mutate}
+      />
     </>
   )
 }
