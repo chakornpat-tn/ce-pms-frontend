@@ -1,6 +1,6 @@
 'use client'
 import { TuneRounded, Send } from '@mui/icons-material'
-
+import { UpdateCourseStatusDialog } from '@/components/Dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { UpdateStatusDialog } from '@/components/Dialog/StatusDialog/UpdateStatusDialog'
-
+import courseStatus from '@/constants/course/courseStatus'
 
 type Props = {
   children: React.ReactNode
@@ -44,10 +44,19 @@ export function ProjectManagementMenu({
             </UpdateStatusDialog>
           </div>
           <div className="primary-hover flex cursor-pointer justify-start px-2 py-1">
-            <div className="flex items-center gap-2">
-              <Send />
-              <span>ส่งไปยังวิชาโครงงาน</span>
-            </div>
+            {courseList === courseStatus.PreProject && (
+              <UpdateCourseStatusDialog
+                newCourseStatus={courseStatus.PassPre}
+                ids={idSelection}
+                onSuccess={onSuccess}
+                nullOnSuccess={true}
+              >
+                <div className="flex items-center gap-2">
+                  <Send />
+                  <span>ผ่านวิชาเตรียมโครงงาน</span>
+                </div>
+              </UpdateCourseStatusDialog>
+            )}
           </div>
         </DropdownMenuGroup>
       </DropdownMenuContent>

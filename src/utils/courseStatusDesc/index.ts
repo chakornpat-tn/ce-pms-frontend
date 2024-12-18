@@ -6,7 +6,7 @@ export const CourseStatusDesc = (status:number) => {
         case courseStatus.ApprovePreExam:
             return 'อนุมัติสอบหัวข้อโครงงาน'
         case courseStatus.PassPre:
-            return 'ผ่านสอบหัวข้อโครงงาน'
+            return 'ผ่านการสอบหัวข้อโครงงาน'
         case courseStatus.Project:
             return 'ดำเนินโครงงาน'
         case courseStatus.ApproveProjectExam:
