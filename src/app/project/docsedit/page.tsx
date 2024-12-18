@@ -1,7 +1,7 @@
 'use client'
-import { GetProjectFormToken } from '@/actions/project'
-import userProjectRole from '@/constants/userProjectRole/userProjectRole'
+import { GetProjectFormToken, UpdateProjectFormToken } from '@/actions/project'
 import useSWR from 'swr'
+import React, { useState } from 'react'
 
 const handleResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.target.style.height = 'auto'
@@ -9,22 +9,43 @@ const handleResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 }
 
 export default function DocsEdit() {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
-const fetcher = async () => {
-  const data = await GetProjectFormToken()
-  return data
-}
+  const fetcher = async () => {
+    const data = await GetProjectFormToken()
+    return data
+  }
 
-const {data, error} = useSWR('project-form-token', fetcher)
+  const { data, error } = useSWR('project-form-token', fetcher)
 
-  if( error ) return <> error </>
+  if (error) return <>Error loading data</>
   if (!data) {
     return <div>Loading...</div>
   }
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitError(null)
+    setSuccessMessage(null)
+
+    const formData = new FormData(e.currentTarget)
+
+    try {
+      await UpdateProjectFormToken(data, formData)
+      setSuccessMessage('Project updated successfully!')
+    } catch (error: any) {
+      setSubmitError(error.message || 'Failed to update project.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <section className="relative mt-0 overflow-x-auto bg-white p-10 shadow-md sm:rounded">
-      <form className="container mx-auto max-w-3xl">
+      <form className="container mx-auto max-w-3xl" onSubmit={handleSubmit}>
         <input type="hidden" name="id" value={data.id || ''} />
         <h1 className="mb-6 text-center text-xl md:text-3xl">
           <input
@@ -87,39 +108,19 @@ const {data, error} = useSWR('project-form-token', fetcher)
                 rows={1}
               />
             </div>
-            {/* <div className="flex flex-col">
-                
-              {data.users.filter(
-                user => user.userProjectRole == userProjectRole.CO_ADVISOR,
-              ).length > 0 && (
-                <div className="flex flex-col mt-6">
-                  <h3 className="mb-2 font-bold">อาจารย์ที่ปรึกษาร่วม</h3>
-                  <select
-                    name="coAdvisor"
-                    className="w-full rounded border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
-                  >
-                    {data.users
-                      .filter(
-                        user =>
-                          user.userProjectRole == userProjectRole.CO_ADVISOR,
-                      )
-                      .map(userData => (
-                        <option key={userData.user.id} value={userData.user.id}>
-                          {userData.user.name}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-              )}
-            </div> */}
           </div>
         </div>
         <button
           type="submit"
-          className="hover:bg-primary2-600 mt-8 w-full rounded bg-primary2-500 px-6 py-3 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-primary2-500 focus:ring-offset-2"
+          className={`hover:bg-primary2-600 mt-8 w-full rounded bg-primary2-500 px-6 py-3 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-primary2-500 focus:ring-offset-2 ${
+            isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+          disabled={isSubmitting}
         >
-          บันทึกข้อมูล
+          {isSubmitting ? 'Saving...' : 'บันทึกข้อมูล'}
         </button>
+        {submitError && <p className="mt-4 text-red-500">{submitError}</p>}
+        {successMessage && <p className="mt-4 text-green-500">{successMessage}</p>}
       </form>
     </section>
   )
