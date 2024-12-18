@@ -71,7 +71,12 @@ export default async function Page({}: Props) {
           <div className="mb-4 border-b border-primary2-400"></div>
           <div className="flex w-full flex-col gap-2 text-sm md:text-base">
             <div className="flex flex-col">
-              <h3 className="mt-4 font-bold">การดำเนินการ</h3>
+              <div className="flex items-center justify-between">
+                <h3 className="mt-4 font-bold">การดำเนินการ</h3>
+                <button className="rounded bg-primary1 px-3 py-1 text-xs text-white md:px-4 md:text-base">
+                  <Link href="/project/docsedit">แก้ไขเอกสาร</Link>
+                </button>
+              </div>
               <p className="text-gray-500">
                 {CourseStatusDesc(Number(data.courseStatus))}
               </p>
@@ -124,6 +129,16 @@ export default async function Page({}: Props) {
               <h3 className="mb-2 font-bold">Abstract</h3>
               <p className="text-gray-500">
                 {data.abstractEng ?? 'ไม่ได้ระบุ'}
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="mb-2 font-bold">รายละเอียด</h3>
+              <p className="mb-4 text-gray-500">
+                {data.detail ?? 'ไม่ได้ระบุ'}
+              </p>
+              <h3 className="mb-2 font-bold">Detail</h3>
+              <p className="text-gray-500">
+                {data.detailEng ?? 'ไม่ได้ระบุ'}
               </p>
             </div>
             <div className="flex flex-col">

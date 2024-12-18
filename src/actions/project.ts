@@ -196,3 +196,35 @@ export async function GetProjectFormToken(): Promise<ProjectByIDRes> {
     throw error
   }
 }
+
+export async function UpdateProjectFormToken(projectId: number, updateData: Partial<ProjectByIDRes>): Promise<ProjectByIDRes> {
+  try {
+    const Cookie = await cookies();
+    const token = Cookie.get('token');
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.');
+    }
+
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET);
+    const { payload } = await jwtVerify(token.value, secret);
+
+    if (!payload.id || Number(payload.id) !== projectId) {
+      throw new Error('Token payload is invalid or does not match the project ID.');
+    }
+
+    const url = `/v1/project/${projectId}`;
+
+    const res = await useAPI<{ data: ProjectByIDRes }>(url, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updateData),
+    });
+
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+}
