@@ -291,7 +291,10 @@ export async function updateMultipleProjects(
       ...(semester && { semester: Number(semester) }),
       ...(academicYear && { academicYear: Number(academicYear) }),
       ...(type && { type: type as string }),
-      ...(projectStatusId && { projectStatusId: Number(projectStatusId) }),
+      ...(projectStatusId && {
+        projectStatusId:
+          projectStatusId === 'null' ? null : Number(projectStatusId),
+      }),
       ...(courseStatus && { courseStatus: Number(courseStatus) }),
     }
 
@@ -305,14 +308,16 @@ export async function updateMultipleProjects(
       throw new Error('Authentication token is missing.')
     }
 
-    await useAPI('/v1/project', {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${token.value}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(projectData),
-    })
+    if (projectData.ids.length !== 0) {
+      await useAPI('/v1/project', {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(projectData),
+      })
+    }
 
     revalidatePath('/')
   } catch (error) {
