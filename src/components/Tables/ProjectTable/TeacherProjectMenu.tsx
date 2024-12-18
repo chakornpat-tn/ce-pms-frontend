@@ -49,7 +49,7 @@ function TeacherProjectMenu({ projectId, projectName }: Props) {
         }}
       >
         <MenuItem className="text-primary1" onClick={handleClose}>
-          <Link href={`pre-project/update/${projectId}`}>
+          <Link href={`update/${projectId}`}>
             <EditIcon fontSize="small" className="mr-1" />
             แก้ไข
           </Link>
