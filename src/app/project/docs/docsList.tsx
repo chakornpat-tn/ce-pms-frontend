@@ -58,29 +58,26 @@ const DocsList = (props: Props) => {
     <>
       {data && data.length > 0 ? (
         <section className="list-disc pl-2 md:pl-6">
+          <div className="flex w-full justify-center">
+            <UploadDocsWithCommentsDialog
+              projectId={projectId}
+              documentId={documentId}
+              documentName={`${documentName}-v.${data.length + 1}`}
+              trigger={
+                <div className="w-full flex justify-center rounded-md bg-primary2-400 p-2 transition-colors duration-200 hover:bg-primary2-500">
+                  <button className="flex items-center gap-2 text-white">
+                    <UploadIcon className="h-5 w-5" />
+                    <p className="text-xs md:text-base">อัพโหลดเอกสารใหม่</p>
+                  </button>
+                </div>
+              }
+            />
+          </div>
           {data.map((doc: ProjectDocumentRes, index: number) => (
             <div
               key={doc.id}
               className="relative mt-4 min-h-[100px] w-full rounded-md border bg-white p-3 shadow-sm transition-all duration-200 hover:shadow-md md:mt-6 md:p-6"
             >
-              {index === 0 && doc.comments && projectComments.data && (
-                <UploadDocsWithCommentsDialog
-                  projectId={projectId}
-                  documentId={documentId}
-                  documentName={`${documentName}-v.${data.length + 1}`}
-                  trigger={
-                    <div className="absolute -top-5 right-4 rounded-md bg-orange-300 px-4 py-1 transition-colors duration-200 hover:bg-orange-400">
-                      <button className="flex items-center gap-2 text-primary2-400 transition-colors duration-200 hover:text-primary2-500">
-                        <UploadIcon className="h-5 w-5" />
-                        <p className="text-xs md:text-base">
-                          อัพโหลดเอกสารใหม่
-                        </p>
-                      </button>
-                    </div>
-                  }
-                />
-              )}
-
               {/* content  */}
               <div className="mb-3 flex items-center gap-3">
                 <div className="flex items-center gap-3 text-primary2-500">

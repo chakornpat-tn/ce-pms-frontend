@@ -69,7 +69,10 @@ const TeacherProjectTable: React.FC<Props> = ({
           <ProjectManagementMenu
           courseList={courseList}
             idSelection={selectedIds}
-            onSuccess={mutate}
+            onSuccess={ () => {
+              mutate()
+              setSelectedIds([])
+            }}
           >
             <button className="w-full rounded-md bg-primary2-400 px-3 py-1.5 text-sm text-white transition-colors hover:bg-primary2-500 md:w-auto md:px-4 md:py-2 md:text-base">
               จัดการโครงงาน

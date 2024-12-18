@@ -1,67 +1,50 @@
-import { ButtonWithArrow, SmallButtonWithArrow } from '@/components/Buttons'
-import { Presentprojectcard } from '@/components/Cards'
-export default function selectproject() {
+'use client'
+import { useEffect, useState } from 'react'
+import PreProject from './pre-project/page'
+import Project from './project/page'
+import Regis from './regis/page'
+export default function SelectProject() {
+  const [activeTab, setActiveTab] = useState('pre-project')
+
   return (
-    <div className="min-h-screen bg-bg_primary">
-      <div className="max-2xl mx-auto my-5 text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-black sm:text-4xl">
-          โครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์
-        </h2>
+    <div className="">
+      <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
+        <h1 className="text-2xl font-bold text-primary1 md:text-4xl">
+          คุมสอบโครงงาน
+        </h1>
       </div>
-      <div className="flex w-auto justify-center">
-        <div className="py-2">
-          <h5 className="mb-4 text-2xl text-gray-900">
-            โครงงานที่ยังขาดกรรมการสอบ
-          </h5>
-          <div className="mb-4 mt-4 flex flex-wrap justify-end">
-            <SmallButtonWithArrow
-              Title={'ดูโครงงานที่เป็นกรรมการสอบ'}
-              path={'/teacher/present/mypresent'}
-            />
-          </div>
-          <div className="grid h-full grid-cols-1 gap-4 md:grid-cols-3">
-            <Presentprojectcard
-              path="#"
-              Title={''}
-              showButton={true}
-              showStatus={true}
-              Status={''}
-            />
-            <Presentprojectcard
-              path="#"
-              Title={''}
-              showButton={true}
-              showStatus={true}
-              Status={''}
-            />
-            <Presentprojectcard
-              path="#"
-              Title={''}
-              showButton={true}
-              showStatus={true}
-              Status={''}
-            />
-            <Presentprojectcard
-              path="#"
-              Title={''}
-              showButton={true}
-              showStatus={true}
-              Status={''}
-            />
-            <Presentprojectcard
-              path="#"
-              Title={''}
-              showButton={true}
-              showStatus={true}
-              Status={''}
-            />
-            <Presentprojectcard
-              path="#"
-              Title={''}
-              showButton={true}
-              showStatus={true}
-              Status={''}
-            />
+      <div className="h-full min-h-[80dvh] w-full rounded-md bg-white shadow-md">
+        <div className="my-[15px] w-full rounded-md bg-white shadow-sm">
+          <ul className="-mb-px flex flex-wrap">
+            <li className="me-2">
+              <button
+                onClick={() => setActiveTab('pre-project')}
+                className={`primary-hover inline-block rounded-t-lg border-b-2 p-4 text-primary1 ${activeTab === 'pre-project' ? 'border-primary1' : 'border-transparent'}`}
+              >
+                เตรียมโครงงาน
+              </button>
+            </li>
+            <li className="me-2">
+              <button
+                onClick={() => setActiveTab('project')}
+                className={`primary-hover inline-block rounded-t-lg border-b-2 p-4 text-primary1 ${activeTab === 'project' ? 'border-primary1' : 'border-transparent'}`}
+              >
+                โครงงาน
+              </button>
+            </li>
+            <li className="me-2">
+              <button
+                onClick={() => setActiveTab('regis-pre-project')}
+                className={`primary-hover inline-block rounded-t-lg border-b-2 p-4 text-primary1 ${activeTab === 'regis-pre-project' ? 'border-primary1' : 'border-transparent'}`}
+              >
+                ลงทะเบียนเป็นกรรมการ
+              </button>
+            </li>
+          </ul>
+          <div className="flex flex-row items-center justify-center p-4">
+            {activeTab === 'pre-project' && <PreProject />}
+            {activeTab === 'project' && <Project />}
+            {activeTab === 'regis-pre-project' && <Regis />}
           </div>
         </div>
       </div>
