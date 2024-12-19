@@ -202,6 +202,29 @@ export async function GetProjectFormToken(): Promise<ProjectByIDRes> {
   }
 }
 
+export async function GetProjectByID(projectId:number): Promise<ProjectByIDRes> {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const url = `/v1/project/${projectId}`
+
+    const res = await useAPI<{ data: ProjectByIDRes }>(url, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
+
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
 export async function UpdateProjectFormToken(
   previousState: unknown,
   formData: FormData,

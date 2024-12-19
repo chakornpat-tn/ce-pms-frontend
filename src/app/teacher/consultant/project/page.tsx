@@ -10,6 +10,10 @@ import { Loader } from '@/components/Loading'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import ProjectMenu from '@/components/Tables/ProjectTable/TeacherProjectMenu'
 import { ProjectStatusBadge } from '@/components/Badge'
+import { ProjectDetailDialog } from '@/components/Dialog'
+import userRoles from '@/constants/userRoles/userRoles'
+import course from '@/constants/course/course'
+import { CourseStatusDesc } from '@/utils/courseStatusDesc'
 
 type Props = {}
 
@@ -22,6 +26,7 @@ type Project = {
     bgColor: string
     textColor: string
   }
+  courseStatus: number
 }
 
 function page({}: Props) {
@@ -75,7 +80,7 @@ function page({}: Props) {
     }
 
     return (
-    <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md">
+      <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md">
         <article>
           <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
             <h2 className="mb-4 text-xl font-bold md:mb-0 md:text-2xl">
@@ -96,6 +101,9 @@ function page({}: Props) {
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
                     สถานะ
                   </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
+                    ดำเนินการ
+                  </th>
                   <th scope="col" className="relative px-6 py-3">
                     <span className="sr-only">Edit</span>
                   </th>
@@ -105,9 +113,17 @@ function page({}: Props) {
                 {data &&
                   data.map(project => (
                     <tr key={project.id} className="hover:bg-gray-100">
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {project.projectName}
-                      </td>
+                      <ProjectDetailDialog
+                        projectId={project.id}
+                        userRole={userRoles.Teacher}
+                        courseMenu={course.Project}
+                        onSuccess={mutate}
+                      >
+                        <td className="cursor-pointer whitespace-nowrap px-6 py-4 hover:underline">
+                          {project.projectName}
+                        </td>
+                      </ProjectDetailDialog>
+
                       <td className="flex items-center whitespace-nowrap px-6 py-4">
                         {project.username}
                         <button
@@ -118,7 +134,14 @@ function page({}: Props) {
                         </button>
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        <ProjectStatusBadge textColor={project.projectStatus?.textColor} bgColor={project.projectStatus?.bgColor} name={project.projectStatus?.name} />
+                        <ProjectStatusBadge
+                          textColor={project.projectStatus?.textColor}
+                          bgColor={project.projectStatus?.bgColor}
+                          name={project.projectStatus?.name}
+                        />
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        {CourseStatusDesc(project.courseStatus)}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-primary1">
                         <ProjectMenu

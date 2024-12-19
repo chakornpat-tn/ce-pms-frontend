@@ -64,9 +64,9 @@ export function UpdateStatusDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-h-[90vh] w-dvw bg-white">
         <DialogHeader>
-          <DialogTitle>อัพเดทสถานะโครงงาน</DialogTitle>
+          <DialogTitle>อัปเดตสถานะโครงงาน</DialogTitle>
           <DialogDescription>
-            อัพเดทสถานะโครงงานทั้งหมดที่เลือก
+            อัปเดตสถานะโครงงานทั้งหมดที่เลือก
           </DialogDescription>
         </DialogHeader>
         <form action={action} className="space-y-4">
@@ -135,7 +135,7 @@ export function UpdateStatusDialog({
             type="submit"
             className="w-[100%] rounded-md bg-primary2-400 px-4 py-2 text-secondary1 hover:bg-primary2-500"
           >
-            {isPending ? 'อัพเดท....' : 'อัพเดท'}
+            {isPending ? 'อัปเดต....' : 'อัปเดต'}
           </button>
         </form>
       </DialogContent>

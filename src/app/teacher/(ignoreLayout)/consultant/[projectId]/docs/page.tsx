@@ -14,11 +14,12 @@ import { Document } from '@/models/Document'
 import { ListDocumentInProject } from '@/actions/documents'
 import { Loader } from '@/components/Loading'
 import DocsList from './docsList'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import course from '@/constants/course/course'
 
 const ProjectPage = () => {
   const params = useParams<{ projectId: string }>()
+  const router = useRouter()
   const projectId = params.projectId
   const fetcher = (key: string, ...args: any[]) => {
     if (key === 'project') {
@@ -93,14 +94,50 @@ const ProjectPage = () => {
   )
     return (
       <div className="relative mt-0 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md sm:p-10">
+        <button
+          onClick={() => router.back()}
+          className="mb-4 flex items-center text-gray-600 hover:text-gray-900"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+          ย้อนกลับ
+        </button>
         <article className="mx-auto text-center">
-          ไม่สามารถตรวจสอบเอกสารได้ในขณะนี้
+        ไม่มีเอกสารที่ส่งมาให้ตรวจสอบ
         </article>
       </div>
     )
 
   return (
     <section className="relative mt-0 min-h-[calc(100dvh-10dvh)] overflow-x-auto bg-white p-4 shadow-md sm:rounded-md sm:p-10">
+      <button
+        onClick={() => router.back()}
+        className="mb-4 flex items-center text-gray-600 hover:text-gray-900"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5 mr-2"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+        ย้อนกลับ
+      </button>
       <article className="flex flex-col items-center">
         <div className="flex w-full flex-col items-center justify-center space-y-4 px-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-4">
           <div className="w-full max-w-screen-md px-2 sm:w-1/2 sm:px-0">

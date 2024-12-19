@@ -39,7 +39,7 @@ export function ProjectManagementMenu({
             >
               <div className="flex items-center gap-2">
                 <TuneRounded />
-                <span>อัพเดทสถานะ</span>
+                <span>อัปเดตสถานะ</span>
               </div>
             </UpdateStatusDialog>
           </div>

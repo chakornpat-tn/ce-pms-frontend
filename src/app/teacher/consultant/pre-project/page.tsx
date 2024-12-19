@@ -10,6 +10,10 @@ import { Loader } from '@/components/Loading'
 import ProjectMenu from '@/components/Tables/ProjectTable/TeacherProjectMenu'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { ProjectStatusBadge } from '@/components/Badge'
+import { ProjectDetailDialog } from '@/components/Dialog'
+import userRoles from '@/constants/userRoles/userRoles'
+import course from '@/constants/course/course'
+import { CourseStatusDesc } from '@/utils/courseStatusDesc'
 
 type Props = {}
 
@@ -22,6 +26,7 @@ type Project = {
     bgColor: string
     textColor: string
   }
+  courseStatus: number
 }
 function page({}: Props) {
   const currentYear = new Date().getFullYear() + 543
@@ -47,6 +52,7 @@ function page({}: Props) {
   const { data, isLoading, mutate } = useSWR(
     [`consultant-pre-project`, []],
     fetchData,
+    { revalidateOnFocus: false, revalidateOnReconnect: false },
   )
 
   const handleSearch = (e: React.FormEvent) => {
@@ -97,6 +103,9 @@ function page({}: Props) {
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
                     สถานะ
                   </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 md:text-base">
+                    ดำเนินการ
+                  </th>
                   <th scope="col" className="relative px-6 py-3">
                     <span className="sr-only">Edit</span>
                   </th>
@@ -106,9 +115,17 @@ function page({}: Props) {
                 {data &&
                   data.map(project => (
                     <tr key={project.id} className="hover:bg-gray-100">
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {project.projectName}
-                      </td>
+                      <ProjectDetailDialog
+                        projectId={project.id}
+                        userRole={userRoles.Teacher}
+                        courseMenu={course.PreProject}
+                        onSuccess={mutate}
+                      >
+                        <td className="cursor-pointer whitespace-nowrap px-6 py-4 hover:underline">
+                          {project.projectName}
+                        </td>
+                      </ProjectDetailDialog>
+
                       <td className="flex items-center whitespace-nowrap px-6 py-4">
                         {project.username}
                         <button
@@ -124,6 +141,9 @@ function page({}: Props) {
                           bgColor={project.projectStatus?.bgColor}
                           name={project.projectStatus?.name}
                         />
+                      </td>
+                      <td className="whitespace-nowrap px-6 py-4">
+                        {CourseStatusDesc(project.courseStatus)}
                       </td>
                       <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-primary1">
                         <ProjectMenu
