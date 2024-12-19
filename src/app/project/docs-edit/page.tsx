@@ -2,13 +2,15 @@
 import { GetProjectFormToken, UpdateProjectFormToken } from '@/actions/project'
 import useSWR from 'swr'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 const handleResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    e.target.style.height = 'auto'
-    e.target.style.height = `${e.target.scrollHeight}px`
+  e.target.style.height = 'auto'
+  e.target.style.height = `${e.target.scrollHeight}px`
 }
 
 export default function DocsEdit() {
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
@@ -44,7 +46,25 @@ export default function DocsEdit() {
   }
 
   return (
-    <section className="relative mt-0 overflow-x-auto bg-white p-10 shadow-md sm:rounded">
+    <section className="relative min-h-[90dvh] mt-0 overflow-x-auto bg-white p-10 shadow-md rounded">
+      <button
+        onClick={() => router.back()}
+        className="mb-4 flex items-center text-gray-600 hover:text-gray-900"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="mr-2 h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+            clipRule="evenodd"
+          />
+        </svg>
+        ย้อนกลับ
+      </button>
       <form className="container mx-auto max-w-3xl" onSubmit={handleSubmit}>
         <input type="hidden" name="id" value={data.id || ''} />
         <h1 className="mb-6 text-center text-xl md:text-3xl">
@@ -113,14 +133,16 @@ export default function DocsEdit() {
         <button
           type="submit"
           className={`hover:bg-primary2-600 mt-8 w-full rounded bg-primary2-500 px-6 py-3 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-primary2-500 focus:ring-offset-2 ${
-            isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            isSubmitting ? 'cursor-not-allowed opacity-50' : ''
           }`}
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Saving...' : 'บันทึกข้อมูล'}
         </button>
         {submitError && <p className="mt-4 text-red-500">{submitError}</p>}
-        {successMessage && <p className="mt-4 text-green-500">{successMessage}</p>}
+        {successMessage && (
+          <p className="mt-4 text-green-500">{successMessage}</p>
+        )}
       </form>
     </section>
   )

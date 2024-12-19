@@ -2,6 +2,7 @@
 
 import config from '@/config'
 import { ListProjectFilterQuery, ProjectRes } from '@/models/Project'
+import { CheckRegisExamDateRes } from '@/models/ProjectUser'
 import useAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
@@ -115,7 +116,8 @@ export async function GetProjectInCommittee(req: ListProjectFilterQuery) {
   }
 }
 
-export async function GetProjectInCompleteUsers(req: ListProjectFilterQuery) {  try {
+export async function GetProjectInCompleteUsers(req: ListProjectFilterQuery) {
+  try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
     if (!token?.value) {
@@ -140,6 +142,29 @@ export async function GetProjectInCompleteUsers(req: ListProjectFilterQuery) {  
       },
     })
 
+    return res.data
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || 'Failed to fetch project list.',
+    )
+  }
+}
+
+export async function CheckStatusRegisExamDateTime(projectId: number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const url = `/v1/project-user/check-regis-exam-date/${projectId}`
+    const res = await useAPI<{data:CheckRegisExamDateRes}>(url,{
+     headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
     return res.data
   } catch (error: any) {
     throw new Error(

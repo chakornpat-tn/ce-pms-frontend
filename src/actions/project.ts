@@ -10,6 +10,7 @@ import {
   UpdateProjectRequest,
 } from '@/models/Project'
 import useAPI from '@/utils/useAPI'
+import dayjs from 'dayjs'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
@@ -202,7 +203,9 @@ export async function GetProjectFormToken(): Promise<ProjectByIDRes> {
   }
 }
 
-export async function GetProjectByID(projectId:number): Promise<ProjectByIDRes> {
+export async function GetProjectByID(
+  projectId: number,
+): Promise<ProjectByIDRes> {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
@@ -248,7 +251,9 @@ export async function UpdateProjectFormToken(
     const projectStatusId = formData.get('projectStatusId')
     const courseStatus = formData.get('courseStatus')
     const password = formData.get('password')
-    const examDateTime = formData.get('examDateTime')
+    const examDateTime = dayjs(String(formData.get('examDateTime'))).format(
+      'YYYY-MM-DD HH:mm:ss.SSS',
+    )
 
     const projectData: UpdateProjectRequest = {
       ...(projectName && { projectName: projectName as string }),
@@ -287,6 +292,8 @@ export async function UpdateProjectFormToken(
       },
       body: JSON.stringify(projectData),
     })
+
+    revalidatePath('/')
   } catch (error) {
     throw error
   }

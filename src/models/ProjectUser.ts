@@ -16,6 +16,11 @@ export type UpdateProjectUserRequest = {
   projectId: number
   userId: number
   userProjectRole?: number
-  projectDocs?: string 
-  prepDocs?: string 
+  projectDocs?: string
+  prepDocs?: string
+}
+
+export type CheckRegisExamDateRes = {
+  projectExamApprove: boolean
+  projectCommitteeCountApprove: boolean
 }
