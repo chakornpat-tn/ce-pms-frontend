@@ -9,6 +9,7 @@ import { ProjectStatusBadge } from '@/components/Badge'
 import { ProjectManagementMenu } from '@/components/DropdownMenu'
 import { UpdateProjectsRequest } from '@/models/Project'
 import { CourseStatusDesc } from '@/utils/courseStatusDesc'
+import { ProjectDetailDialog } from '@/components/Dialog'
 
 type Project = {
   id: number
@@ -26,6 +27,7 @@ type Props = {
   data: Project[] | undefined
   loading: boolean
   courseList: number
+  userRole:number
   mutate: () => void
 }
 
@@ -33,6 +35,7 @@ const TeacherProjectTable: React.FC<Props> = ({
   data,
   loading,
   courseList,
+  userRole,
   mutate,
 }) => {
   const [selectedIds, setSelectedIds] = useState<number[]>([])
@@ -116,9 +119,17 @@ const TeacherProjectTable: React.FC<Props> = ({
                         onChange={() => handleSelect(project.id)}
                       />
                     </td>
-                    <td className="whitespace-nowrap px-6 py-4">
-                      {project.projectName}
-                    </td>
+                    <ProjectDetailDialog
+                        projectId={project.id}
+                        userRole={userRole}
+                        courseMenu={courseList}
+                        onSuccess={mutate}
+                      >
+                        <td className="cursor-pointer whitespace-nowrap px-6 py-4 hover:underline">
+                          {project.projectName}
+                        </td>
+                      </ProjectDetailDialog>
+
                     <td className="flex items-center whitespace-nowrap px-6 py-4">
                       {project.username}
                       <button

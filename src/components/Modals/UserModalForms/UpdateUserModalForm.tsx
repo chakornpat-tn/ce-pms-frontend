@@ -141,7 +141,7 @@ function UpdateUserModalForm({ children, handleClose }: Props) {
           type="submit"
           className=" mt-2 w-2/5 rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500"
         >
-          อัพเดท
+          อัปเดต
         </button>
         <button
           type="button"

@@ -47,7 +47,7 @@ export function UpdateCourseStatusDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-h-[90vh] w-dvw bg-white">
         <DialogHeader>
-          <DialogTitle>อัพเดทสถานะดำเนินการ</DialogTitle>
+          <DialogTitle>อัปเดตสถานะดำเนินการ</DialogTitle>
         </DialogHeader>
         <form action={action} className="space-y-4">
           <input type="hidden" name="ids" value={JSON.stringify(ids)} />
@@ -56,7 +56,7 @@ export function UpdateCourseStatusDialog({
             <input type="hidden" name="projectStatusId" value={'null'} />
           )}
           <div className="w-full max-w-screen-md px-2">
-            อัพเดทสถานะดำเนิการเป็น
+            อัปเดตสถานะดำเนิการเป็น
             <span className="font-semibold">
               {' '}
               "{CourseStatusDesc(newCourseStatus)}"{' '}
@@ -75,7 +75,7 @@ export function UpdateCourseStatusDialog({
               disabled={isPending}
               className="rounded-md bg-primary2-400 px-4 py-2 text-secondary1 transition-colors duration-200 hover:bg-primary2-500"
             >
-              {isPending ? 'อัพเดท...' : 'อัพเดท'}
+              {isPending ? 'อัปเดต...' : 'อัปเดต'}
             </button>
           </div>
         </form>

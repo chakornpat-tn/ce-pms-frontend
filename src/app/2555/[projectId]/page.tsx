@@ -53,7 +53,7 @@ export default function page({}: Props) {
               make the pork larb menu together!
             </p>
             <p className="mb-5">
-              <span className="font-bold"> อัพเดทล่าสุดโดย :</span> นาย ไฟแดง
+              <span className="font-bold"> อัปเดตล่าสุดโดย :</span> นาย ไฟแดง
               แซงไฟเขียว
             </p>
           </section>

@@ -19,7 +19,7 @@ const Page = () => {
           action={async (formData: FormData) => {
             if (password === confirmPassword) {
               await UpdateProjectFormToken('', formData)
-              toast.success('อัพเดทรหัสผ่านเสร็จสิ้น')
+              toast.success('อัปเดตรหัสผ่านเสร็จสิ้น')
               redirect('/project')
             }
           }}

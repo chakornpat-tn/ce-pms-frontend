@@ -9,6 +9,7 @@ import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilte
 import TeacherProjectTable from '@/components/Tables/ProjectTable/TeacherProjectTable'
 import Course from '@/constants/course/course'
 import course from '@/constants/course/course'
+import userRoles from '@/constants/userRoles/userRoles'
 
 type Props = {}
 
@@ -63,6 +64,7 @@ function page({}: Props) {
       {/* Search Results */}
       <TeacherProjectTable
         courseList={course.Project}
+        userRole={userRoles.ProjectTeacher}
         data={data}
         loading={isLoading}
         mutate={mutate}

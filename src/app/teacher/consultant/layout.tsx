@@ -27,7 +27,7 @@ function layout({ children }: Props) {
           }
         />
       </div>
-      <div className="my-[15px] w-full rounded-md bg-white shadow-sm">
+      <div className="my-[15px] w-full rounded-md bg-white roundedmin-h-[80dvh]  min-h-[80dvh] shadow-sm">
         <ul className="-mb-px flex flex-wrap">
           <li className="me-2">
             <Link
@@ -46,7 +46,7 @@ function layout({ children }: Props) {
             </Link>
           </li>
         </ul>
-        <div className="flex flex-row items-center justify-center p-4">
+        <div className="flex flex-row items-center  justify-center p-4">
           {children}
         </div>
       </div>
