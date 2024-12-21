@@ -25,7 +25,7 @@ function ReportProject({ reportType, onClose }: Props) {
     key: string
   ) => {
     const newPercentages = { ...percentages, [key]: e.target.value };
-    
+
     // คำนวณผลรวมของช่องที่ต้องการ
     const sum = ['part0', 'part1', 'part2', 'part3', 'part4', 'part5', 'part6']
       .reduce((acc, partKey) => {
@@ -162,6 +162,69 @@ function ReportProject({ reportType, onClose }: Props) {
             <h3 className="font-bold">ความคิดเห็นเพิ่มเติม</h3>
             <textarea placeholder="ความคิดเห็นเพิ่มเติม" className="w-full p-2 border rounded-md h-20" />
           </div>
+
+          {/* ส่วนที่เพิ่มใหม่ */}
+          <div className="mt-4">
+            <h3 className="font-bold">ผลการประเมินรายงานความก้าวหน้า</h3>
+            <div className="space-y-4">
+              {[
+                'ความสามารถในการทำงานเป็นทีม',
+                'ระดับความเข้าใจของนักศึกษาในข้อเสนอโครงงานวิศวกรรม',
+                'ความสามารถในการแก้ไขปัญหาเฉพาะหน้า',
+                'ความถี่ในการขอคำปรึกษา',
+              ].map((label, index) => (
+                <div key={index} className="flex items-center space-x-4">
+                  <span>{label}</span>
+                  <select className="border rounded-md p-1">
+                    <option value="น้อย">น้อย</option>
+                    <option value="ปานกลาง">ปานกลาง</option>
+                    <option value="มาก">มาก</option>
+                  </select>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <h3 className="font-bold">หมายเหตุ</h3>
+            <div className="space-y-2">
+              {[
+                'น้อย เทียบเท่ากับ 3 คะแนน',
+                'ปานกลาง เทียบเท่ากับ 4 คะแนน',
+                'มาก เทียบเท่ากับ 5 คะแนน',
+              ].map((note, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <input type="checkbox" id={`note${index}`} />
+                  <label htmlFor={`note${index}`}>{note}</label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <h3 className="font-bold">สรุป</h3>
+            <div className="flex items-center space-x-2">
+              <span>เอกสารการโครงงาน:</span>
+              <input type="text" className="border rounded-md p-1 w-16" placeholder="%" />
+            </div>
+            <div className="flex items-center space-x-2 mt-2">
+              <span>ชิ้นงาน / ระบบงาน:</span>
+              <input type="text" className="border rounded-md p-1 w-16" placeholder="%" />
+            </div>
+          </div>
+
+          <div className="mt-4 flex justify-between">
+            <div className="text-center">
+              <span>.................................................</span>
+              <br />
+              <input type="text" placeholder="ชื่อผู้เซ็น" className="w-full p-1 border rounded-md mt-2" />
+              <span>(ลายเซ็นอาจารย์ที่ปรึกษาโครงงาน)</span>
+            </div>
+            <div className="text-center">
+              <span>วันที่.......... เดือน.......... พ.ศ..........</span>
+            </div>
+          </div>
+
         </div>
         <button
           onClick={handleClose}
