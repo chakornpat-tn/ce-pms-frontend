@@ -15,6 +15,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import ProjectMenu from '@/components/Tables/ProjectTable/TeacherProjectMenu'
 import { ProjectStatusBadge } from '@/components/Badge'
 import course from '@/constants/course/course'
+import { RegisCommitteeDialog } from '@/components/Dialog'
 
 type Props = {}
 
@@ -119,9 +120,17 @@ function Regis({}: Props) {
                         />
                       </td>
                       <td className="whitespace-nowrap px-6 py-4">
-                        <button className="rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500">
-                          ลงทะเบียน
-                        </button>
+                        <RegisCommitteeDialog
+                          projectId={project.id}
+                          onSuccess={() => {
+                            mutate()
+                            toast.success('ลงทะเบียนเป็นกรรมการสำเร็จ')
+                          }}
+                        >
+                          <button className="rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-500">
+                            ลงทะเบียน
+                          </button>
+                        </RegisCommitteeDialog>
                       </td>
                     </tr>
                   ))}

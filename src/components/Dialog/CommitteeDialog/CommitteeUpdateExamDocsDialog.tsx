@@ -13,31 +13,20 @@ import { useState } from 'react'
 import useSWR from 'swr'
 import dayjs from 'dayjs'
 import { ProjectByIDRes } from '@/models/Project'
-import Link from 'next/link'
-import userRoles from '@/constants/userRoles/userRoles'
-import { UpdateCourseStatusDialog } from '../CourseStatusDialog/UpdateCourseStatusDIalog'
-import courseStatus from '@/constants/course/courseStatus'
-import course from '@/constants/course/course'
-import AssignmentIcon from '@mui/icons-material/Assignment'
-import ProgressIcon from '@mui/icons-material/ShowChart'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import GradeIcon from '@mui/icons-material/Grade'
-import PreviewIcon from '@mui/icons-material/Preview'
-import { UpdateExamDocsDialog } from '../CommitteeDialog/UpdateExamDocsDialog'
+import { UpdateExamDocsDialog } from './UpdateExamDocsDialog'
 
 type Props = {
   children: React.ReactNode
   projectId: number
-  userRole: number
-  courseMenu: number
+  courseId: number
   onSuccess?: () => void
 }
 
-export function ProjectDetailDialog({
+export function CommitteeUpdateExamDocsDialog({
   children,
   projectId,
-  userRole,
-  courseMenu,
+  courseId,
   onSuccess,
 }: Props) {
   const [open, setOpen] = useState(false)
@@ -60,7 +49,7 @@ export function ProjectDetailDialog({
             {projectDetail(data)}
           </article>
           <article className="mx-2 w-full md:w-1/3">
-            {menuSelection(userRole, projectId, courseMenu, onSuccess)}
+            {menuSelection(projectId, courseId, onSuccess)}
           </article>
         </section>
       </DialogContent>
@@ -85,6 +74,13 @@ const projectDetail = (data: ProjectByIDRes) => {
               <h3 className="mb-2 font-bold">เสนอหัวข้อปีการศึกษา</h3>
               <p className="text-gray-500">
                 {data.semester} /{data.academicYear}
+              </p>
+            </div>
+
+            <div>
+              <h3 className="mb-2 font-bold">บทคัดย่อ</h3>
+              <p className="text-gray-500">
+                {data.abstract ? data.abstract : 'ไม่ระบุ'}
               </p>
             </div>
 
@@ -159,9 +155,8 @@ const projectDetail = (data: ProjectByIDRes) => {
 }
 
 const menuSelection = (
-  userRole: number,
   projectId: number,
-  courseMenu: number,
+  courseId: number,
   onSuccess?: () => void,
 ) => {
   const commonButtonClasses =
@@ -169,58 +164,12 @@ const menuSelection = (
 
   return (
     <div className="flex w-full flex-col gap-2">
-      {userRole === userRoles.Teacher ? (
-        <Link href={`/teacher/consultant/${projectId}/docs`}>
-          <button className={commonButtonClasses}>
-            <AssignmentIcon className="shrink-0" />{' '}
-            <span className="flex-1 text-center">ตรวจสอบเอกสาร</span>
-          </button>
-        </Link>
-      ) : (
+      <UpdateExamDocsDialog projectId={projectId} courseId={courseId}>
         <button className={commonButtonClasses}>
-          <AssignmentIcon className="shrink-0" />{' '}
-          <span className="flex-1 text-center">ตรวจสอบเอกสาร</span>
+          <GradeIcon className="shrink-0" />
+          <span className="flex-1 text-center">ส่งคะแนนสอบ</span>
         </button>
-      )}
-      {courseMenu === course.Project && (
-        <button className={commonButtonClasses}>
-          <ProgressIcon className="shrink-0" />{' '}
-          <span className="flex-1 text-center">ตรวจสอบความคืบหน้า</span>
-        </button>
-      )}
-
-      {userRole === userRoles.Teacher ? (
-        <div className="space-y-2">
-          <UpdateCourseStatusDialog
-            ids={[projectId]}
-            newCourseStatus={
-              courseMenu === course.PreProject
-                ? courseStatus.ApprovePreExam
-                : courseMenu === course.Project
-                  ? courseStatus.ApproveProjectExam
-                  : courseStatus.ApprovePreExam
-            }
-            onSuccess={onSuccess}
-          >
-            <button className={commonButtonClasses}>
-              <CheckCircleIcon className="shrink-0" />{' '}
-              <span className="flex-1 text-center">อนุมัติสอบ</span>
-            </button>
-          </UpdateCourseStatusDialog>
-
-          <UpdateExamDocsDialog projectId={projectId} courseId={courseMenu} >
-            <button className={commonButtonClasses}>
-              <GradeIcon className="shrink-0" />
-              <span className="flex-1 text-center">ส่งคะแนนสอบ</span>
-            </button>
-          </UpdateExamDocsDialog>
-        </div>
-      ) : (
-        <button className={commonButtonClasses}>
-          <PreviewIcon className="shrink-0" />
-          <span className="flex-1 text-center">ตรวจคะแนนสอบ</span>
-        </button>
-      )}
+      </UpdateExamDocsDialog>
     </div>
   )
 }
