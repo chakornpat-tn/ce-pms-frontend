@@ -85,12 +85,29 @@ export type ProjectStudent = {
   studentId: number
 }
 export type ProjectUser = {
-  projectId?: number
+  projectId: number
   userId: number
-  userProjectRole: number
-  projectDocs?: string
-  prepDocs?: string
+  prepDocs?: string | null
+  projectDocs?: string | null
+  projectPoint?: number | null
+  prepPoint?: number | null
+  userProjectRole?: number
 }
+
+export type ProjectUserWithUser = {
+  projectId: number
+  userId: number
+  prepDocs: string | null
+  projectDocs: string | null
+  userProjectRole: number
+  prepPoint: number | null
+  projectPoint: number | null
+  user: {
+    id: number
+    name: string
+  }
+}
+
 
 export type ProjectRes = {
   id: number
