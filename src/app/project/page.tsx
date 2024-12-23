@@ -126,6 +126,7 @@ export default async function Page({}: Props) {
             <button className="mb-4 rounded-md bg-primary1 px-3 py-2 text-xs text-white sm:text-sm md:px-4 md:text-base">
               <Link href="/project/studentprogress">รายงานความก้าวหน้า</Link>
             </button>
+            
           </div>
           <div className="mb-4 border-b border-primary2-400"></div>
           <div className="flex w-full flex-col gap-2 text-xs sm:text-sm md:text-base">
