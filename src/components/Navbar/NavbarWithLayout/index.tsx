@@ -124,7 +124,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
   const projectItems = [
     { name: 'หน้าแรก', icon: Home, link: '/project' },
     { name: 'ส่งเอกสาร', icon: Description, link: '/project/docs' },
-    { name: 'เปลี่ยนรหัสผ่าน', icon: Lock, link: '#' },
+    { name: 'เปลี่ยนรหัสผ่าน', icon: Lock, link: '/project/change-password' },
     {
       name: 'ออกจากระบบ',
       icon: ExitToApp,

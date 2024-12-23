@@ -67,7 +67,7 @@ const DocsList = (props: Props) => {
                 <div className="w-full flex justify-center rounded-md bg-primary2-400 p-2 transition-colors duration-200 hover:bg-primary2-500">
                   <button className="flex items-center gap-2 text-white">
                     <UploadIcon className="h-5 w-5" />
-                    <p className="text-xs md:text-base">อัพโหลดเอกสารใหม่</p>
+                    <p className="text-xs md:text-base">อัปโหลดเอกสารใหม่</p>
                   </button>
                 </div>
               }
@@ -167,7 +167,7 @@ const DocsList = (props: Props) => {
             trigger={
               <button className="text-primary1-500 flex items-center justify-center gap-2 hover:underline">
                 <UploadIcon className="h-5 w-5" />
-                คลิกเพื่ออัพโหลด
+                คลิกเพื่ออัปโหลด
               </button>
             }
           />

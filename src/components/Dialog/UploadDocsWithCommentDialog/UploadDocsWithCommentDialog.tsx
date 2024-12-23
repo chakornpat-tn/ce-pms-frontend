@@ -38,7 +38,7 @@ export function UploadDocsWithCommentsDialog(props: Props) {
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="max-h-[90vh] w-[95vw] overflow-y-auto bg-white">
         <DialogHeader>
-          <DialogTitle className="text-2xl">อัพโหลดเอกสาร PDF</DialogTitle>
+          <DialogTitle className="text-2xl">อัปโหลดเอกสาร PDF</DialogTitle>
         </DialogHeader>
         <div className="mx-auto w-full p-4">
           <form className="space-y-4" action={ (formData) => {
@@ -105,7 +105,7 @@ export function UploadDocsWithCommentsDialog(props: Props) {
                 className="inline-flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none"
               >
                 <CloudUpload className="w-4 h-4" />
-                อัพโหลด
+                อัปโหลด
               </button>
             </div>
           </form>

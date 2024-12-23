@@ -12,6 +12,8 @@ export type Project = {
   detailEng?: string | null
   semester: number
   academicYear: number
+  projectSemester?: number
+  projectAcademicYear?: number
   type?: string | null
   projectStatusId?: number | null
   courseStatus: number
@@ -50,6 +52,8 @@ export type UpdateProjectRequest = {
   detailEng?: string
   semester?: number
   academicYear?: number
+  projectSemester?: number
+  projectAcademicYear?: number
   type?: string | null
   projectStatusId?: number | null
   courseStatus?: number
@@ -78,6 +82,8 @@ export type ListProjectsFilter = {
   projectName?: string
   projectStatus?: number[]
   courseStatus?: number[]
+  projectSemester?: number
+  projectAcademicYear?: number
 }
 
 export type ProjectStudent = {
@@ -108,7 +114,6 @@ export type ProjectUserWithUser = {
   }
 }
 
-
 export type ProjectRes = {
   id: number
   username: string
@@ -137,6 +142,8 @@ export type ListProjectFilterQuery = {
   projectName?: string
   projectStatus?: string
   courseStatus?: string
+  projectSemester?: number
+  projectAcademicYear?: number
 }
 
 export type ProjectByIDRes = {
@@ -151,6 +158,8 @@ export type ProjectByIDRes = {
   detailEng?: string | null
   semester: number
   academicYear: number
+  projectSemester?: number
+  projectAcademicYear?: number
   type?: string | null
   projectStatusId?: number | null
   courseStatus: number

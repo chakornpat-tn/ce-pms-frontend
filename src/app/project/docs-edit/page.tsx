@@ -72,7 +72,7 @@ export default function DocsEdit() {
             type="text"
             name="projectName"
             defaultValue={data.projectName || ''}
-            className="w-full rounded border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+            className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
             placeholder="ชื่อโครงงาน"
           />
         </h1>
@@ -81,7 +81,7 @@ export default function DocsEdit() {
             type="text"
             name="projectNameEng"
             defaultValue={data.projectNameEng || ''}
-            className="w-full rounded border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+            className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
             placeholder="ชื่อโครงงานภาษาอังกฤษ"
           />
         </h2>
@@ -95,7 +95,7 @@ export default function DocsEdit() {
                   type="text"
                   name="semester"
                   defaultValue={data.semester || ''}
-                  className="w-1/3 rounded border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                  className="w-1/3 rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
                   placeholder="ภาคการศึกษา"
                 />
                 <span className="text-gray-500">/</span>
@@ -103,7 +103,7 @@ export default function DocsEdit() {
                   type="text"
                   name="academicYear"
                   defaultValue={data.academicYear || ''}
-                  className="w-2/3 rounded border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                  className="w-2/3 rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
                   placeholder="ปีการศึกษา"
                 />
               </div>
@@ -113,7 +113,7 @@ export default function DocsEdit() {
               <textarea
                 name="abstract"
                 defaultValue={data.abstract || ''}
-                className="w-full resize-none rounded border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                className="w-full resize-none rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
                 placeholder="กรอกบทคัดย่อ"
                 onInput={handleResize}
                 rows={1}
@@ -122,7 +122,7 @@ export default function DocsEdit() {
               <textarea
                 name="abstractEng"
                 defaultValue={data.abstractEng || ''}
-                className="w-full resize-none rounded border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                className="w-full resize-none rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
                 placeholder="Enter abstract in English"
                 onInput={handleResize}
                 rows={1}
@@ -132,7 +132,7 @@ export default function DocsEdit() {
         </div>
         <button
           type="submit"
-          className={`hover:bg-primary2-600 mt-8 w-full rounded bg-primary2-500 px-6 py-3 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-primary2-500 focus:ring-offset-2 ${
+          className={`hover:bg-primary2-600 mt-8 w-full rounded-md bg-primary2-500 px-6 py-3 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-primary2-500 focus:ring-offset-2 ${
             isSubmitting ? 'cursor-not-allowed opacity-50' : ''
           }`}
           disabled={isSubmitting}

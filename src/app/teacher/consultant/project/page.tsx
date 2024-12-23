@@ -38,14 +38,13 @@ function page({}: Props) {
   }
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
     projectName: '',
-    semester: 0,
-    academicYear: currentYear,
+    projectSemester: 0,
+    projectAcademicYear: currentYear,
     projectStatus: '',
     courseStatus: `${courseStatus.Project}, ${courseStatus.ApproveProjectExam}, ${courseStatus.ApprovePreExam}`,
   })
 
   const fetchData = async () => {
-    console.log(filters)
     const res = await ListProjectByUserID(filters)
     toast.success('ค้นหาสำเร็จ', { duration: 1000 })
     return res
@@ -168,7 +167,7 @@ function page({}: Props) {
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
         currentYear={currentYear}
-        course={2}
+        course={course.Project}
       />
       {/* Search Results */}
       <ProjectTable data={data} loading={isLoading} />

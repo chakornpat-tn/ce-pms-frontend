@@ -10,6 +10,9 @@ import TeacherProjectTable from '@/components/Tables/ProjectTable/TeacherProject
 import Course from '@/constants/course/course'
 import course from '@/constants/course/course'
 import userRoles from '@/constants/userRoles/userRoles'
+import Link from 'next/link'
+import { Add } from '@mui/icons-material'
+
 
 type Props = {}
 
@@ -18,8 +21,8 @@ function page({}: Props) {
   const currentYear = new Date().getFullYear() + 543
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
     projectName: '',
-    semester: 0,
-    academicYear: currentYear,
+    projectSemester: 0,
+    projectAcademicYear: currentYear,
     projectStatus: '',
     courseStatus: `${courseStatus.Project}, ${courseStatus.ApproveProjectExam},${courseStatus.Pass}`,
   })
@@ -51,6 +54,13 @@ function page({}: Props) {
     <>
       <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
         <h1 className="text-3xl font-bold text-primary1">จัดการโครงงาน</h1>
+        <div>
+          <Link href="/teacher/project/pass-pre-project">
+            <button className="mt-2 flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0">
+              <Add /> เพิ่มโครงงาน
+            </button>
+          </Link>
+        </div>
       </div>
       {/* Search Form */}
       <ProjectFilterForm
@@ -61,6 +71,7 @@ function page({}: Props) {
         currentYear={currentYear}
         course={Course.Project}
       />
+
       {/* Search Results */}
       <TeacherProjectTable
         courseList={course.Project}

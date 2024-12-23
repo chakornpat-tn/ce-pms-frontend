@@ -59,7 +59,7 @@ const ProjectPage = () => {
       if (file.type === 'application/pdf') {
         console.log('Uploaded PDF:', file)
       } else {
-        alert('กรุณาอัพโหลดไฟล์ PDF เท่านั้น')
+        alert('กรุณาอัปโหลดไฟล์ PDF เท่านั้น')
       }
     }
   }
