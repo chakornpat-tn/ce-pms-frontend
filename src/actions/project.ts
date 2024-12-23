@@ -24,6 +24,13 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     if (req?.academicYear)
       queryParams.append('academicYear', req.academicYear.toString())
     if (req?.semester) queryParams.append('semester', req.semester.toString())
+    if (req?.projectAcademicYear)
+      queryParams.append(
+        'projectAcademicYear',
+        req.projectAcademicYear.toString(),
+      )
+    if (req?.projectSemester)
+      queryParams.append('projectSemester', req.projectSemester.toString())
     if (req?.projectStatus)
       queryParams.append('projectStatus', req.projectStatus)
     if (req?.courseStatus) queryParams.append('courseStatus', req.courseStatus)
@@ -251,9 +258,7 @@ export async function UpdateProjectFormToken(
     const projectStatusId = formData.get('projectStatusId')
     const courseStatus = formData.get('courseStatus')
     const password = formData.get('password')
-    const examDateTime = dayjs(String(formData.get('examDateTime'))).format(
-      'YYYY-MM-DD HH:mm:ss.SSS',
-    )
+    const examDateTime = formData.get('examDateTime')
 
     const projectData: UpdateProjectRequest = {
       ...(projectName && { projectName: projectName as string }),
@@ -268,7 +273,13 @@ export async function UpdateProjectFormToken(
       ...(projectStatusId && { projectStatusId: Number(projectStatusId) }),
       ...(courseStatus && { courseStatus: Number(courseStatus) }),
       ...(password && { password: password as string }),
-      ...(examDateTime && { examDateTime: new Date(examDateTime as string) }),
+      ...(examDateTime && {
+        examDateTime: new Date(
+          dayjs(String(examDateTime)).format(
+            'YYYY-MM-DD HH:mm:ss.SSS',
+          ) as string,
+        ),
+      }),
     }
 
     if (Object.keys(projectData).length === 0) {
@@ -315,6 +326,8 @@ export async function updateMultipleProjects(
     const type = formData.get('type')
     const projectStatusId = formData.get('projectStatusId')
     const courseStatus = formData.get('courseStatus')
+    const projectSemester = formData.get('projectSemester')
+    const projectAcademicYear = formData.get('projectAcademicYear')
 
     const projectData = {
       ids,
@@ -326,6 +339,10 @@ export async function updateMultipleProjects(
           projectStatusId === 'null' ? null : Number(projectStatusId),
       }),
       ...(courseStatus && { courseStatus: Number(courseStatus) }),
+      ...(projectSemester && { projectSemester: Number(projectSemester) }),
+      ...(projectAcademicYear && {
+        projectAcademicYear: Number(projectAcademicYear),
+      }),
     }
 
     if (Object.keys(projectData).length === 0) {
@@ -350,6 +367,32 @@ export async function updateMultipleProjects(
     }
 
     revalidatePath('/')
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function ListProjectPassPre(req: ListProjectFilterQuery) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+
+    const queryParams = new URLSearchParams()
+    if (req?.projectName) queryParams.append('projectName', req.projectName)
+    if (req?.academicYear)
+      queryParams.append('academicYear', req.academicYear.toString())
+    if (req?.semester) queryParams.append('semester', req.semester.toString())
+
+    const url = `/v1/project/pass-pre?${queryParams.toString()}`
+    console.log(url)
+    const res = await useAPI<{ data: ProjectRes[] }>(url, {
+      headers: {
+        Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
+
+    return res.data
   } catch (error) {
     throw error
   }

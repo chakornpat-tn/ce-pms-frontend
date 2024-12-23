@@ -47,8 +47,8 @@ export function UpdateExamDocsDialog(props: Props) {
         <DialogHeader>
           <DialogTitle className="text-2xl">
             {courseId === course.PreProject
-              ? 'อัพโหลดเอกสารสอบเตรียมโครงงาน'
-              : 'อัพโหลดเอกสารสอบโครงงาน'}{' '}
+              ? 'อัปโหลดเอกสารสอบเตรียมโครงงาน'
+              : 'อัปโหลดเอกสารสอบโครงงาน'}{' '}
           </DialogTitle>
         </DialogHeader>
         <div className="mx-auto w-full p-4">
@@ -202,7 +202,7 @@ export function UpdateExamDocsDialog(props: Props) {
                 className="inline-flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none"
               >
                 <CloudUpload className="h-4 w-4" />
-                {isPending ? 'อัพโหลด....' : 'อัพโหลด'}
+                {isPending ? 'อัปโหลด....' : 'อัปโหลด'}
               </button>
             </div>
           </form>

@@ -33,7 +33,7 @@ function ReportProject({ reportType, onClose }: Props) {
         return acc + value;
       }, 0);
 
-    // อัพเดตค่าในช่อง "รวมทั้งหมด"
+    // อัปเดตค่าในช่อง "รวมทั้งหมด"
     setPercentages({
       ...newPercentages,
       total: sum.toString()

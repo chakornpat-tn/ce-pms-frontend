@@ -1,6 +1,7 @@
 import { ListProjectStatus } from '@/actions/projectStatus'
 import React, { useState } from 'react'
 import useSWR from 'swr'
+import Course from '@/constants/course/course'
 
 type Props = {
   filters: any
@@ -17,7 +18,7 @@ const ProjectFilterForm: React.FC<Props> = ({
   handleSearch,
   handleKeyPress,
   currentYear,
-  course,
+  course = Course.PreProject,
 }) => {
   const [value, setValue] = useState<number | ''>(0)
 
@@ -44,30 +45,43 @@ const ProjectFilterForm: React.FC<Props> = ({
       <div className="flex w-auto items-center gap-2">
         <input
           type="number"
-          name="semester"
+          name={course === Course.Project ? 'projectSemester' : 'semester'}
           min={1}
-          max={3}
+          max={2}
           placeholder="ทุกภาคเรียน"
           className="w-full min-w-[113px] rounded-md border p-2 text-sm sm:text-base"
-          value={filters.semester || ''}
+          value={
+            course === Course.Project
+              ? filters.projectSemester || ''
+              : filters.semester || ''
+          }
           onChange={e =>
             setFilters({
               ...filters,
-              semester: parseInt(e.target.value) || 0,
+              [course === Course.Project ? 'projectSemester' : 'semester']:
+                parseInt(e.target.value) || 1,
             })
           }
         />
         <p className="flex-shrink-0 text-sm sm:text-base">/</p>
         <input
           type="number"
-          name="academicYear"
+          name={
+            course === Course.Project ? 'projectAcademicYear' : 'academicYear'
+          }
           placeholder="ปีการศึกษา"
           min="0"
-          value={filters.academicYear}
+          value={
+            course === Course.Project
+              ? filters.projectAcademicYear
+              : filters.academicYear
+          }
           onChange={e =>
             setFilters({
               ...filters,
-              academicYear:
+              [course === Course.Project
+                ? 'projectAcademicYear'
+                : 'academicYear']:
                 Math.max(0, parseInt(e.target.value)) || currentYear,
             })
           }

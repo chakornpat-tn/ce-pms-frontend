@@ -57,6 +57,13 @@ export async function ListProjectByUserID(req: ListProjectFilterQuery) {
     if (req?.projectStatus)
       queryParams.append('projectStatus', req.projectStatus)
     if (req?.courseStatus) queryParams.append('courseStatus', req.courseStatus)
+    if (req?.projectAcademicYear)
+      queryParams.append(
+        'projectAcademicYear',
+        req.projectAcademicYear.toString(),
+      )
+    if (req?.projectSemester)
+      queryParams.append('projectSemester', req.projectSemester.toString())
 
     const secret = new TextEncoder().encode(config.TOKEN_SECRET)
     const { payload } = await jwtVerify(token.value, secret)
