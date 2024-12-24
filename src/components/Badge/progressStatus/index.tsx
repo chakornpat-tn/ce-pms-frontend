@@ -22,7 +22,7 @@ const ProgressReportStatusBadge = ({ status }: { status: number }) => {
       case progressReportStatus.SEEN:
         return 'อ่านแล้ว'
       case progressReportStatus.REPLIED:
-        return 'ตอบคลับแล้ว'
+        return 'ตอบกลับแล้ว'
       default:
         return 'ไม่ระบุ'
     }

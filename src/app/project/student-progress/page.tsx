@@ -1,11 +1,13 @@
 'use client'
-import { GetProjectFormToken, UpdateProjectFormToken } from '@/actions/project'
 import useSWR from 'swr'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { Loader } from '@/components/Loading'
-import { CreateProgressReportDialog } from '@/components/Dialog'
+import {
+  CreateProgressReportDialog,
+  ProgressDetailDialog,
+} from '@/components/Dialog'
 import { ListProgressReportFormToken } from '@/actions/progressReport'
 import dayjs from 'dayjs'
 import { ProgressReportStatusBadge } from '@/components/Badge'
@@ -44,7 +46,7 @@ export default function DocsEdit() {
             รายงานความคืบหน้าของโครงงาน
           </h2>
 
-          <CreateProgressReportDialog>
+          <CreateProgressReportDialog progressCount={data.length} onSuccess={mutate} >
             <button className="w-full rounded-md bg-primary2-400 px-2 py-1 text-xs text-white transition-colors hover:bg-primary2-500 sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm md:px-4 md:py-2 md:text-base">
               ส่งรายงานความคืบหน้า
             </button>
@@ -53,21 +55,21 @@ export default function DocsEdit() {
         <article className="mt-5 w-full bg-white">
           {data &&
             data.map(item => (
-              <div
-                key={item.id}
-                className="mb-4 flex flex-col items-center justify-between rounded-lg border border-primary1 p-4 shadow-sm hover:shadow-md sm:flex-row sm:px-6"
-              >
-                <div className="text-lg font-medium text-primary1">
-                  <p>{item.title}</p>
-                  <p>
-                    <ProgressReportStatusBadge status={item.status} />
-                  </p>
+              <ProgressDetailDialog key={item.id} progressId={item.id}>
+                <div className="mb-4 flex cursor-pointer flex-col items-start justify-between space-y-2 rounded-lg border border-primary1 p-4 shadow-sm hover:shadow-md sm:flex-row sm:items-center sm:space-y-0 sm:px-6">
+                  <div className="text-lg font-medium text-primary1">
+                    <p>{item.title}</p>
+                    <p>
+                      <ProgressReportStatusBadge status={item.status} />
+                    </p>
+                  </div>
+                  <div className="text-xs text-gray-600 sm:text-sm">
+                    {dayjs(item.createAt).format('HH:mm ') +
+                      dayjs(item.createAt).format('DD/MM/') +
+                      (Number(dayjs(item.createAt).format('YYYY')) + 543)}
+                  </div>
                 </div>
-                <div className="text-sm text-gray-600">
-                  {dayjs(item.createAt).format('DD/MM/') +
-                    (parseInt(dayjs(item.updatedAt).format('YYYY')) + 543)}{' '}
-                </div>
-              </div>
+              </ProgressDetailDialog>
             ))}
         </article>
       </div>

@@ -342,3 +342,30 @@ export async function RegisCommittee(projectId: number) {
     )
   }
 }
+
+export async function CheckUserIsAdvisor(projectId: number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.')
+    }
+    const url = `/v1/project-user/check-advisor/${payload.id}/${projectId}`
+    const res = await useAPI<{ data: boolean }>(url, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}

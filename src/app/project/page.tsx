@@ -77,7 +77,7 @@ export default async function Page({}: Props) {
                 {CourseStatusDesc(projectData.courseStatus)}
               </p>
             </div>
-            <button className="btn bg-primary2-400 text-xs text-white transition-colors duration-200 hover:bg-primary2-500 sm:text-sm md:text-base">
+            <button className="btn bg-primary2-400 text-xs text-white rounded-md transition-colors duration-200 hover:bg-primary2-500 sm:text-sm md:text-base">
               <Link href="/project/docs" className="flex items-center gap-2">
                 <SendIcon className="h-4 w-4 sm:h-5 sm:w-5" />{' '}
                 คลิกเพื่อส่งเอกสาร
@@ -123,8 +123,8 @@ export default async function Page({}: Props) {
           </div>
           <Progress value={1} />
           <div className="mt-4 flex w-full flex-col items-center justify-center">
-            <button className="mb-4 rounded-md bg-primary1 px-3 py-2 text-xs text-white sm:text-sm md:px-4 md:text-base">
-              <Link href="/project/studentprogress">รายงานความก้าวหน้า</Link>
+            <button className="mb-4 rounded-md bg-primary2-400 hover:bg-primary2-500 px-3 py-2 text-xs text-white sm:text-sm md:px-4 md:text-base">
+              <Link href="/project/student-progress">รายงานความก้าวหน้า</Link>
             </button>
             
           </div>

@@ -183,10 +183,12 @@ const menuSelection = (
         </button>
       )}
       {courseMenu === course.Project && (
-        <button className={commonButtonClasses}>
-          <ProgressIcon className="shrink-0" />{' '}
-          <span className="flex-1 text-center">ตรวจสอบความคืบหน้า</span>
-        </button>
+        <Link href={`/teacher/project-detail/${projectId}/progress-report`}>
+          <button className={commonButtonClasses}>
+            <ProgressIcon className="shrink-0" />{' '}
+            <span className="flex-1 text-center">ตรวจสอบความคืบหน้า</span>
+          </button>
+        </Link>
       )}
 
       {userRole === userRoles.Teacher ? (
@@ -208,7 +210,7 @@ const menuSelection = (
             </button>
           </UpdateCourseStatusDialog>
 
-          <UpdateExamDocsDialog projectId={projectId} courseId={courseMenu} >
+          <UpdateExamDocsDialog projectId={projectId} courseId={courseMenu}>
             <button className={commonButtonClasses}>
               <GradeIcon className="shrink-0" />
               <span className="flex-1 text-center">ส่งคะแนนสอบ</span>

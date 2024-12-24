@@ -15,13 +15,18 @@ import { CreateProgressReport } from '@/actions/progressReport'
 
 type Props = {
   children: React.ReactNode
+  progressCount: number
   onSuccess?: () => void
 }
-export function CreateProgressReportDialog({ children, onSuccess }: Props) {
+export function CreateProgressReportDialog({
+  children,
+  onSuccess,
+  progressCount = 1,
+}: Props) {
   const [open, setOpen] = useState(false)
 
   const handleAction = (prevState: unknown, formData: FormData) => {
-    CreateProgressReport(prevState,formData)
+    CreateProgressReport(prevState, formData)
     setProductFileName('')
     setDocsFileName('')
     onSuccess?.()
@@ -38,11 +43,12 @@ export function CreateProgressReportDialog({ children, onSuccess }: Props) {
       <DialogContent className="max-h-[90vh] w-[95vw] max-w-4xl overflow-y-auto rounded bg-white p-4 md:h-auto md:p-6">
         <DialogHeader>
           <DialogTitle className="text-lg md:text-xl">
-            ส่งรายงานความคืบหน้า
+            ส่งรายงานความคืบหน้าครั้งที่ {progressCount}
           </DialogTitle>
         </DialogHeader>
         <div className="mx-auto max-w-2xl space-y-4 md:space-y-6">
           <form className="space-y-3 md:space-y-4" action={action}>
+            <input type="hidden" name="title" value={`รายงานความคืบหน้าครั้งที่ ${progressCount}`}  />
             <div className="space-y-2">
               <label htmlFor="section-1" className="text-sm md:text-base">
                 1 แสดงรายละเอียดของผลการดำเนินงาน
@@ -51,7 +57,7 @@ export function CreateProgressReportDialog({ children, onSuccess }: Props) {
               <textarea
                 id="section-1"
                 name="section-1"
-                className="font-thai min-h-[80px] w-full rounded-md border p-2 text-sm md:min-h-[100px] md:text-base"
+                className="min-h-[80px] w-full rounded-md border p-2 text-sm md:min-h-[100px] md:text-base"
                 placeholder="กรุณากรอกรายละเอียด..."
                 required
               />
@@ -65,7 +71,7 @@ export function CreateProgressReportDialog({ children, onSuccess }: Props) {
               <textarea
                 id="section-2"
                 name="section-2"
-                className="font-thai min-h-[80px] w-full rounded-md border p-2 text-sm md:min-h-[100px] md:text-base"
+                className="min-h-[80px] w-full rounded-md border p-2 text-sm md:min-h-[100px] md:text-base"
                 placeholder="กรุณากรอกรายละเอียด..."
                 required
               />
@@ -77,7 +83,7 @@ export function CreateProgressReportDialog({ children, onSuccess }: Props) {
               <textarea
                 id="section-3"
                 name="section-3"
-                className="font-thai min-h-[80px] w-full rounded-md border p-2 text-sm md:min-h-[100px] md:text-base"
+                className="min-h-[80px] w-full rounded-md border p-2 text-sm md:min-h-[100px] md:text-base"
                 placeholder="กรุณากรอกรายละเอียด..."
                 required
               />
@@ -101,14 +107,19 @@ export function CreateProgressReportDialog({ children, onSuccess }: Props) {
                     name="product_file"
                     accept=".pdf"
                     id="product_file"
-                    onChange={(e) => setProductFileName(e.target.files?.[0]?.name || '')}
+                    onChange={e =>
+                      setProductFileName(e.target.files?.[0]?.name || '')
+                    }
                   />
                   <label
                     htmlFor="product_file"
-                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-gray-300 bg-white p-3 text-sm transition-all hover:bg-gray-50 hover:border-primary2-400 hover:text-primary2-400"
+                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-gray-300 bg-white p-3 text-sm transition-all hover:border-primary2-400 hover:bg-gray-50 hover:text-primary2-400"
                   >
                     <CloudUpload className="h-5 w-5" />
-                    <span className="text-gray-500">{productFileName || 'อัปโหลดเอกสารตัวอย่างชิ้นงาน (ไม่บังคับ)'}</span>
+                    <span className="text-gray-500">
+                      {productFileName ||
+                        'อัปโหลดเอกสารตัวอย่างชิ้นงาน (ไม่บังคับ)'}
+                    </span>
                   </label>
                 </div>
                 <div className="relative">
@@ -119,23 +130,28 @@ export function CreateProgressReportDialog({ children, onSuccess }: Props) {
                     required
                     accept=".pdf"
                     id="docs_file"
-                    onChange={(e) => setDocsFileName(e.target.files?.[0]?.name || '')}
+                    onChange={e =>
+                      setDocsFileName(e.target.files?.[0]?.name || '')
+                    }
                   />
                   <label
                     htmlFor="docs_file"
                     className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border-2 border-primary2-400 bg-white p-3 text-sm transition-all hover:bg-gray-50"
                   >
                     <CloudUpload className="h-5 w-5 text-primary2-400" />
-                    <span className="text-primary2-400">{docsFileName || 'อัปโหลดเอกสารรายงาน (บังคับ)'}</span>
+                    <span className="text-primary2-400">
+                      {docsFileName || 'อัปโหลดเอกสารรายงาน (บังคับ)'}
+                    </span>
                   </label>
                 </div>
               </div>
             </div>
             <button
               type="submit"
+              disabled={isPending}
               className="w-full rounded-md bg-primary2-400 px-4 py-2 text-white hover:bg-primary2-400"
             >
-              ส่งรายงาน
+              {isPending ? 'กำลังส่ง...' : 'ส่งรายงาน'}
             </button>
           </form>
         </div>
@@ -188,7 +204,7 @@ const ProgressForm = () => {
                   max={section.weight}
                   value={section.percent}
                   onChange={e => handlePercentChange(index, e.target.value)}
-                  className="w-16 border rounded text-right text-sm md:w-20"
+                  className="w-16 rounded border text-right text-sm md:w-20"
                 />
                 <span>%</span>
               </div>
@@ -221,7 +237,7 @@ const ProgressForm = () => {
                 min={0}
                 defaultValue={0}
                 max={100}
-                className="w-20 border rounded text-right text-sm md:w-24"
+                className="w-20 rounded border text-right text-sm md:w-24"
               />
               <span>%</span>
             </div>
