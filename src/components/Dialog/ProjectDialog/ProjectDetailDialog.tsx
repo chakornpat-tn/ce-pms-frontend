@@ -24,6 +24,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import GradeIcon from '@mui/icons-material/Grade'
 import PreviewIcon from '@mui/icons-material/Preview'
 import { UpdateExamDocsDialog } from '../CommitteeDialog/UpdateExamDocsDialog'
+import PointTeacherDialog from '../PointTeacherDialog/PointTeacherDialog'
 
 type Props = {
   children: React.ReactNode
@@ -177,10 +178,12 @@ const menuSelection = (
           </button>
         </Link>
       ) : (
-        <button className={commonButtonClasses}>
-          <AssignmentIcon className="shrink-0" />{' '}
-          <span className="flex-1 text-center">ตรวจสอบเอกสาร</span>
-        </button>
+        <Link href={`/teacher/project-detail/${projectId}/docs`}>
+          <button className={commonButtonClasses}>
+            <AssignmentIcon className="shrink-0" />{' '}
+            <span className="flex-1 text-center">ตรวจสอบเอกสาร</span>
+          </button>
+        </Link>
       )}
       {courseMenu === course.Project && (
         <Link href={`/teacher/project-detail/${projectId}/progress-report`}>
@@ -218,10 +221,12 @@ const menuSelection = (
           </UpdateExamDocsDialog>
         </div>
       ) : (
-        <button className={commonButtonClasses}>
-          <PreviewIcon className="shrink-0" />
-          <span className="flex-1 text-center">ตรวจคะแนนสอบ</span>
-        </button>
+        <PointTeacherDialog projectId={projectId} >
+          <button className={commonButtonClasses}>
+            <PreviewIcon className="shrink-0" />
+            <span className="flex-1 text-center">ตรวจคะแนนสอบ</span>
+          </button>
+        </PointTeacherDialog>
       )}
     </div>
   )

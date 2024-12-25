@@ -2,19 +2,13 @@
 import React from 'react'
 import useSWR from 'swr'
 import { ProjectDocumentRes } from '@/models/ProjectDocument'
-import { ListProjectDocs } from '@/actions/projectDocuments'
+import {
+  ListProjectDocs,
+  UpdateProjectDocStatus,
+} from '@/actions/projectDocuments'
 import { Loader } from '@/components/Loading'
-import {
-  UploadDocsDialog,
-  UploadDocsWithCommentsDialog,
-} from '@/components/Dialog'
-import {
-  CloudDownload as DownloadIcon,
-  Comment as CommentIcon,
-  CloudUpload as UploadIcon,
-} from '@mui/icons-material'
+import { CloudDownload as DownloadIcon, Message } from '@mui/icons-material'
 import dayjs from 'dayjs'
-import { ListComment } from '@/actions/comment'
 import projectDocumentStatus from '@/constants/projectDocumentStatus/projectDocumentStatus'
 
 type Props = {
@@ -33,16 +27,11 @@ const DocsList = (props: Props) => {
     return []
   }
 
-  const projectComments = useSWR(
-    ['project-comment', projectId, documentId],
-    () => ListComment(projectId, documentId),
-  )
   const { data, isLoading, error, mutate } = useSWR(
     projectId && documentId
       ? [`/v1/project-document`, projectId, documentId]
       : null,
     fetchDocs,
-    { revalidateOnFocus: false },
   )
   if (isLoading)
     return (
@@ -58,29 +47,16 @@ const DocsList = (props: Props) => {
     <>
       {data && data.length > 0 ? (
         <section className="list-disc pl-2 md:pl-6">
-          <div className="flex w-full justify-center">
-            <UploadDocsWithCommentsDialog
-              projectId={projectId}
-              documentId={documentId}
-              documentName={`${documentName}-v.${data.length + 1}`}
-              trigger={
-                <div className="flex w-full justify-center rounded-md bg-primary2-400 p-2 transition-colors duration-200 hover:bg-primary2-500">
-                  <button className="flex items-center gap-2 text-white">
-                    <UploadIcon className="h-5 w-5" />
-                    <p className="text-xs md:text-base">อัปโหลดเอกสารใหม่</p>
-                  </button>
-                </div>
-              }
-            />
-          </div>
           {data.map((doc: ProjectDocumentRes, index: number) => (
             <div
               key={doc.id}
               className="relative mt-4 min-h-[100px] w-full rounded-md border bg-white p-3 shadow-sm transition-all duration-200 hover:shadow-md md:mt-6 md:p-6"
             >
               {/* content  */}
-              <div className="mb-3 flex items-center gap-3">
-                <div className="flex items-center gap-3 text-primary2-500">
+              <div className="mb-3 flex flex-col items-start gap-3 md:flex-row md:items-center">
+                <div
+                  className="flex items-center gap-3 text-primary2-500"
+                >
                   <a
                     href={doc.documentUrl}
                     target="_blank"
@@ -93,6 +69,7 @@ const DocsList = (props: Props) => {
                     </h1>
                   </a>
                 </div>
+
               </div>
               <div className="space-y-3 md:space-y-4">
                 <div className="flex items-center gap-2 text-xs md:text-sm">
@@ -124,13 +101,13 @@ const DocsList = (props: Props) => {
                 </div>
                 {doc.CommentBasedEdits && doc.CommentBasedEdits.length > 0 && (
                   <div className="rounded-md bg-gray-100 p-3 md:p-4">
-                    <p className="mb-2 text-xs font-semibold text-gray-700 md:text-sm">
+                    <p className="mb-2 text-sm font-semibold text-gray-700 md:text-base">
                       หัวข้อที่ทำการแก้ไข
                     </p>
                     {doc.CommentBasedEdits.map((editComment, index) => (
                       <p
                         key={index}
-                        className="ml-3 text-xs text-gray-600 md:ml-4 md:text-sm"
+                        className="ml-3 text-sm text-gray-600 md:ml-4 md:text-base"
                       >
                         - {editComment.content}
                       </p>
@@ -140,39 +117,26 @@ const DocsList = (props: Props) => {
                 {doc.comments && doc.comments.length > 0 && (
                   <div className="border-t pt-3 md:pt-4">
                     <div>
-                      <p className="mb-2 text-xs font-semibold text-gray-700 md:text-sm">
+                      <p className="mb-2 text-sm font-semibold text-gray-700 md:text-base">
                         ความคิดเห็น
                       </p>
                       {doc.comments.map((comment, index) => (
                         <p
                           key={index}
-                          className="ml-3 text-xs text-gray-600 md:ml-4 md:text-sm"
+                          className="ml-3 text-sm text-gray-600 md:ml-4 md:text-base"
                         >
                           - {comment.content}
                         </p>
                       ))}
                     </div>
                   </div>
-                )}
+                )}{' '}
               </div>
             </div>
           ))}
         </section>
       ) : (
-        <div className="flex h-64 items-center justify-center">
-          <UploadDocsDialog
-            projectId={projectId}
-            documentId={documentId}
-            documentName={documentName}
-            onSuccess={mutate}
-            trigger={
-              <button className="text-primary1-500 flex items-center justify-center gap-2 hover:underline">
-                <UploadIcon className="h-5 w-5" />
-                คลิกเพื่ออัปโหลด
-              </button>
-            }
-          />
-        </div>
+        <></>
       )}
     </>
   )
