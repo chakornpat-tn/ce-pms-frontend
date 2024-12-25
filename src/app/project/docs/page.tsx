@@ -11,7 +11,7 @@ import DocsCard from '@/components/Cards/DocsCard/DocsCard'
 import { GetProjectFormToken } from '@/actions/project'
 import courseStatus from '@/constants/course/courseStatus'
 import course from '@/constants/course/course'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 import { ProjectByIDRes } from '@/models/Project'
 import { Document } from '@/models/Document'
 import { ListDocument } from '@/actions/documents'
@@ -42,27 +42,6 @@ const ProjectPage = () => {
 
   const ProjectStatus = [courseStatus.ApproveProjectExam, courseStatus.Project]
   const openSubmitOnStatus = [...preProjectStatus, ...ProjectStatus]
-
-  const handleCardClick = () => {
-    if (selectedItem) {
-      setIsModalOpen(true)
-    }
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-  }
-
-  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      if (file.type === 'application/pdf') {
-        console.log('Uploaded PDF:', file)
-      } else {
-        alert('กรุณาอัปโหลดไฟล์ PDF เท่านั้น')
-      }
-    }
-  }
 
   const ProjectFetcher = useSWR(
     'project',

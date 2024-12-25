@@ -259,6 +259,7 @@ export async function UpdateProjectFormToken(
     const courseStatus = formData.get('courseStatus')
     const password = formData.get('password')
     const examDateTime = formData.get('examDateTime')
+    const examLocation = formData.get('examLocation')
 
     const projectData: UpdateProjectRequest = {
       ...(projectName && { projectName: projectName as string }),
@@ -280,6 +281,7 @@ export async function UpdateProjectFormToken(
           ) as string,
         ),
       }),
+      ...(examLocation && { examLocation: examLocation as string }),
     }
 
     if (Object.keys(projectData).length === 0) {

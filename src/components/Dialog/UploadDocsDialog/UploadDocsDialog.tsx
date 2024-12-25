@@ -18,10 +18,17 @@ type Props = {
   projectId?: number
   documentId?: number
   documentName: string
+  onSuccess?: () => void
 }
 
 export function UploadDocsDialog(props: Props) {
-  const [error, action, isPending] = useActionState(CreateProjectDocs, null)
+  const [error, action, isPending] = useActionState(
+    (prevState: unknown, formData: FormData) => {
+      CreateProjectDocs(prevState, formData)
+      props.onSuccess?.()
+    },
+    null,
+  )
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [open, setOpen] = useState(false)
   const { trigger, projectId, documentId, documentName } = props
@@ -34,16 +41,20 @@ export function UploadDocsDialog(props: Props) {
           <DialogTitle className="text-2xl">อัปโหลดเอกสาร PDF</DialogTitle>
         </DialogHeader>
         <div className="mx-auto w-full p-4">
-          <form className="space-y-4" action={ (formData) => {
-            action(formData)
-            setOpen(false)
-            setSelectedFile(null)
-          }} onSubmit={(e) => {
-            if (!selectedFile) {
-              e.preventDefault()
-              return
-            }
-          }}>
+          <form
+            className="space-y-4"
+            action={formData => {
+              action(formData)
+              setOpen(false)
+              setSelectedFile(null)
+            }}
+            onSubmit={e => {
+              if (!selectedFile) {
+                e.preventDefault()
+                return
+              }
+            }}
+          >
             <input type="hidden" name="projectId" value={projectId} />
             <input type="hidden" name="documentId" value={documentId} />
             <input type="hidden" name="documentName" value={documentName} />
@@ -54,13 +65,13 @@ export function UploadDocsDialog(props: Props) {
                 name="document"
                 accept=".pdf"
                 className="hidden"
-                onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                onChange={e => setSelectedFile(e.target.files?.[0] || null)}
               />
               <label
                 htmlFor="document"
-                className="flex flex-col items-center gap-2 cursor-pointer"
+                className="flex cursor-pointer flex-col items-center gap-2"
               >
-                <CloudUpload className="w-12 h-12 text-gray-400" />
+                <CloudUpload className="h-12 w-12 text-gray-400" />
                 <span className="text-sm text-gray-500">
                   {selectedFile ? selectedFile.name : 'คลิกเลือกไฟล์ PDF'}
                 </span>
@@ -72,7 +83,7 @@ export function UploadDocsDialog(props: Props) {
                 disabled={isPending || !selectedFile}
                 className="inline-flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none"
               >
-                <CloudUpload className="w-4 h-4" />
+                <CloudUpload className="h-4 w-4" />
                 อัปโหลด
               </button>
             </div>

@@ -297,7 +297,6 @@ export async function GetProjectUserDetail(
         'Content-Type': 'application/json',
       },
     })
-
     return res.data
   } catch (error: any) {
     throw new Error(

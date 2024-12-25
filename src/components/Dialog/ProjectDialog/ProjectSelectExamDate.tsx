@@ -25,15 +25,15 @@ export function ProjectSelectExamDate({
 }: Props) {
   const [open, setOpen] = useState(false)
 
-    const [error, action, isPending] = useActionState(
-      async (state: void | null, formData: FormData) => {
-        await UpdateProjectFormToken(null,formData)
-        setOpen(false)
-        if (onSuccess) onSuccess()
-        return null
-      },
-      null
-    )
+  const [error, action, isPending] = useActionState(
+    async (state: void | null, formData: FormData) => {
+      await UpdateProjectFormToken(null, formData)
+      setOpen(false)
+      if (onSuccess) onSuccess()
+      return null
+    },
+    null,
+  )
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -57,6 +57,23 @@ export function ProjectSelectExamDate({
               className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-2 py-1 text-sm text-gray-700 focus:border-blue-500 focus:ring-blue-500"
               lang="th"
               data-date-format="th-TH"
+            />
+          </div>
+
+          <div className="w-full max-w-screen-md px-2">
+            <label
+              htmlFor="text"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              สถานที่สอบ
+            </label>
+            <input
+              id="text"
+              type="text"
+              name="examLocation"
+              placeholder="สถานที่สอบ"
+              required
+              className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-2 py-1 text-sm text-gray-700 focus:border-blue-500 focus:ring-blue-500"
             />
           </div>
 

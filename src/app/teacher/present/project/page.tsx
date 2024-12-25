@@ -5,12 +5,16 @@ import { useState } from 'react'
 import { ListProjectFilterQuery } from '@/models/Project'
 import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
-import { GetProjectInCommittee, ListProjectByUserID } from '@/actions/projectUser'
+import {
+  GetProjectInCommittee,
+  ListProjectByUserID,
+} from '@/actions/projectUser'
 import { Loader } from '@/components/Loading'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import ProjectMenu from '@/components/Tables/ProjectTable/TeacherProjectMenu'
 import { ProjectStatusBadge } from '@/components/Badge'
 import course from '@/constants/course/course'
+import { CommitteeUpdateExamDocsDialog } from '@/components/Dialog'
 
 type Props = {}
 
@@ -101,9 +105,14 @@ function Project({}: Props) {
                 {data &&
                   data.map(project => (
                     <tr key={project.id} className="hover:bg-gray-100">
-                      <td className="whitespace-nowrap px-6 py-4">
-                        {project.projectName}
-                      </td>
+                      <CommitteeUpdateExamDocsDialog
+                        projectId={project.id}
+                        courseId={course.Project}
+                      >
+                        <td className="cursor-pointer whitespace-nowrap px-6 py-4 hover:underline">
+                          {project.projectName}
+                        </td>
+                      </CommitteeUpdateExamDocsDialog>
                       <td className="flex items-center whitespace-nowrap px-6 py-4">
                         {project.username}
                         <button
