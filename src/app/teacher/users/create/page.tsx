@@ -2,9 +2,15 @@
 import React, { useActionState, useState } from 'react'
 import { createUser } from '@/actions/user'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function CreateUserPage() {
-  const [data, action, isPending] = useActionState(createUser, undefined)
+  const router = useRouter()
+  const handleCreate = async (prevState:unknown, formData:FormData) => {
+    await createUser(prevState,formData)
+    router.back()
+  }
+  const [data, action, isPending] = useActionState(handleCreate, null)
 
   return (
     <div className="h-full p-4">

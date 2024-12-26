@@ -38,6 +38,7 @@ export async function createUser(previousState: unknown, formData: FormData) {
       },
     })
 
+    revalidatePath('/teacher/users')
     if (res) {
       return { message: 'สร้างผู้ใช้เสร็จสิ้น' }
     }

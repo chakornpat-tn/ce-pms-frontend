@@ -168,6 +168,7 @@ export type ProjectByIDRes = {
   createdAt: Date
   updatedAt: Date
   examDateTime: Date
+  examLocation?: string
   projectStatus: ProjectStatus
 }
 

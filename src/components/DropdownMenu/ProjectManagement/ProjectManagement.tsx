@@ -1,5 +1,5 @@
 'use client'
-import { TuneRounded, Send } from '@mui/icons-material'
+import { TuneRounded, Send, Close } from '@mui/icons-material'
 import { UpdateCourseStatusDialog } from '@/components/Dialog'
 import {
   DropdownMenu,
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { UpdateStatusDialog } from '@/components/Dialog/StatusDialog/UpdateStatusDialog'
 import courseStatus from '@/constants/course/courseStatus'
+import course from '@/constants/course/course'
 
 type Props = {
   children: React.ReactNode
@@ -31,20 +32,20 @@ export function ProjectManagementMenu({
       <DropdownMenuContent className="w-56">
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <div className="primary-hover flex cursor-pointer justify-start px-2 py-1">
+          <DropdownMenuItem className="flex cursor-pointer justify-start gap-2">
             <UpdateStatusDialog
               courseList={courseList}
               ids={idSelection}
               onSuccess={onSuccess}
             >
               <div className="flex items-center gap-2">
-                <TuneRounded />
+                <TuneRounded className="h-4 w-4" />
                 <span>อัปเดตสถานะ</span>
               </div>
             </UpdateStatusDialog>
-          </div>
-          <div className="primary-hover flex cursor-pointer justify-start px-2 py-1">
-            {courseList === courseStatus.PreProject && (
+          </DropdownMenuItem>
+          {courseList === course.PreProject && (
+            <DropdownMenuItem className="flex cursor-pointer justify-start gap-2">
               <UpdateCourseStatusDialog
                 newCourseStatus={courseStatus.PassPre}
                 ids={idSelection}
@@ -52,12 +53,40 @@ export function ProjectManagementMenu({
                 nullOnSuccess={true}
               >
                 <div className="flex items-center gap-2">
-                  <Send />
+                  <Send className="h-4 w-4" />
                   <span>ผ่านวิชาเตรียมโครงงาน</span>
                 </div>
               </UpdateCourseStatusDialog>
-            )}
-          </div>
+            </DropdownMenuItem>
+          )}
+          {courseList === course.Project && (
+            <DropdownMenuItem className="flex cursor-pointer justify-start gap-2">
+              <UpdateCourseStatusDialog
+                newCourseStatus={courseStatus.Pass}
+                ids={idSelection}
+                onSuccess={onSuccess}
+                nullOnSuccess={true}
+              >
+                <div className="flex items-center gap-2">
+                  <Send className="h-4 w-4" />
+                  <span>ผ่านวิชาโครงงาน</span>
+                </div>
+              </UpdateCourseStatusDialog>
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuItem className="flex cursor-pointer justify-start gap-2">
+            <UpdateCourseStatusDialog
+              newCourseStatus={courseStatus.Fail}
+              ids={idSelection}
+              onSuccess={onSuccess}
+              nullOnSuccess={true}
+            >
+              <div className="flex items-center gap-2">
+                <Close className="h-4 w-4" />
+                <span>โครงงานไม่ผ่าน</span>
+              </div>
+            </UpdateCourseStatusDialog>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

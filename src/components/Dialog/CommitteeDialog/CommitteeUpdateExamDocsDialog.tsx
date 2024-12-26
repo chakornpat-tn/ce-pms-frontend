@@ -15,6 +15,7 @@ import dayjs from 'dayjs'
 import { ProjectByIDRes } from '@/models/Project'
 import GradeIcon from '@mui/icons-material/Grade'
 import { UpdateExamDocsDialog } from './UpdateExamDocsDialog'
+import { ListProjectDocsApproveDialog } from '../ProjectDocsDialog/ListProjectDocsApprove'
 
 type Props = {
   children: React.ReactNode
@@ -76,7 +77,14 @@ const projectDetail = (data: ProjectByIDRes) => {
                 {data.semester} /{data.academicYear}
               </p>
             </div>
-
+            {data.projectSemester && data.projectAcademicYear && (
+              <div>
+                <h3 className="mb-2 font-bold">ศึกษาโครงงานปีการศึกษา</h3>
+                <p className="text-gray-500">
+                  {data.projectSemester} /{data.projectAcademicYear}
+                </p>
+              </div>
+            )}
             <div>
               <h3 className="mb-2 font-bold">บทคัดย่อ</h3>
               <p className="text-gray-500">
@@ -170,6 +178,12 @@ const menuSelection = (
           <span className="flex-1 text-center">ส่งคะแนนสอบ</span>
         </button>
       </UpdateExamDocsDialog>
+      <ListProjectDocsApproveDialog projectId={projectId}>
+        <button className={commonButtonClasses}>
+          <GradeIcon className="shrink-0" />
+          <span className="flex-1 text-center">ดูเอกสาร</span>
+        </button>
+      </ListProjectDocsApproveDialog>
     </div>
   )
 }

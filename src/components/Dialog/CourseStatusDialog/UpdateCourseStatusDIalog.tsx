@@ -53,7 +53,10 @@ export function UpdateCourseStatusDialog({
           <input type="hidden" name="ids" value={JSON.stringify(ids)} />
           <input type="hidden" name="courseStatus" value={newCourseStatus} />
           {nullOnSuccess && (
-            <input type="hidden" name="projectStatusId" value={'null'} />
+            <>
+              <input type="hidden" name="projectStatusId" value={'null'} />
+              <input type="hidden" name="examLocation" value={'null'} />
+            </>
           )}
           <div className="w-full max-w-screen-md px-2">
             อัปเดตสถานะดำเนิการเป็น

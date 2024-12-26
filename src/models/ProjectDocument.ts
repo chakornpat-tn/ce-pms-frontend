@@ -38,3 +38,18 @@ export type ProjectDocumentRes = {
   comments: Comment[]
   CommentBasedEdits: CommentBasedEdit[]
 }
+
+export type ProjectDocsAdvisorApproveRes = {
+  id: number
+  projectId: number
+  documentId: number
+  documentName: string
+  documentUrl: string
+  status: number
+  createdAt: Date
+  updatedAt: Date
+  document: {
+    course: number
+    name: string
+  }
+}

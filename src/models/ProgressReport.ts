@@ -61,3 +61,11 @@ export type ReportResultType = {
   }
   comment?: string
 }
+
+export type ProjectProgressReportRes = {
+  id: number
+  projectId: number | null
+  productProgress: number | null
+  docsProgress: number
+  updatedAt: string
+}
