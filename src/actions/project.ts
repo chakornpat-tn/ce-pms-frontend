@@ -330,6 +330,7 @@ export async function updateMultipleProjects(
     const courseStatus = formData.get('courseStatus')
     const projectSemester = formData.get('projectSemester')
     const projectAcademicYear = formData.get('projectAcademicYear')
+    const examLocation = formData.get('examLocation')
 
     const projectData = {
       ids,
@@ -344,7 +345,10 @@ export async function updateMultipleProjects(
       ...(projectSemester && { projectSemester: Number(projectSemester) }),
       ...(projectAcademicYear && {
         projectAcademicYear: Number(projectAcademicYear),
-      }),
+       ...(examLocation && {
+        examLocation:
+          examLocation === 'null' ? null : examLocation,
+      }),}),
     }
 
     if (Object.keys(projectData).length === 0) {

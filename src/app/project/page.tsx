@@ -12,7 +12,8 @@ import { CheckRegisExamDateRes } from '@/models/ProjectUser'
 import { CheckStatusRegisExamDateTime } from '@/actions/projectUser'
 import { CalendarIcon, SendIcon } from 'lucide-react'
 import { ProjectSelectExamDate } from '@/components/Dialog/ProjectDialog/ProjectSelectExamDate'
-
+import { ProjectProgressReportRes } from '@/models/ProgressReport'
+import { GetProjectProgressReport } from '@/actions/progressReport'
 
 const steps = [
   'ใบขอสอบ2.0',
@@ -26,10 +27,12 @@ type Props = {}
 export default async function Page({}: Props) {
   let projectData: ProjectByIDRes | undefined
   let regisExamDate: CheckRegisExamDateRes | undefined
+  let projectProgressReport: ProjectProgressReportRes | null | undefined
   try {
     projectData = await GetProjectFormToken()
     if (!projectData) return
     regisExamDate = await CheckStatusRegisExamDateTime(projectData.id)
+    projectProgressReport = await GetProjectProgressReport(projectData.id)
   } catch (error) {
     console.error('Error fetching project data')
     return
@@ -77,7 +80,7 @@ export default async function Page({}: Props) {
                 {CourseStatusDesc(projectData.courseStatus)}
               </p>
             </div>
-            <button className="btn bg-primary2-400 text-xs text-white rounded-md transition-colors duration-200 hover:bg-primary2-500 sm:text-sm md:text-base">
+            <button className="btn rounded-md bg-primary2-400 text-xs text-white transition-colors duration-200 hover:bg-primary2-500 sm:text-sm md:text-base">
               <Link href="/project/docs" className="flex items-center gap-2">
                 <SendIcon className="h-4 w-4 sm:h-5 sm:w-5" />{' '}
                 คลิกเพื่อส่งเอกสาร
@@ -98,6 +101,9 @@ export default async function Page({}: Props) {
                           .format('DD/MM/YYYY เวลา HH.mmน.')
                       : 'ยังไม่ได้เลือก'}
                   </p>
+                  {projectData.examLocation && (
+                    <p className='text-xs sm:text-sm md:text-base break-words overflow-hidden'>{projectData.examLocation}</p>
+                  )}
                 </div>
                 <ProjectSelectExamDate projectId={projectData.id}>
                   <button className="btn bg-primary2-400 text-xs text-white transition-colors duration-200 hover:bg-primary2-500 sm:text-sm md:text-base">
@@ -109,25 +115,30 @@ export default async function Page({}: Props) {
             )}
 
           <br />
+          {(!projectProgressReport || projectProgressReport != null) && (
+            <div>
+              <div className="mb-4 border-b border-primary2-500"></div>
+              <h3 className="text-xs font-bold sm:text-sm md:text-base">
+                รายงานความก้าวหน้าโครง
+              </h3>
+              <div className="mt-2 flex items-center justify-center">
+                <p className="text-xs sm:text-sm md:text-base">เอกสาร</p>
+              </div>
+              <Progress value={projectProgressReport?.productProgress || 0} />
+              <div className="mt-2 flex items-center justify-center">
+                <p className="text-xs sm:text-sm md:text-base">ชิ้นงาน</p>
+              </div>
+              <Progress value={projectProgressReport?.docsProgress || 0} />
+              <div className="mt-4 flex w-full flex-col items-center justify-center">
+                <button className="mb-4 rounded-md bg-primary2-400 px-3 py-2 text-xs text-white hover:bg-primary2-500 sm:text-sm md:px-4 md:text-base">
+                  <Link href="/project/student-progress">
+                    รายงานความก้าวหน้า
+                  </Link>
+                </button>
+              </div>
+            </div>
+          )}
 
-          <div className="mb-4 border-b border-primary2-500"></div>
-          <h3 className="text-xs font-bold sm:text-sm md:text-base">
-            รายงานความก้าวหน้าโครง
-          </h3>
-          <div className="mt-2 flex items-center justify-center">
-            <p className="text-xs sm:text-sm md:text-base">เอกสาร</p>
-          </div>
-          <Progress value={1} />
-          <div className="mt-2 flex items-center justify-center">
-            <p className="text-xs sm:text-sm md:text-base">ชิ้นงาน</p>
-          </div>
-          <Progress value={1} />
-          <div className="mt-4 flex w-full flex-col items-center justify-center">
-            <button className="mb-4 rounded-md bg-primary2-400 hover:bg-primary2-500 px-3 py-2 text-xs text-white sm:text-sm md:px-4 md:text-base">
-              <Link href="/project/student-progress">รายงานความก้าวหน้า</Link>
-            </button>
-            
-          </div>
           <div className="mb-4 border-b border-primary2-400"></div>
           <div className="flex w-full flex-col gap-2 text-xs sm:text-sm md:text-base">
             <div className="flex flex-col">
@@ -137,9 +148,7 @@ export default async function Page({}: Props) {
                   <Link href="/project/docs-edit">แก้ไขเอกสาร</Link>
                 </button>
               </div>
-              <p className="text-gray-500">
-              {projectData.type ?? 'ไม่ระบุ'}
-              </p>
+              <p className="text-gray-500">{projectData.type ?? 'ไม่ระบุ'}</p>
             </div>
 
             <div className="flex flex-col">

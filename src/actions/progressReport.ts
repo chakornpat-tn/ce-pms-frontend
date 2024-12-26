@@ -1,7 +1,7 @@
 'use server'
 
 import config from '@/config'
-import { ProgressReport } from '@/models/ProgressReport'
+import { ProgressReport, ProjectProgressReportRes } from '@/models/ProgressReport'
 import useAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
@@ -162,9 +162,9 @@ export async function changeProgressReportStatus(id: number, status: number) {
     }
 
     let data: { status: number } = {
-      status: status
+      status: status,
     }
-   
+
     const form = new FormData()
     form.append('data', JSON.stringify(data))
     const url = `/v1/progress-report/${id}`
@@ -198,8 +198,8 @@ export async function CreateProgressReport(
       throw new Error('Token payload is invalid or missing user ID.')
     }
 
-    const productFile = formData.get('product_file') as File || null
-    const docsFile = formData.get('docs_file') as File || null    
+    const productFile = (formData.get('product_file') as File) || null
+    const docsFile = (formData.get('docs_file') as File) || null
     const data = {
       report: {
         section1: formData.get('section-1'),
@@ -241,7 +241,8 @@ export async function CreateProgressReport(
       projectId: Number(payload.id),
     }
     const form = new FormData()
-    if (productFile && productFile.size > 0) form.append('productFile', productFile)
+    if (productFile && productFile.size > 0)
+      form.append('productFile', productFile)
 
     if (docsFile && docsFile.size > 0) form.append('docsFile', docsFile)
     form.append('data', JSON.stringify(data))
@@ -255,6 +256,29 @@ export async function CreateProgressReport(
     })
     revalidatePath('/')
     return
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function GetProjectProgressReport(projectId: number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const res = await useAPI<{
+      data: ProjectProgressReportRes | null
+    }>(`/v1/progress-report/project/${projectId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    })
+
+    return res.data
   } catch (error) {
     throw error
   }

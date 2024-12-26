@@ -1,6 +1,11 @@
 'use server'
 
-import { ProjectDocument, ProjectDocumentRes } from '@/models/ProjectDocument'
+import Project from '@/app/teacher/present/project/page'
+import {
+  ProjectDocsAdvisorApproveRes,
+  ProjectDocument,
+  ProjectDocumentRes,
+} from '@/models/ProjectDocument'
 import useAPI from '@/utils/useAPI'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
@@ -53,10 +58,9 @@ export async function CreateProjectDocs(
       }),
     )
 
-
-      if (formData.getAll('selectedComments').length > 0) {
-        form.append('commentIDs', formData.getAll('selectedComments').join(','))
-      }    
+    if (formData.getAll('selectedComments').length > 0) {
+      form.append('commentIDs', formData.getAll('selectedComments').join(','))
+    }
 
     await useAPI('/v1/project-document', {
       method: 'POST',
@@ -100,6 +104,30 @@ export async function UpdateProjectDocStatus(
     })
     revalidatePath('/')
     return
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function ListProjectDocsApprove(projectId: number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+    const res = await useAPI<{
+      data: {
+        preProject: ProjectDocsAdvisorApproveRes[]
+        project: ProjectDocsAdvisorApproveRes[]
+      }
+    }>(`/v1/project-document/advisor-approve/${projectId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.value}`,
+      },
+    })
+    return res.data
   } catch (error) {
     throw error
   }

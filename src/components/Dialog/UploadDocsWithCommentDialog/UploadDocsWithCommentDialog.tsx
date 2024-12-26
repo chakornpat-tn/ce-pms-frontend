@@ -20,6 +20,7 @@ type Props = {
   projectId?: number
   documentId?: number
   documentName: string
+  onSuccess?: () => void
 }
 
 export function UploadDocsWithCommentsDialog(props: Props) {
@@ -27,10 +28,16 @@ export function UploadDocsWithCommentsDialog(props: Props) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [open, setOpen] = useState(false)
   const [selectedComments, setSelectedComments] = useState<number[]>([])
-  const { trigger, projectId, documentId, documentName } = props
-  
-  const { data, isLoading, error: commentError } = useSWR(['project-comment', projectId, documentId], () => ListComment(projectId, documentId))
-  
+  const { trigger, projectId, documentId, documentName, onSuccess } = props
+
+  const {
+    data,
+    isLoading,
+    error: commentError,
+  } = useSWR(['project-comment', projectId, documentId], () =>
+    ListComment(projectId, documentId),
+  )
+
   if (!projectId || !documentId) return
 
   return (
@@ -41,16 +48,21 @@ export function UploadDocsWithCommentsDialog(props: Props) {
           <DialogTitle className="text-2xl">อัปโหลดเอกสาร PDF</DialogTitle>
         </DialogHeader>
         <div className="mx-auto w-full p-4">
-          <form className="space-y-4" action={ (formData) => {
-            action(formData)
-            setOpen(false)
-            setSelectedFile(null)
-          }} onSubmit={(e) => {
-            if (!selectedFile) {
-              e.preventDefault()
-              return
-            }
-          }}>
+          <form
+            className="space-y-4"
+            action={formData => {
+              action(formData)
+              setOpen(false)
+              setSelectedFile(null)
+              onSuccess?.()
+            }}
+            onSubmit={e => {
+              if (!selectedFile) {
+                e.preventDefault()
+                return
+              }
+            }}
+          >
             <input type="hidden" name="projectId" value={projectId} />
             <input type="hidden" name="documentId" value={documentId} />
             <input type="hidden" name="documentName" value={documentName} />
@@ -61,13 +73,13 @@ export function UploadDocsWithCommentsDialog(props: Props) {
                 name="document"
                 accept=".pdf"
                 className="hidden"
-                onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                onChange={e => setSelectedFile(e.target.files?.[0] || null)}
               />
               <label
                 htmlFor="document"
-                className="flex flex-col items-center gap-2 cursor-pointer"
+                className="flex cursor-pointer flex-col items-center gap-2"
               >
-                <CloudUpload className="w-12 h-12 text-gray-400" />
+                <CloudUpload className="h-12 w-12 text-gray-400" />
                 <span className="text-sm text-gray-500">
                   {selectedFile ? selectedFile.name : 'คลิกเลือกไฟล์ PDF'}
                 </span>
@@ -75,20 +87,30 @@ export function UploadDocsWithCommentsDialog(props: Props) {
             </div>
             {data && data.length > 0 && (
               <div className="space-y-2">
-                <p className="text-sm font-medium">เลือกหัวข้อที่ได้ทำการแก้ไข</p>
+                <p className="text-sm font-medium">
+                  เลือกหัวข้อที่ได้ทำการแก้ไข
+                </p>
                 <div className="max-h-[250px] overflow-y-auto">
-                  {data.map((comment) => (
-                    <label key={comment.id} className="flex items-center space-x-2 py-1">
+                  {data.map(comment => (
+                    <label
+                      key={comment.id}
+                      className="flex items-center space-x-2 py-1"
+                    >
                       <input
                         type="checkbox"
                         name="selectedComments"
                         value={comment.id}
                         checked={selectedComments.includes(comment.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
-                            setSelectedComments([...selectedComments, comment.id])
+                            setSelectedComments([
+                              ...selectedComments,
+                              comment.id,
+                            ])
                           } else {
-                            setSelectedComments(selectedComments.filter(id => id !== comment.id))
+                            setSelectedComments(
+                              selectedComments.filter(id => id !== comment.id),
+                            )
                           }
                         }}
                         className="rounded-md border-gray-300"
@@ -98,13 +120,14 @@ export function UploadDocsWithCommentsDialog(props: Props) {
                   ))}
                 </div>
               </div>
-            )}            <div className="flex justify-center">
+            )}{' '}
+            <div className="flex justify-center">
               <button
                 type="submit"
                 disabled={isPending || !selectedFile}
                 className="inline-flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none"
               >
-                <CloudUpload className="w-4 h-4" />
+                <CloudUpload className="h-4 w-4" />
                 อัปโหลด
               </button>
             </div>

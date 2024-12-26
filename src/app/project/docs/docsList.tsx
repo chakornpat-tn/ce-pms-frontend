@@ -63,6 +63,7 @@ const DocsList = (props: Props) => {
               projectId={projectId}
               documentId={documentId}
               documentName={`${documentName}-v.${data.length + 1}`}
+              onSuccess={mutate}
               trigger={
                 <div className="flex w-full justify-center rounded-md bg-primary2-400 p-2 transition-colors duration-200 hover:bg-primary2-500">
                   <button className="flex items-center gap-2 text-white">
