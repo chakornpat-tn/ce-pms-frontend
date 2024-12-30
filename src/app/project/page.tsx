@@ -14,6 +14,12 @@ import { CalendarIcon, SendIcon } from 'lucide-react'
 import { ProjectSelectExamDate } from '@/components/Dialog/ProjectDialog/ProjectSelectExamDate'
 import { ProjectProgressReportRes } from '@/models/ProgressReport'
 import { GetProjectProgressReport } from '@/actions/progressReport'
+import { ListDocument } from '@/actions/documents'
+import course from '@/constants/course/course'
+import { Document } from '@/models/Document'
+import CourseStepper from '@/components/Stepper/CourseStepper/CourseStepper'
+import { ProjectDocument } from '@/models/ProjectDocument'
+import { ListLastProjectDocsStatus } from '@/actions/projectDocuments'
 
 const steps = [
   'ใบขอสอบ2.0',
@@ -28,11 +34,24 @@ export default async function Page({}: Props) {
   let projectData: ProjectByIDRes | undefined
   let regisExamDate: CheckRegisExamDateRes | undefined
   let projectProgressReport: ProjectProgressReportRes | null | undefined
+  let documentStepper: Document[] | undefined
+  let projectDocsProgress: ProjectDocument[] | undefined
   try {
     projectData = await GetProjectFormToken()
     if (!projectData) return
     regisExamDate = await CheckStatusRegisExamDateTime(projectData.id)
     projectProgressReport = await GetProjectProgressReport(projectData.id)
+
+    documentStepper = await ListDocument({
+      course: projectData.projectAcademicYear
+        ? course.Project
+        : course.PreProject,
+      isActive: true,
+    })
+    projectDocsProgress = await ListLastProjectDocsStatus(
+      projectData.id,
+      projectData.projectAcademicYear ? course.Project : course.PreProject,
+    )
   } catch (error) {
     console.error('Error fetching project data')
     return
@@ -50,7 +69,8 @@ export default async function Page({}: Props) {
           {projectData.projectNameEng ?? 'ไม่ได้ระบุชื่อโครงงานภาษาอังกฤษ'}
         </h2>
         <div className="w-full">
-          <Box sx={{ width: '100%', overflowX: 'auto' }}>
+          <CourseStepper steps={documentStepper} projectDocsProgress={projectDocsProgress} />
+          {/* <Box sx={{ width: '100%', overflowX: 'auto' }}>
             <Stepper activeStep={1} alternativeLabel>
               {steps.map(label => (
                 <Step key={label}>
@@ -62,7 +82,7 @@ export default async function Page({}: Props) {
                 </Step>
               ))}
             </Stepper>
-          </Box>
+          </Box> */}
           <div className="my-5 flex w-full flex-col items-center justify-around gap-4 sm:flex-row sm:gap-2">
             <div className="flex flex-col items-center justify-center">
               <p className="text-xs sm:text-sm md:text-base">สถานะโครงงาน</p>
@@ -102,7 +122,9 @@ export default async function Page({}: Props) {
                       : 'ยังไม่ได้เลือก'}
                   </p>
                   {projectData.examLocation && (
-                    <p className='text-xs sm:text-sm md:text-base break-words overflow-hidden'>{projectData.examLocation}</p>
+                    <p className="overflow-hidden break-words text-xs sm:text-sm md:text-base">
+                      {projectData.examLocation}
+                    </p>
                   )}
                 </div>
                 <ProjectSelectExamDate projectId={projectData.id}>
