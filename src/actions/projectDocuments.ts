@@ -1,6 +1,7 @@
 'use server'
 
 import Project from '@/app/teacher/present/project/page'
+import { Document } from '@/models/Document'
 import {
   ProjectDocsAdvisorApproveRes,
   ProjectDocument,
@@ -122,6 +123,27 @@ export async function ListProjectDocsApprove(projectId: number) {
         project: ProjectDocsAdvisorApproveRes[]
       }
     }>(`/v1/project-document/advisor-approve/${projectId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token.value}`,
+      },
+    })
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function ListLastProjectDocsStatus(projectId:number, course:number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+    const res = await useAPI<{
+      data: ProjectDocument[]
+    }>(`/v1/project-document/project-docs-status/${projectId}/${course}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token.value}`,
