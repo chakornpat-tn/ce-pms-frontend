@@ -1,13 +1,16 @@
 'use server'
 
 import Project from '@/app/teacher/present/project/page'
+import config from '@/config'
 import { Document } from '@/models/Document'
 import {
   ProjectDocsAdvisorApproveRes,
   ProjectDocument,
   ProjectDocumentRes,
+  ProjectDocumentWaitUpdateRes,
 } from '@/models/ProjectDocument'
 import useAPI from '@/utils/useAPI'
+import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 
@@ -134,7 +137,10 @@ export async function ListProjectDocsApprove(projectId: number) {
   }
 }
 
-export async function ListLastProjectDocsStatus(projectId:number, course:number) {
+export async function ListLastProjectDocsStatus(
+  projectId: number,
+  course: number,
+) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
@@ -149,6 +155,37 @@ export async function ListLastProjectDocsStatus(projectId:number, course:number)
         Authorization: `Bearer ${token.value}`,
       },
     })
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function ListProjectDocsWaitUpdate() {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.')
+    }
+
+    const res = await useAPI<{ data: ProjectDocumentWaitUpdateRes[] }>(
+      `/v1/project-document/wait-update/${payload.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+
     return res.data
   } catch (error) {
     throw error

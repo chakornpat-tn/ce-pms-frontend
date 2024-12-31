@@ -24,3 +24,13 @@ export type CheckRegisExamDateRes = {
   projectExamApprove: boolean
   projectCommitteeCountApprove: boolean
 }
+
+export type ProjectUserExamDateRes = {
+  id: number
+  projectName: string
+  projectNameEng: string | null
+  examDateTime: Date
+  examLocation: string
+  academicYear: number
+  projectAcademicYear: number | null
+}

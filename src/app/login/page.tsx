@@ -4,20 +4,23 @@ import Image from 'next/image'
 import { useActionState } from 'react'
 import { studentlogin, login } from '@/actions/auth'
 import { useState } from 'react'
+import { Loader } from '@/components/Loading'
 
 export default function LoginPage() {
   const [isTeacher, setIsTeacher] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const initState = {
     message: '',
   }
 
-  const [studentState, studentFormAction] = useActionState(
+  const [studentState, studentFormAction, studentLoginPending] = useActionState(
     studentlogin,
     initState,
   )
-  const [teacherState, teacherFormAction] = useActionState(login, initState)
+  const [teacherState, teacherFormAction, teacherLoginPending] = useActionState(
+    login,
+    initState,
+  )
 
   const currentState = isTeacher ? teacherState : studentState
   const currentFormAction = isTeacher ? teacherFormAction : studentFormAction
@@ -33,12 +36,7 @@ export default function LoginPage() {
   }
 
   const handleSubmit = async (formData: FormData) => {
-    setIsSubmitting(true)
-    try {
-      await currentFormAction(formData)
-    } finally {
-      setIsSubmitting(false)
-    }
+    currentFormAction(formData)
   }
 
   return (
@@ -60,7 +58,6 @@ export default function LoginPage() {
 
         <div className="relative bottom-12 w-full rounded-md bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
-
             <div className="mt-6 grid justify-center text-lg leading-tight tracking-tight text-gray-900 sm:text-2xl md:text-3xl">
               {/* Toggle Switch */}
 
@@ -122,11 +119,14 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="focus:ring-primary-300 w-full rounded-md bg-primary2-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none focus:ring-4"
+                disabled={studentLoginPending || teacherLoginPending}
+                className="focus:ring-primary-300 w-full rounded-md bg-primary2-400 px max-h-[25px]-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none focus:ring-4"
+             
               >
-                {isSubmitting ? (
-                  <span className="loading loading-ring loading-xs sm:loading-sm md:loading-md lg:loading-lg"></span>
+                {studentLoginPending || teacherLoginPending ? (
+                  <div>
+                    <Loader />
+                  </div>
                 ) : (
                   'เข้าสู่ระบบ'
                 )}

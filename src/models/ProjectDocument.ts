@@ -1,3 +1,7 @@
+import Project from '@/app/teacher/present/project/page'
+import { Document } from './Document'
+import { ProjectByIDRes } from './Project'
+
 export type ProjectDocument = {
   id: number
   projectId: number
@@ -52,4 +56,10 @@ export type ProjectDocsAdvisorApproveRes = {
     course: number
     name: string
   }
+}
+
+export type ProjectDocumentWaitUpdateRes = {
+  project: ProjectByIDRes
+  document: Document
+  createdAt: Date
 }
