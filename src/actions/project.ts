@@ -36,6 +36,7 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     if (req?.courseStatus) queryParams.append('courseStatus', req.courseStatus)
 
     const url = `/v1/project?${queryParams.toString()}`
+    console.log(url)
     const res = await useAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
@@ -214,17 +215,17 @@ export async function GetProjectByID(
   projectId: number,
 ): Promise<ProjectByIDRes> {
   try {
-    const Cookie = await cookies()
-    const token = Cookie.get('token')
-    if (!token?.value) {
-      throw new Error('Authentication token is missing.')
-    }
+    // const Cookie = await cookies()
+    // const token = Cookie.get('token')
+    // if (!token?.value) {
+    //   throw new Error('Authentication token is missing.')
+    // }
 
     const url = `/v1/project/${projectId}`
 
     const res = await useAPI<{ data: ProjectByIDRes }>(url, {
       headers: {
-        Authorization: `Bearer ${token.value}`,
+        // Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
       },
     })
