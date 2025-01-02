@@ -11,7 +11,9 @@ const WaitUpdateTable = ({
   data?: ProjectDocumentWaitUpdateRes[]
 }) => {
   return (
-    <div className={`w-full flex-1 rounded-md border bg-white shadow-sm min-h-[400px]`}>
+    <div
+      className={`min-h-[400px] w-full flex-1 rounded-md border bg-white shadow-sm`}
+    >
       <div className="border-b bg-primary2-400 p-4">
         <h2 className="text-lg font-semibold text-white">การอัปเดตเอกสาร</h2>
       </div>
@@ -38,7 +40,7 @@ const WaitUpdateTable = ({
               data.map((row, rowIndex) => (
                 <tr key={rowIndex} className="cursor-pointer hover:bg-gray-100">
                   <td className="px-4 py-3 text-xs sm:text-sm">
-                    <div className="line-clamp-2 sm:line-clamp-1 hover:underline">
+                    <div className="line-clamp-2 hover:underline sm:line-clamp-1">
                       <Link
                         href={`/teacher/consultant/${row.project.id}/docs`}
                         key={rowIndex}
@@ -54,7 +56,6 @@ const WaitUpdateTable = ({
                     <div className="mt-1 text-xs text-gray-500 sm:hidden">
                       {row.document.name}
                     </div>
-        
                   </td>
                   <td className="hidden whitespace-nowrap px-4 py-3 text-xs sm:table-cell sm:text-sm">
                     {row.document.name}
@@ -64,7 +65,7 @@ const WaitUpdateTable = ({
                       ? 'วิชาโครงงาน'
                       : 'วิชาเตรียมโครงงาน'}
                   </td>
-                  <td className=" whitespace-nowrap px-4 py-3 text-xs sm:table-cell sm:text-sm">
+                  <td className="whitespace-nowrap px-4 py-3 text-xs sm:table-cell sm:text-sm">
                     {dayjs(row.createdAt)
                       .add(543, 'year')
                       .format('DD/MM/YYYY HH:mm')}
@@ -78,7 +79,7 @@ const WaitUpdateTable = ({
                 </td>
               </tr>
             )}
-          </tbody>{' '}
+          </tbody>
         </table>
       </div>
     </div>

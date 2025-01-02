@@ -1,5 +1,3 @@
-import { Stepper, Step, StepLabel } from '@mui/material'
-import Box from '@mui/material/Box'
 import { Progress } from '@/components/Stepper'
 import Link from 'next/link'
 import { GetProjectFormToken } from '@/actions/project'
@@ -20,14 +18,6 @@ import { Document } from '@/models/Document'
 import CourseStepper from '@/components/Stepper/CourseStepper/CourseStepper'
 import { ProjectDocument } from '@/models/ProjectDocument'
 import { ListLastProjectDocsStatus } from '@/actions/projectDocuments'
-
-const steps = [
-  'ใบขอสอบ2.0',
-  'ใบซ้อมนำเสนอ3.0',
-  'ใบประเมินคณะกรรมการ4.0',
-  'ใบส่งชิ้นงาน5.0',
-  'ส่งปริญญานิพนธ์',
-]
 
 type Props = {}
 export default async function Page({}: Props) {
@@ -70,19 +60,6 @@ export default async function Page({}: Props) {
         </h2>
         <div className="w-full">
           <CourseStepper steps={documentStepper} projectDocsProgress={projectDocsProgress} />
-          {/* <Box sx={{ width: '100%', overflowX: 'auto' }}>
-            <Stepper activeStep={1} alternativeLabel>
-              {steps.map(label => (
-                <Step key={label}>
-                  <StepLabel>
-                    <span className="text-xs sm:text-sm md:text-base">
-                      {label}
-                    </span>
-                  </StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Box> */}
           <div className="my-5 flex w-full flex-col items-center justify-around gap-4 sm:flex-row sm:gap-2">
             <div className="flex flex-col items-center justify-center">
               <p className="text-xs sm:text-sm md:text-base">สถานะโครงงาน</p>
