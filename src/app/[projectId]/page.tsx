@@ -3,21 +3,26 @@ import dayjs from 'dayjs'
 import { CourseStatusDesc } from '@/utils/courseStatusDesc'
 import { GetProjectByID } from '@/actions/project'
 import { ProjectStatusBadge } from '@/components/Badge'
+import { ProjectByIDRes } from '@/models/Project'
 import { redirect } from 'next/navigation'
-
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ projectId: string }>
-}) { 
+}) {
   const projectId = (await params).projectId
 
-  const projectData = await GetProjectByID(Number(projectId))
-
-  if (!projectData) {
-    redirect('..')
+  let projectData: ProjectByIDRes | null = null
+  try {
+    projectData = await GetProjectByID(Number(projectId))
+  } catch (error) {
+    return redirect('/') // Redirect to previous page (home page) if error occurs
   }
+  if (!projectData) {
+    return redirect('/') // Redirect to previous page (home page) if no project data found
+  }
+
   return (
     <section className="relative mt-0 overflow-x-auto rounded-md bg-white p-4 shadow-md md:p-10">
       <article className="container mx-auto px-2 md:px-4">
