@@ -1,4 +1,4 @@
-import { Project } from './Project'
+import { Project, ProjectByIDRes } from './Project'
 
 export type ProgressReport = {
   id: number
@@ -68,4 +68,8 @@ export type ProjectProgressReportRes = {
   productProgress: number | null
   docsProgress: number
   updatedAt: string
+}
+
+export type ProjectReportWaitUpdateRes = ProgressReport & {
+  project: ProjectByIDRes
 }

@@ -15,9 +15,11 @@ import {
 
 const ExamDateTimeTable = ({ data }: { data?: ProjectUserExamDateRes[] }) => {
   return (
-    <div className={`w-full flex-1 rounded-md border bg-white shadow-sm min-h-[400px]`}>
-      <div className="border-b bg-primary2-400 p-4">
-        <h2 className="text-lg font-semibold text-white">ตารางนัดสอบ</h2>
+    <div
+      className={`min-h-[400px] w-full flex-1 rounded-md border bg-white shadow-sm`}
+    >
+      <div className="border bg-white p-4">
+        <h2 className="text-lg font-semibold text-primary2-400">ตารางนัดสอบ</h2>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">

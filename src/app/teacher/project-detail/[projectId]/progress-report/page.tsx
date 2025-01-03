@@ -26,7 +26,7 @@ function progressReport({}: Props) {
     {
       revalidateOnFocus: false,
       revalidateIfStale: false,
-      revalidateOnReconnect: false,
+      revalidateOnReconnect: true,
     },
   )
 
