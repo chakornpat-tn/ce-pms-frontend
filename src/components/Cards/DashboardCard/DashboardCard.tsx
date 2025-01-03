@@ -7,7 +7,7 @@ type Props = {
 
 const DashboardCard = ({}) => {
   return (
-    <div className="block max-w-sm rounded-md border bg-white p-6">
+    <div className="block rounded-md border w-full h-full bg-white p-6">
       <div className="flex-1 truncate">
         <div className="flex items-center justify-between">
           <h3 className="max-w-48 truncate text-sm font-bold text-gray-800">

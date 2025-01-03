@@ -273,7 +273,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
           </div>
         </div>
 
-        <main
+        <main className='overflow-y-auto h-full'
           onClick={() => isOpen && window.innerWidth < 768 && toggleSidebar()}
         >
           {children}

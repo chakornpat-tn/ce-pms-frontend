@@ -1,7 +1,11 @@
 'use server'
 
 import config from '@/config'
-import { ProgressReport, ProjectProgressReportRes } from '@/models/ProgressReport'
+import {
+  ProgressReport,
+  ProjectProgressReportRes,
+  ProjectReportWaitUpdateRes,
+} from '@/models/ProgressReport'
 import useAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
@@ -272,6 +276,35 @@ export async function GetProjectProgressReport(projectId: number) {
     const res = await useAPI<{
       data: ProjectProgressReportRes | null
     }>(`/v1/progress-report/project/${projectId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    })
+
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function GetProjectProgressWaitUpdate() {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.')
+    }
+
+    const res = await useAPI<{
+      data: ProjectReportWaitUpdateRes[]
+    }>(`/v1/progress-report/wait-update/${payload.id}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token.value}`,

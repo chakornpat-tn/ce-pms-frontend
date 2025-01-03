@@ -1,5 +1,6 @@
 'use client'
 import { GetProjectByID, updateMultipleProjects } from '@/actions/project'
+import BallotIcon from '@mui/icons-material/Ballot';
 import {
   Dialog,
   DialogContent,
@@ -180,7 +181,7 @@ const menuSelection = (
       </UpdateExamDocsDialog>
       <ListProjectDocsApproveDialog projectId={projectId}>
         <button className={commonButtonClasses}>
-          <GradeIcon className="shrink-0" />
+          <BallotIcon className="shrink-0" />
           <span className="flex-1 text-center">ดูเอกสาร</span>
         </button>
       </ListProjectDocsApproveDialog>

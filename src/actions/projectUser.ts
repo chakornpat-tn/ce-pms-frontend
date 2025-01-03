@@ -8,7 +8,10 @@ import {
   ProjectUser,
   ProjectUserWithUser,
 } from '@/models/Project'
-import { CheckRegisExamDateRes, ProjectUserExamDateRes } from '@/models/ProjectUser'
+import {
+  CheckRegisExamDateRes,
+  ProjectUserExamDateRes,
+} from '@/models/ProjectUser'
 import useAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
@@ -393,7 +396,42 @@ export async function CheckExamDateTimeUserToken() {
         },
       },
     )
-    
+
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function CountProjectInYear(academicYear: number) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.')
+    }
+
+    const url = `/v1/project-user/count-project/${payload.id}/${academicYear}`
+    const res = await useAPI<{
+      data: {
+        CountPreProp: number
+        CountOnProject: number
+        CountAllProject: number
+      }
+    }>(url, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
+
     return res.data
   } catch (error) {
     throw error
