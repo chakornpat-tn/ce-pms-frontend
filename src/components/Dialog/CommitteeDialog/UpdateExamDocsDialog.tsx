@@ -132,7 +132,7 @@ export function UpdateExamDocsDialog(props: Props) {
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                         >
-                          โครรง
+                        โครงงาน
                         </th>
                       )}
                     </tr>

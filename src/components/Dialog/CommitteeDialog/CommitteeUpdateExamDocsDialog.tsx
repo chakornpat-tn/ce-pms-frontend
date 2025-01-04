@@ -1,10 +1,11 @@
 'use client'
 import { GetProjectByID, updateMultipleProjects } from '@/actions/project'
-import BallotIcon from '@mui/icons-material/Ballot';
+import BallotIcon from '@mui/icons-material/Ballot'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -54,6 +55,15 @@ export function CommitteeUpdateExamDocsDialog({
             {menuSelection(projectId, courseId, onSuccess)}
           </article>
         </section>
+        <DialogFooter className="flex justify-start md:items-center md:justify-center">
+          <a
+            href={`/teacher/project-detail/${projectId}`}
+            target="_blank"
+            className="text-center font-medium text-primary2-400 transition-colors duration-300 hover:text-primary2-500 hover:underline"
+          >
+            ข้อมูลโครงงานเพิ่มเติม
+          </a>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

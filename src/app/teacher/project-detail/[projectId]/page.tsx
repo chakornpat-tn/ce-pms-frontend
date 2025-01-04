@@ -1,3 +1,4 @@
+'use client'
 import userProjectRole from '@/constants/userProjectRole/userProjectRole'
 import dayjs from 'dayjs'
 import { CourseStatusDesc } from '@/utils/courseStatusDesc'
@@ -5,23 +6,67 @@ import { GetProjectByID } from '@/actions/project'
 import { ProjectStatusBadge } from '@/components/Badge'
 import { ProjectByIDRes } from '@/models/Project'
 import { redirect } from 'next/navigation'
+import { CheckStatusRegisExamDateTime } from '@/actions/projectUser'
+import { GetProjectProgressReport } from '@/actions/progressReport'
+import course from '@/constants/course/course'
+import { ListDocument } from '@/actions/documents'
+import { ListLastProjectDocsStatus } from '@/actions/projectDocuments'
+import { Progress } from '@/components/Stepper'
+import CourseStepper from '@/components/Stepper/CourseStepper/CourseStepper'
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { use } from 'react'
+import { ProjectProgressReportRes } from '@/models/ProgressReport'
 
-export default async function Page({
+export default function Page({
   params,
 }: {
   params: Promise<{ projectId: string }>
 }) {
-  const projectId = (await params).projectId
+  const [projectData, setProjectData] = useState<ProjectByIDRes | null>(null)
+  const [regisExamDate, setRegisExamDate] = useState<any>(null)
+  const [projectProgressReport, setProjectProgressReport] = useState<ProjectProgressReportRes | null>(null)
+  const [documentStepper, setDocumentStepper] = useState<any[]>([])
+  const [projectDocsProgress, setProjectDocsProgress] = useState<any[]>([])
 
-  let projectData: ProjectByIDRes | null = null
-  try {
-    projectData = await GetProjectByID(Number(projectId))
-  } catch (error) {
-    return redirect('/') 
-  }
-  if (!projectData) {
-    return redirect('/') 
-  }
+  const { projectId } = use(params)
+
+  useEffect(() => {
+    async function fetchProjectData() {
+      try {
+        const data = await GetProjectByID(Number(projectId))
+        if (!data) {
+          redirect('/')
+        }
+        setProjectData(data)
+
+        const examDateResult = await CheckStatusRegisExamDateTime(data.id)
+        setRegisExamDate(examDateResult)
+
+        const progressReport = await GetProjectProgressReport(data.id)
+        setProjectProgressReport(progressReport)
+
+        const stepper = await ListDocument({
+          course: data.projectAcademicYear ? course.Project : course.PreProject,
+          isActive: true,
+        })
+        setDocumentStepper(stepper)
+
+        const docsProgress = await ListLastProjectDocsStatus(
+          data.id,
+          data.projectAcademicYear ? course.Project : course.PreProject,
+        )
+        setProjectDocsProgress(docsProgress)
+
+      } catch (error) {
+        redirect('/')
+      }
+    }
+
+    fetchProjectData()
+  }, [projectId])
+
+  if (!projectData) return null
 
   return (
     <section className="relative mt-0 overflow-x-auto rounded-md bg-white p-4 shadow-md md:p-10">
@@ -33,7 +78,11 @@ export default async function Page({
           {projectData.projectNameEng ?? 'ไม่ได้ระบุชื่อโครงงานภาษาอังกฤษ'}
         </h2>
         <div className="w-full">
-          <div className="my-5 flex w-full flex-col items-center justify-around gap-4 sm:flex-row sm:gap-2">
+          <CourseStepper
+            steps={documentStepper}
+            projectDocsProgress={projectDocsProgress}
+          />
+          <div className="my-5 flex w-full flex-col items-center justify-evenly gap-4 sm:flex-row sm:gap-4">
             <div className="flex flex-col items-center justify-center">
               <p className="text-xs sm:text-sm md:text-base">สถานะโครงงาน</p>
               <ProjectStatusBadge
@@ -42,6 +91,26 @@ export default async function Page({
                 name={projectData.projectStatus?.name}
               />
             </div>
+            {regisExamDate?.projectCommitteeCountApprove &&
+              regisExamDate.projectExamApprove && (
+                <div className="flex flex-col items-center justify-center">
+                  <p className="text-xs font-semibold sm:text-sm md:text-base">
+                    วันสอบ
+                  </p>
+                  <p className="text-xs sm:text-sm md:text-base">
+                    {projectData.examDateTime
+                      ? dayjs(projectData.examDateTime)
+                          .add(543, 'year')
+                          .format('DD/MM/YYYY เวลา HH.mmน.')
+                      : 'ยังไม่ได้เลือก'}
+                  </p>
+                  {projectData.examLocation && (
+                    <p className="overflow-hidden break-words text-xs sm:text-sm md:text-base">
+                      {projectData.examLocation}
+                    </p>
+                  )}
+                </div>
+              )}
             <div className="flex flex-col items-center justify-center">
               <p className="text-xs font-semibold sm:text-sm md:text-base">
                 ดำเนินการ
@@ -53,6 +122,22 @@ export default async function Page({
           </div>
 
           <br />
+          {(projectProgressReport != null) && (
+            <div className='py-4 mb-4'>
+              <div className="mb-4 border-b border-primary2-500"></div>
+              <h3 className="text-xs font-bold sm:text-sm md:text-base">
+                ความก้าวหน้าโครง
+              </h3>
+              <div className="mt-2 flex items-center justify-center">
+                <p className="text-xs sm:text-sm md:text-base">เอกสาร</p>
+              </div>
+              <Progress value={projectProgressReport?.productProgress || 0} />
+              <div className="mt-2 flex items-center justify-center">
+                <p className="text-xs sm:text-sm md:text-base">ชิ้นงาน</p>
+              </div>
+              <Progress value={projectProgressReport?.docsProgress || 0} />
+            </div>
+          )}
 
           <div className="mb-4 border-b border-primary2-400"></div>
           <div className="flex w-full flex-col gap-2 text-xs sm:text-sm md:text-base">

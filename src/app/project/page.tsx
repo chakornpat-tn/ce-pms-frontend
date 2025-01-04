@@ -114,7 +114,7 @@ export default async function Page({}: Props) {
             )}
 
           <br />
-          {(!projectProgressReport || projectProgressReport != null) && (
+          {(projectProgressReport != null ) && (
             <div>
               <div className="mb-4 border-b border-primary2-500"></div>
               <h3 className="text-xs font-bold sm:text-sm md:text-base">

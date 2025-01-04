@@ -3,6 +3,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -94,6 +95,15 @@ export function ProjectSelectExamDate({
             </button>
           </div>
         </form>
+        <DialogFooter className="flex justify-start md:items-center md:justify-center">
+          <a
+            href={`/teacher/project-detail/${projectId}`}
+            target="_blank"
+            className="text-center font-medium text-primary2-400 transition-colors duration-300 hover:text-primary2-500 hover:underline"
+          >
+            ข้อมูลโครงงานเพิ่มเติม
+          </a>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

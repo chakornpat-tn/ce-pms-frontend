@@ -13,11 +13,9 @@ import userRoles from '@/constants/userRoles/userRoles'
 import Link from 'next/link'
 import { Add } from '@mui/icons-material'
 
-
 type Props = {}
 
 function page({}: Props) {
-  const title = 'จัดการโครงงาน'
   const currentYear = new Date().getFullYear() + 543
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
     projectName: '',
@@ -29,7 +27,10 @@ function page({}: Props) {
 
   const fetchData = async () => {
     const res = await ListProjects(filters)
-    toast.success('ค้นหาสำเร็จ', { duration: 1000 })
+    if (res.length == 0 && filters.projectAcademicYear == currentYear) {
+      setFilters({ ...filters, projectAcademicYear: currentYear - 1 })
+      mutate()
+    }
     return res
   }
 
@@ -68,7 +69,7 @@ function page({}: Props) {
         setFilters={setFilters}
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
-        currentYear={currentYear}
+        currentYear={Number(filters.projectAcademicYear)}
         course={Course.Project}
       />
 

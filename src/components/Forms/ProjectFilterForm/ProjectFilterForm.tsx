@@ -45,7 +45,7 @@ const ProjectFilterForm: React.FC<Props> = ({
       <div className="flex w-auto items-center gap-2">
         <input
           type="number"
-          name={course === Course.Project ? 'projectSemester' : 'semester'}
+          name={course == Course.Project ? 'projectSemester' : 'semester'}
           min={1}
           max={2}
           placeholder="ทุกภาคเรียน"
@@ -58,7 +58,7 @@ const ProjectFilterForm: React.FC<Props> = ({
           onChange={e =>
             setFilters({
               ...filters,
-              [course === Course.Project ? 'projectSemester' : 'semester']:
+              [course == Course.Project ? 'projectSemester' : 'semester']:
                 parseInt(e.target.value) || 1,
             })
           }
@@ -72,14 +72,14 @@ const ProjectFilterForm: React.FC<Props> = ({
           placeholder="ปีการศึกษา"
           min="0"
           value={
-            course === Course.Project
+            course == Course.Project
               ? filters.projectAcademicYear
               : filters.academicYear
           }
           onChange={e =>
             setFilters({
               ...filters,
-              [course === Course.Project
+              [course == Course.Project
                 ? 'projectAcademicYear'
                 : 'academicYear']:
                 Math.max(0, parseInt(e.target.value)) || currentYear,

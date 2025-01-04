@@ -2,8 +2,10 @@
 import { GetProjectByID, updateMultipleProjects } from '@/actions/project'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -64,6 +66,11 @@ export function ProjectDetailDialog({
             {menuSelection(userRole, projectId, courseMenu, onSuccess)}
           </article>
         </section>
+        <DialogFooter className="flex justify-start md:justify-center md:items-center">
+          <a href={`/teacher/project-detail/${projectId}`} target='_blank' className='text-primary2-400 hover:text-primary2-500 hover:underline transition-colors duration-300 font-medium text-center'>
+            ข้อมูลโครงงานเพิ่มเติม
+          </a>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
@@ -221,7 +228,7 @@ const menuSelection = (
           </UpdateExamDocsDialog>
         </div>
       ) : (
-        <PointTeacherDialog projectId={projectId} >
+        <PointTeacherDialog projectId={projectId}>
           <button className={commonButtonClasses}>
             <PreviewIcon className="shrink-0" />
             <span className="flex-1 text-center">ตรวจคะแนนสอบ</span>

@@ -33,10 +33,6 @@ type Project = {
 function Regis({}: Props) {
   const currentYear = new Date().getFullYear() + 543
 
-  const handleCopyUsername = (username: string) => {
-    navigator.clipboard.writeText(username)
-    toast.success(`คัดลอก"${username}"เสร็จสิ้น`, { duration: 1000 })
-  }
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
     projectName: '',
     semester: 0,
@@ -47,6 +43,13 @@ function Regis({}: Props) {
 
   const fetchData = async () => {
     const res = await GetProjectInCompleteUsers(filters)
+    if (res.length == 0 && filters.academicYear == currentYear) {
+      setFilters({
+        ...filters,
+        academicYear: currentYear - 1,
+      })
+      mutate()
+    }
     return res
   }
 
@@ -150,8 +153,8 @@ function Regis({}: Props) {
         setFilters={setFilters}
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
-        currentYear={currentYear}
-        course={course.Project}
+        currentYear={Number(filters.academicYear)}
+        course={course.PreProject}
       />
       {/* Search Results */}
       <ProjectTable data={data} loading={isLoading} />

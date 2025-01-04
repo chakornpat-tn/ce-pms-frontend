@@ -1,3 +1,4 @@
+'use client'
 import projectDocumentStatus from '@/constants/projectDocumentStatus/projectDocumentStatus'
 import { Document } from '@/models/Document'
 import { ProjectDocument } from '@/models/ProjectDocument'
@@ -52,12 +53,12 @@ const CourseStepper: React.FC<CourseStepperProps> = ({
   return (
     <div className="w-full px-4 py-6">
       <div className="block overflow-x-auto">
-        <div className="flex min-w-max items-center justify-between">
+        <div className="flex min-w-max items-center justify-evenly space-x-4">
           {steps.map((step, index) => (
             <React.Fragment key={step.id}>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center ">
                 <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-200 cursor-help ${getStepStatus(
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all duration-200 ${getStepStatus(
                     step,
                   )}`}
                   title={getStatusDescription(getStepStatus(step))}
