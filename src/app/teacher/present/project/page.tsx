@@ -49,8 +49,9 @@ function Project({}: Props) {
     if(res.length == 0 && filters.projectAcademicYear == currentYear) {
       setFilters({
         ...filters,
-        projectAcademicYear: currentYear,
+        projectAcademicYear: currentYear-1,
       })
+      mutate()
     }
     return res
   }
