@@ -38,14 +38,20 @@ function Project({}: Props) {
   }
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
     projectName: '',
-    semester: 0,
-    academicYear: currentYear,
+    projectSemester: 0,
+    projectAcademicYear: currentYear,
     projectStatus: '',
     courseStatus: `${courseStatus.Project}, ${courseStatus.ApproveProjectExam}, ${courseStatus.Pass}`,
   })
 
   const fetchData = async () => {
     const res = await GetProjectInCommittee(filters)
+    if(res.length == 0 && filters.projectAcademicYear == currentYear) {
+      setFilters({
+        ...filters,
+        projectAcademicYear: currentYear,
+      })
+    }
     return res
   }
 
@@ -147,7 +153,7 @@ function Project({}: Props) {
         setFilters={setFilters}
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
-        currentYear={currentYear}
+        currentYear={Number(filters.projectAcademicYear)}
         course={course.Project}
       />
       {/* Search Results */}

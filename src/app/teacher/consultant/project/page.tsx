@@ -46,7 +46,14 @@ function page({}: Props) {
 
   const fetchData = async () => {
     const res = await ListProjectByUserID(filters)
-    toast.success('ค้นหาสำเร็จ', { duration: 1000 })
+    if (res.length == 0 && filters.projectAcademicYear == currentYear) {
+      setFilters({
+        ...filters,
+        projectAcademicYear: currentYear - 1,
+      })
+      mutate()
+    }
+
     return res
   }
 
@@ -166,7 +173,7 @@ function page({}: Props) {
         setFilters={setFilters}
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
-        currentYear={currentYear}
+        currentYear={Number(filters.projectAcademicYear)}
         course={course.Project}
       />
       {/* Search Results */}

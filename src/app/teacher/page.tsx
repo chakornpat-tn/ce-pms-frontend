@@ -15,7 +15,8 @@ import ProjectDocumentWaitUpdateTable from '@/components/Tables/ProjectProgressT
 type Props = {}
 
 function page({}: Props) {
-  const [year, setYear] = useState(new Date().getFullYear() + 543)
+  const currentYear = new Date().getFullYear() + 543
+  const [year, setYear] = useState(currentYear)
 
   const ExamDateTimeData = useSWR('/project-user/check-exam-date', () =>
     CheckExamDateTimeUserToken(),
@@ -32,7 +33,14 @@ function page({}: Props) {
 
   const CountProject = useSWR(
     `/project-user/count-project/userId/${year}`,
-    async () => await CountProjectInYear(year),
+    async () => {
+      const res = await CountProjectInYear(year)
+      if (res.CountAllProject == 0 && year == currentYear) {
+        setYear(currentYear - 1)
+        CountProject.mutate()
+      }
+      return res
+    },
   )
 
   return (

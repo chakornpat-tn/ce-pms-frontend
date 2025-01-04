@@ -104,7 +104,10 @@ export async function GetProjectInCommittee(req: ListProjectFilterQuery) {
     if (req?.projectName) queryParams.append('projectName', req.projectName)
     if (req?.academicYear)
       queryParams.append('academicYear', req.academicYear.toString())
+    if (req?.projectAcademicYear)
+      queryParams.append('projectAcademicYear', req.projectAcademicYear.toString())
     if (req?.semester) queryParams.append('semester', req.semester.toString())
+    if (req?.projectSemester) queryParams.append('projectSemester', req.projectSemester.toString())
     if (req?.projectStatus)
       queryParams.append('projectStatus', req.projectStatus)
     if (req?.courseStatus) queryParams.append('courseStatus', req.courseStatus)
@@ -117,6 +120,7 @@ export async function GetProjectInCommittee(req: ListProjectFilterQuery) {
     }
 
     const url = `/v1/project-user/committee/${Number(payload.id)}?${queryParams.toString()}`
+    console.log(url)
 
     const res = await useAPI<{ data: ProjectRes[] }>(url, {
       headers: {

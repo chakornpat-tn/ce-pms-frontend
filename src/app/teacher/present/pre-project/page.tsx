@@ -46,6 +46,12 @@ function PreProject({}: Props) {
 
   const fetchData = async () => {
     const res = await GetProjectInCommittee(filters)
+    if(res.length == 0 && filters.academicYear == currentYear) {
+      setFilters({
+        ...filters,
+        academicYear:currentYear - 1,
+      })
+    }
     return res
   }
 
@@ -148,7 +154,7 @@ function PreProject({}: Props) {
         setFilters={setFilters}
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
-        currentYear={currentYear}
+        currentYear={Number(filters.academicYear)}
         course={course.PreProject}
       />
       {/* Search Results */}

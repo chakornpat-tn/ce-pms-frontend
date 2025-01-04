@@ -39,12 +39,18 @@ export default function Home() {
 
   const projectList = useSWR(
     '/list-user-project',
-    () => ListProjects(filters),
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
+    async () => {
+      let res = await ListProjects(filters)
+      if (res.length == 0 && filters.academicYear == currentYear) {
+        setFilters({
+          ...filters,
+          projectAcademicYear: currentYear - 1,
+          academicYear: currentYear - 1,
+        })
+        projectList.mutate()
+      }
+      return res
+    }
   )
 
   const projectByID = useSWR(
@@ -122,7 +128,7 @@ export default function Home() {
               name="year"
               placeholder="ปีการศึกษา"
               min="0"
-              defaultValue={currentYear}
+              defaultValue={filters.academicYear}
               onChange={e =>
                 setFilters({
                   ...filters,
@@ -150,7 +156,7 @@ export default function Home() {
       {projectList.data && projectList.data.length > 0 ? (
         <section className="my-2 h-full w-full gap-2">
           <div className="container mx-auto flex h-full flex-col items-stretch justify-evenly md:flex-row">
-            <section className="md:w-1/3 w-full">
+            <section className="w-full md:w-1/3">
               <p className="mb-2 text-lg font-semibold text-gray-800">
                 ผลการค้นหา
               </p>
@@ -192,8 +198,8 @@ export default function Home() {
                   <a
                     key={project.id}
                     href={`/${project.id}`}
-                    target='_blank'
-                    className={`m-2 block h-48 max-h-[130px] min-w-full md:hidden rounded-lg border bg-white shadow-md hover:border-primary2-400 ${project.id === projectSelection ? 'border-2 border-primary2-400' : ''}`}
+                    target="_blank"
+                    className={`m-2 block h-48 max-h-[130px] min-w-full rounded-lg border bg-white shadow-md hover:border-primary2-400 md:hidden ${project.id === projectSelection ? 'border-2 border-primary2-400' : ''}`}
                   >
                     <div className="m-4 h-auto w-auto overflow-hidden">
                       <h2 className="truncate text-xl font-bold text-gray-800">
@@ -219,7 +225,7 @@ export default function Home() {
                 )
               })}
             </section>
-            <section className="mt-4 hidden w-2/3  flex-1 md:ml-[64px] md:mt-0 md:block">
+            <section className="mt-4 hidden w-2/3 flex-1 md:ml-[64px] md:mt-0 md:block">
               <div className="mb-2 h-6 font-semibold text-gray-800"></div>
               {!projectSelection ? (
                 <article className="sticky top-0 flex items-start justify-center rounded-lg bg-gray-200">
@@ -279,7 +285,7 @@ const ProjectDetail = ({
     )
   }
   return (
-    <section className="sticky top-2 mt-0 min-w- overflow-y-auto rounded-md bg-white p-4 shadow-md md:p-10 flex-1">
+    <section className="min-w- sticky top-2 mt-0 flex-1 overflow-y-auto rounded-md bg-white p-4 shadow-md md:p-10">
       <article className="container mx-auto px-2 md:px-4">
         <h1 className="text-center text-lg sm:text-xl md:text-3xl">
           {projectData.projectName}
