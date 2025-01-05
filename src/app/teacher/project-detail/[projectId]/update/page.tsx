@@ -313,7 +313,7 @@ export default function DocsEdit() {
                 </div>
               ))}
             </div>
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <div className="mb-3 flex flex-row items-center justify-start">
                 <h3 className="font-bold">อาจารย์</h3>{' '}
                 {projectData.users.length < 3 && (
@@ -341,7 +341,7 @@ export default function DocsEdit() {
                 )}
               </div>
 
-              {/* {projectData.users.map((item, index) => (
+              {projectData.users.map((item, index) => (
                 <div key={item.user.id} className="mb-2 flex space-x-2">
                   <select
                     name={`users[${index}].userId`}
@@ -395,8 +395,8 @@ export default function DocsEdit() {
                     <IndeterminateCheckBoxRounded />
                   </button>
                 </div>
-              ))} */}
-            </div>
+              ))}
+            </div> */}
           </div>
         </div>
         <button
