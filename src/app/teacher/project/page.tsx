@@ -37,7 +37,6 @@ function page({}: Props) {
   const { data, isLoading, mutate } = useSWR(`/v1/project`, fetchData, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
-    revalidateOnReconnect: false,
   })
 
   const handleSearch = (e: React.FormEvent) => {

@@ -59,7 +59,10 @@ export default async function Page({}: Props) {
           {projectData.projectNameEng ?? 'ไม่ได้ระบุชื่อโครงงานภาษาอังกฤษ'}
         </h2>
         <div className="w-full">
-          <CourseStepper steps={documentStepper} projectDocsProgress={projectDocsProgress} />
+          <CourseStepper
+            steps={documentStepper}
+            projectDocsProgress={projectDocsProgress}
+          />
           <div className="my-5 flex w-full flex-col items-center justify-around gap-4 sm:flex-row sm:gap-2">
             <div className="flex flex-col items-center justify-center">
               <p className="text-xs sm:text-sm md:text-base">สถานะโครงงาน</p>
@@ -114,7 +117,7 @@ export default async function Page({}: Props) {
             )}
 
           <br />
-          {(projectData.projectAcademicYear) && (
+          {projectData.projectAcademicYear && (
             <div>
               <div className="mb-4 border-b border-primary2-500"></div>
               <h3 className="text-xs font-bold sm:text-sm md:text-base">
@@ -188,7 +191,7 @@ export default async function Page({}: Props) {
                     ))}
                 </div>
               )}
-               {projectData.users.filter(
+              {projectData.users.filter(
                 (user: any) =>
                   user.userProjectRole == userProjectRole.COMMITTEE,
               ).length > 0 && (
@@ -210,6 +213,15 @@ export default async function Page({}: Props) {
               <p className="text-gray-500">
                 {projectData.semester} /{projectData.academicYear}
               </p>
+
+              {projectData.academicYear && (
+                <>
+                  <h3 className="mt-4 font-bold">ปีการศึกษาที่ลงวิชาโครงงาน</h3>
+                  <p className="text-gray-500">
+                    {projectData.projectSemester} /{projectData.projectAcademicYear}
+                  </p>
+                </>
+              )}
             </div>
             <div className="flex flex-col">
               <h3 className="mb-2 font-bold">บทคัดย่อ</h3>

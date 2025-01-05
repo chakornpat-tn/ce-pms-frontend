@@ -66,8 +66,12 @@ export function ProjectDetailDialog({
             {menuSelection(userRole, projectId, courseMenu, onSuccess)}
           </article>
         </section>
-        <DialogFooter className="flex justify-start md:justify-center md:items-center">
-          <a href={`/teacher/project-detail/${projectId}`} target='_blank' className='text-primary2-400 hover:text-primary2-500 hover:underline transition-colors duration-300 font-medium text-center'>
+        <DialogFooter className="flex justify-start md:items-center md:justify-center">
+          <a
+            href={`/teacher/project-detail/${projectId}`}
+            target="_blank"
+            className="text-center font-medium text-primary2-400 transition-colors duration-300 hover:text-primary2-500 hover:underline"
+          >
             ข้อมูลโครงงานเพิ่มเติม
           </a>
         </DialogFooter>
@@ -94,6 +98,14 @@ const projectDetail = (data: ProjectByIDRes) => {
               <p className="text-gray-500">
                 {data.semester} /{data.academicYear}
               </p>
+              {data.projectAcademicYear && (
+                <>
+                  <h3 className="mb-2 font-bold">ปีการศึกษาที่ลงวิชาโครงงาน</h3>
+                  <p className="text-gray-500">
+                    {data.projectSemester} /{data.projectAcademicYear}
+                  </p>
+                </>
+              )}
             </div>
 
             <h3 className="mb-2 font-bold">ผู้พัฒนา</h3>

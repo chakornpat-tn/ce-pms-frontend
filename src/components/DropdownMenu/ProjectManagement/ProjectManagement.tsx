@@ -32,7 +32,10 @@ export function ProjectManagementMenu({
       <DropdownMenuContent className="w-56">
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className="flex cursor-pointer justify-start gap-2">
+          <DropdownMenuItem
+            onSelect={e => e.preventDefault()}
+            className="flex cursor-pointer justify-start gap-2"
+          >
             <UpdateStatusDialog
               courseList={courseList}
               ids={idSelection}
@@ -45,7 +48,10 @@ export function ProjectManagementMenu({
             </UpdateStatusDialog>
           </DropdownMenuItem>
           {courseList === course.PreProject && (
-            <DropdownMenuItem className="flex cursor-pointer justify-start gap-2">
+            <DropdownMenuItem
+              className="flex cursor-pointer justify-start gap-2"
+              onSelect={e => e.preventDefault()}
+            >
               <UpdateCourseStatusDialog
                 newCourseStatus={courseStatus.PassPre}
                 ids={idSelection}
@@ -60,7 +66,10 @@ export function ProjectManagementMenu({
             </DropdownMenuItem>
           )}
           {courseList === course.Project && (
-            <DropdownMenuItem className="flex cursor-pointer justify-start gap-2">
+            <DropdownMenuItem
+              onSelect={e => e.preventDefault()}
+              className="flex cursor-pointer justify-start gap-2"
+            >
               <UpdateCourseStatusDialog
                 newCourseStatus={courseStatus.Pass}
                 ids={idSelection}
@@ -74,7 +83,10 @@ export function ProjectManagementMenu({
               </UpdateCourseStatusDialog>
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem className="flex cursor-pointer justify-start gap-2">
+          <DropdownMenuItem
+            onSelect={e => e.preventDefault()}
+            className="flex cursor-pointer justify-start gap-2"
+          >
             <UpdateCourseStatusDialog
               newCourseStatus={courseStatus.Fail}
               ids={idSelection}

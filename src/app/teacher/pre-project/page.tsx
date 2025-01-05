@@ -36,9 +36,7 @@ function page({}: Props) {
     [`/v1/pre-project`, []],
     fetchData,
     {
-      revalidateIfStale: false,
       revalidateOnFocus: false,
-      revalidateOnReconnect: false,
     },
   )
 

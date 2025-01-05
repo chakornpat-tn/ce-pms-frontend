@@ -37,7 +37,6 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     if (req?.courseStatus) queryParams.append('courseStatus', req.courseStatus)
 
     const url = `/v1/project?${queryParams.toString()}`
-    console.log(url)
     const res = await useAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
@@ -135,7 +134,7 @@ export async function GetProject(Id: number) {
     const token = Cookie.get('token')
     const url = `/v1/project/${Id}`
 
-    const res = await useAPI<{ data: Project }>(url, {
+    const res = await useAPI<{ data: ProjectByIDRes }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
@@ -263,7 +262,7 @@ export async function UpdateProjectFormToken(
     const examDateTime = formData.get('examDateTime')
     const examLocation = formData.get('examLocation')
 
-      const students :ProjectStudentRequest[] = []
+    const students: ProjectStudentRequest[] = []
     let index = 0
     while (formData.get(`students[${index}].studentId`)) {
       students.push({
@@ -296,7 +295,7 @@ export async function UpdateProjectFormToken(
       ...(examLocation && { examLocation: examLocation as string }),
     }
 
-     if (students.length > 0) {
+    if (students.length > 0) {
       projectData.students = students
     }
 
@@ -321,6 +320,114 @@ export async function UpdateProjectFormToken(
       },
       body: JSON.stringify(projectData),
     })
+
+    revalidatePath('/')
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function UpdateProjectByID(
+  previousState: unknown,
+  formData: FormData,
+) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const projectId = formData.get('projectId')
+    const projectName = formData.get('projectName')
+    const projectNameEng = formData.get('projectNameEng')
+    const abstract = formData.get('abstract')
+    const abstractEng = formData.get('abstractEng')
+    const detail = formData.get('detail')
+    const detailEng = formData.get('detailEng')
+    const semester = formData.get('semester')
+    const academicYear = formData.get('academicYear')
+    const type = formData.get('type')
+    const projectStatusId = formData.get('projectStatusId')
+    const courseStatus = formData.get('courseStatus')
+    const password = formData.get('password')
+    const examDateTime = formData.get('examDateTime')
+    const examLocation = formData.get('examLocation')
+
+    const students: ProjectStudentRequest[] = []
+    let index = 0
+    while (formData.get(`students[${index}].studentId`)) {
+      students.push({
+        studentId: formData.get(`students[${index}].studentId`)?.toString(),
+        name: formData.get(`students[${index}].name`)?.toString(),
+      })
+      index++
+    }
+
+    const users = []
+    index = 0
+    while (formData.get(`users[${index}].userId`)) {
+      users.push({
+        userId: Number(formData.get(`users[${index}].userId`)),
+        userProjectRole: Number(
+          formData.get(`users[${index}].userProjectRole`),
+        ),
+      })
+      index++
+    }
+
+    // const formDataObject:any = {}
+    // formData.forEach((value:any, key:any) => {
+    //   formDataObject[key] = value
+    // })
+    // console.log(formDataObject)
+
+    const projectData: UpdateProjectRequest = {
+      ...(projectName && { projectName: projectName as string }),
+      ...(projectNameEng && { projectNameEng: projectNameEng as string }),
+      ...(abstract && { abstract: abstract as string }),
+      ...(abstractEng && { abstractEng: abstractEng as string }),
+      ...(detail && { detail: detail as string }),
+      ...(detailEng && { detailEng: detailEng as string }),
+      ...(semester && { semester: Number(semester) }),
+      ...(academicYear && { academicYear: Number(academicYear) }),
+      ...(type && { type: type as string }),
+      ...(projectStatusId && { projectStatusId: Number(projectStatusId) }),
+      ...(courseStatus && { courseStatus: Number(courseStatus) }),
+      ...(password && { password: password as string }),
+      ...(examDateTime && {
+        examDateTime: new Date(
+          dayjs(String(examDateTime)).format(
+            'YYYY-MM-DD HH:mm:ss.SSS',
+          ) as string,
+        ),
+      }),
+      ...(examLocation && { examLocation: examLocation as string }),
+    }
+
+    if (students.length > 0) {
+      projectData.students = students
+    }
+
+    if (users.length > 0) {
+      projectData.users = users
+    }
+
+    if (Object.keys(projectData).length === 0) {
+      throw new Error('No data to update')
+    }
+
+    const url = `/v1/project/${Number(projectId)}`
+
+    console.log(projectData)
+    // await useAPI(url, {
+    //   method: 'PATCH',
+    //   headers: {
+    //     Authorization: `Bearer ${token.value}`,
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(projectData),
+    // })
 
     revalidatePath('/')
   } catch (error) {
@@ -361,10 +468,10 @@ export async function updateMultipleProjects(
       ...(projectSemester && { projectSemester: Number(projectSemester) }),
       ...(projectAcademicYear && {
         projectAcademicYear: Number(projectAcademicYear),
-       ...(examLocation && {
-        examLocation:
-          examLocation === 'null' ? null : examLocation,
-      }),}),
+        ...(examLocation && {
+          examLocation: examLocation === 'null' ? null : examLocation,
+        }),
+      }),
     }
 
     if (Object.keys(projectData).length === 0) {
@@ -406,7 +513,6 @@ export async function ListProjectPassPre(req: ListProjectFilterQuery) {
     if (req?.semester) queryParams.append('semester', req.semester.toString())
 
     const url = `/v1/project/pass-pre?${queryParams.toString()}`
-    console.log(url)
     const res = await useAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,

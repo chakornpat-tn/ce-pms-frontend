@@ -120,7 +120,6 @@ export async function GetProjectInCommittee(req: ListProjectFilterQuery) {
     }
 
     const url = `/v1/project-user/committee/${Number(payload.id)}?${queryParams.toString()}`
-    console.log(url)
 
     const res = await useAPI<{ data: ProjectRes[] }>(url, {
       headers: {
