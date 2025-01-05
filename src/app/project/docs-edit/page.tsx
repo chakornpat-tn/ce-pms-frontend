@@ -1,54 +1,68 @@
 'use client'
 import { GetProjectFormToken, UpdateProjectFormToken } from '@/actions/project'
 import useSWR from 'swr'
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
-
-const handleResize = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  e.target.style.height = 'auto'
-  e.target.style.height = `${e.target.scrollHeight}px`
-}
+import React, { useActionState, useEffect, useState } from 'react'
+import { redirect, useRouter } from 'next/navigation'
+import { Loader } from '@/components/Loading'
+import { revalidatePath } from 'next/cache'
+import Link from 'next/link'
+import userProjectRole from '@/constants/userProjectRole/userProjectRole'
+import {
+  ProjectByIDRes,
+  ProjectStudentRequest,
+  StudentEntry,
+} from '@/models/Project'
+import {
+  AddCircleRounded,
+  IndeterminateCheckBoxRounded,
+} from '@mui/icons-material'
 
 export default function DocsEdit() {
-  const router = useRouter()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState<string | null>(null)
-  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const [projectData, setProjectData] = useState<ProjectByIDRes | null>()
 
-  const fetcher = async () => {
-    const data = await GetProjectFormToken()
-    return data
+  const removeStudent = (index: number) => {
+    if (!projectData?.students) return
+    if (projectData.students.length === 1) return
+    const newStudents = [...projectData.students]
+    newStudents.splice(index, 1)
+    setProjectData({
+      ...projectData,
+      students: newStudents,
+    })
   }
 
-  const { data, error } = useSWR('project-form-token', fetcher)
+  const [error, action, isPending] = useActionState(
+    (prevState: unknown, formData: FormData) => {
+      UpdateProjectFormToken(prevState, formData)
+      redirect('/project')
+    },
+    null,
+  )
 
-  if (error) return <>Error loading data</>
-  if (!data) {
-    return <div>Loading...</div>
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitError(null)
-    setSuccessMessage(null)
-
-    const formData = new FormData(e.currentTarget)
-
-    try {
-      await UpdateProjectFormToken(data, formData)
-      setSuccessMessage('Project updated successfully!')
-    } catch (error: any) {
-      setSubmitError(error.message || 'Failed to update project.')
-    } finally {
-      setIsSubmitting(false)
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const data = await GetProjectFormToken()
+        setProjectData(data)
+      } catch (error) {
+        redirect('/project')
+      }
     }
+    fetch()
+  }, [])
+
+  if (!projectData) {
+    return (
+      <div className="mx-auto h-full w-full">
+        <Loader />
+      </div>
+    )
   }
 
   return (
-    <section className="relative min-h-[90dvh] mt-0 overflow-x-auto bg-white p-10 shadow-md rounded">
-      <button
-        onClick={() => router.back()}
+    <section className="relative mt-0 min-h-[90dvh] overflow-x-auto rounded bg-white p-10 shadow-md">
+      <Link
+        href="/project"
         className="mb-4 flex items-center text-gray-600 hover:text-gray-900"
       >
         <svg
@@ -64,14 +78,14 @@ export default function DocsEdit() {
           />
         </svg>
         ย้อนกลับ
-      </button>
-      <form className="container mx-auto max-w-3xl" onSubmit={handleSubmit}>
-        <input type="hidden" name="id" value={data.id || ''} />
+      </Link>
+      <form className="container mx-auto max-w-3xl" action={action}>
+        <input type="hidden" name="id" value={projectData.id || ''} />
         <h1 className="mb-6 text-center text-xl md:text-3xl">
           <input
             type="text"
             name="projectName"
-            defaultValue={data.projectName || ''}
+            defaultValue={projectData.projectName || ''}
             className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
             placeholder="ชื่อโครงงาน"
           />
@@ -80,7 +94,7 @@ export default function DocsEdit() {
           <input
             type="text"
             name="projectNameEng"
-            defaultValue={data.projectNameEng || ''}
+            defaultValue={projectData.projectNameEng || ''}
             className="w-full rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
             placeholder="ชื่อโครงงานภาษาอังกฤษ"
           />
@@ -94,7 +108,7 @@ export default function DocsEdit() {
                 <input
                   type="text"
                   name="semester"
-                  defaultValue={data.semester || ''}
+                  defaultValue={projectData.semester || ''}
                   className="w-1/3 rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
                   placeholder="ภาคการศึกษา"
                 />
@@ -102,9 +116,21 @@ export default function DocsEdit() {
                 <input
                   type="text"
                   name="academicYear"
-                  defaultValue={data.academicYear || ''}
+                  defaultValue={projectData.academicYear || ''}
                   className="w-2/3 rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
                   placeholder="ปีการศึกษา"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="mt-4 font-bold">ประเภทโครงงาน</h3>
+              <div className="mt-2 flex gap-4">
+                <input
+                  type="text"
+                  name="type"
+                  defaultValue={projectData.type || ''}
+                  className="w-1/3 rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                  placeholder="ระบุประเภทโครงงาน"
                 />
               </div>
             </div>
@@ -112,37 +138,104 @@ export default function DocsEdit() {
               <h3 className="mb-2 font-bold">บทคัดย่อ</h3>
               <textarea
                 name="abstract"
-                defaultValue={data.abstract || ''}
-                className="w-full resize-none rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                defaultValue={projectData.abstract || ''}
+                className="textarea w-full resize-none rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
                 placeholder="กรอกบทคัดย่อ"
-                onInput={handleResize}
-                rows={1}
+                rows={4}
               />
               <h3 className="mb-2 mt-6 font-bold">Abstract</h3>
               <textarea
                 name="abstractEng"
-                defaultValue={data.abstractEng || ''}
-                className="w-full resize-none rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                defaultValue={projectData.abstractEng || ''}
+                className="textarea w-full resize-none rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
                 placeholder="Enter abstract in English"
-                onInput={handleResize}
-                rows={1}
+                rows={4}
               />
+            </div>
+            <div className="flex flex-col">
+              <h3 className="mb-2 font-bold">รายละเอียด</h3>
+              <textarea
+                name="detail"
+                defaultValue={projectData.abstract || ''}
+                className="textarea w-full resize-none rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                placeholder="กรอกบทคัดย่อ"
+                rows={4}
+              />
+              <h3 className="mb-2 mt-6 font-bold">Detail</h3>
+              <textarea
+                name="detailEng"
+                defaultValue={projectData.abstractEng || ''}
+                className="textarea w-full resize-none rounded-md border border-gray-300 p-2 shadow-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary2-500"
+                placeholder="Enter abstract in English"
+                rows={4}
+              />
+            </div>
+            <div className="flex flex-col">
+              <div className="mb-3 flex flex-row items-center justify-start">
+                <h3 className="font-bold">ผู้พัฒนา</h3>{' '}
+                {projectData.students.length < 3 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setProjectData({
+                        ...projectData,
+                        students: [
+                          ...projectData.students,
+                          {
+                            student: {
+                              studentId: '',
+                              name: '',
+                            },
+                          } as StudentEntry,
+                        ],
+                      })
+                    }}
+                    className="ml-2 rounded-md p-1 text-primary2-400 transition-all duration-200 hover:text-primary2-500"
+                  >
+                    <AddCircleRounded />
+                  </button>
+                )}
+              </div>
+
+              {projectData.students?.map((item: any, i) => (
+                <div key={i} className="mb-2 flex space-x-2">
+                  <input
+                    type="text"
+                    name={`students[${i}].studentId`}
+                    placeholder="รหัสนักศึกษา"
+                    className="w-[100%] rounded-md border px-3 py-2"
+                    required
+                    defaultValue={item.student.studentId}
+                  />
+                  <input
+                    type="text"
+                    name={`students[${i}].name`}
+                    placeholder="ชื่อ นามสกุล"
+                    className="w-[100%] rounded-md border px-3 py-2"
+                    defaultValue={item.student.name}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeStudent(i)}
+                    className="rounded-md px-2 text-red-300 transition-all duration-200 hover:text-red-500"
+                  >
+                    <IndeterminateCheckBoxRounded />
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>
         <button
           type="submit"
           className={`hover:bg-primary2-600 mt-8 w-full rounded-md bg-primary2-500 px-6 py-3 text-white shadow-lg focus:outline-none focus:ring-2 focus:ring-primary2-500 focus:ring-offset-2 ${
-            isSubmitting ? 'cursor-not-allowed opacity-50' : ''
+            isPending ? 'cursor-not-allowed opacity-50' : ''
           }`}
-          disabled={isSubmitting}
+          disabled={isPending}
         >
-          {isSubmitting ? 'Saving...' : 'บันทึกข้อมูล'}
+          {isPending ? 'กำลังบันทึกข้อมูล...' : 'บันทึกข้อมูล'}
         </button>
-        {submitError && <p className="mt-4 text-red-500">{submitError}</p>}
-        {successMessage && (
-          <p className="mt-4 text-green-500">{successMessage}</p>
-        )}
       </form>
     </section>
   )

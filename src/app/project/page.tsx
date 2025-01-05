@@ -114,7 +114,7 @@ export default async function Page({}: Props) {
             )}
 
           <br />
-          {(projectProgressReport != null ) && (
+          {(projectData.projectAcademicYear) && (
             <div>
               <div className="mb-4 border-b border-primary2-500"></div>
               <h3 className="text-xs font-bold sm:text-sm md:text-base">
@@ -144,7 +144,7 @@ export default async function Page({}: Props) {
               <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
                 <h3 className="mt-4 font-bold">ประเภทโครงงาน</h3>
                 <button className="btn rounded-md bg-primary2-400 text-xs text-white transition-colors duration-200 hover:bg-primary2-500 sm:text-sm md:text-base">
-                  <Link href="/project/docs-edit">แก้ไขเอกสาร</Link>
+                  <Link href="/project/docs-edit">แก้ไขรายละเอียดโครงงาน</Link>
                 </button>
               </div>
               <p className="text-gray-500">{projectData.type ?? 'ไม่ระบุ'}</p>
@@ -180,6 +180,24 @@ export default async function Page({}: Props) {
                     .filter(
                       (user: any) =>
                         user.userProjectRole == userProjectRole.CO_ADVISOR,
+                    )
+                    .map((userData: any) => (
+                      <p key={userData.user.id} className="text-gray-500">
+                        {userData.user.name}
+                      </p>
+                    ))}
+                </div>
+              )}
+               {projectData.users.filter(
+                (user: any) =>
+                  user.userProjectRole == userProjectRole.COMMITTEE,
+              ).length > 0 && (
+                <div className="flex flex-col">
+                  <h3 className="font-bold">กรรมการคุมสอบ</h3>
+                  {projectData.users
+                    .filter(
+                      (user: any) =>
+                        user.userProjectRole == userProjectRole.COMMITTEE,
                     )
                     .map((userData: any) => (
                       <p key={userData.user.id} className="text-gray-500">

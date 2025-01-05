@@ -7,6 +7,7 @@ import {
   Project,
   ProjectByIDRes,
   ProjectRes,
+  ProjectStudentRequest,
   UpdateProjectRequest,
 } from '@/models/Project'
 import useAPI from '@/utils/useAPI'
@@ -262,6 +263,16 @@ export async function UpdateProjectFormToken(
     const examDateTime = formData.get('examDateTime')
     const examLocation = formData.get('examLocation')
 
+      const students :ProjectStudentRequest[] = []
+    let index = 0
+    while (formData.get(`students[${index}].studentId`)) {
+      students.push({
+        studentId: formData.get(`students[${index}].studentId`)?.toString(),
+        name: formData.get(`students[${index}].name`)?.toString(),
+      })
+      index++
+    }
+
     const projectData: UpdateProjectRequest = {
       ...(projectName && { projectName: projectName as string }),
       ...(projectNameEng && { projectNameEng: projectNameEng as string }),
@@ -283,6 +294,10 @@ export async function UpdateProjectFormToken(
         ),
       }),
       ...(examLocation && { examLocation: examLocation as string }),
+    }
+
+     if (students.length > 0) {
+      projectData.students = students
     }
 
     if (Object.keys(projectData).length === 0) {

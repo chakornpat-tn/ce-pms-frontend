@@ -72,8 +72,8 @@ export type UpdateProjectsRequest = {
 }
 
 export type ProjectStudentRequest = {
-  studentId: string
-  name: string
+  studentId?: string
+  name?: string
 }
 
 export type ListProjectsFilter = {
@@ -172,11 +172,11 @@ export type ProjectByIDRes = {
   projectStatus: ProjectStatus
 }
 
-type StudentEntry = {
+export type StudentEntry = {
   student: {
-    id: number
-    studentId: string
-    name: string
+    id?: number
+    studentId?: string
+    name?: string
   }
 }
 
