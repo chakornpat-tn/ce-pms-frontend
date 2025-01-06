@@ -25,20 +25,14 @@ function page({}: Props) {
 
   const fetchData = async () => {
     const res = await ListProjects(filters)
-    if(res.length == 0 && filters.academicYear == currentYear) {
+    if (res.length == 0 && filters.academicYear == currentYear) {
       setFilters({ ...filters, academicYear: currentYear - 1 })
       mutate()
     }
     return res
   }
 
-  const { data, isLoading, mutate } = useSWR(
-    [`/v1/pre-project`, []],
-    fetchData,
-    {
-      revalidateOnFocus: false,
-    },
-  )
+  const { data, isLoading, mutate } = useSWR([`/v1/pre-project`, []], fetchData)
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()

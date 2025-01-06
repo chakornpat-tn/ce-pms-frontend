@@ -44,7 +44,6 @@ const NavbarWithSideBar = ({ children }: Props) => {
         }
         setIsAuthenticated(data.isAuthenticated)
       } catch (error) {
-        console.error('Auth check failed:', error)
         setIsAuthenticated(false)
       }
     }

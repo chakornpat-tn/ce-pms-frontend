@@ -43,7 +43,6 @@ export default async function Page({}: Props) {
       projectData.projectAcademicYear ? course.Project : course.PreProject,
     )
   } catch (error) {
-    console.error('Error fetching project data')
     return
   }
 

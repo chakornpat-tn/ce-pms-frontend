@@ -34,10 +34,7 @@ function page({}: Props) {
     return res
   }
 
-  const { data, isLoading, mutate } = useSWR(`/v1/project`, fetchData, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-  })
+  const { data, isLoading, mutate } = useSWR(`/v1/project`, fetchData)
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()

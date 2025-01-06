@@ -57,8 +57,7 @@ function page({}: Props) {
 
   const { data, isLoading, mutate } = useSWR(
     [`consultant-pre-project`, []],
-    fetchData,
-    { revalidateOnFocus: false, revalidateOnReconnect: false },
+    fetchData
   )
 
   const handleSearch = (e: React.FormEvent) => {

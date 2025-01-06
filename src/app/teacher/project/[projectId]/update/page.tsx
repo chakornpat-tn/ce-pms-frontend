@@ -34,7 +34,6 @@ export default function UpdateProjectPage() {
 
   const handleSubmit = async (formData: FormData) => {
     const password = formData.get('password') as string
-    console.log(password)
     if (password !== '') {
       await updateProject(formData)
       router.back()
