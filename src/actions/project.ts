@@ -376,11 +376,6 @@ export async function UpdateProjectByID(
       index++
     }
 
-    // const formDataObject:any = {}
-    // formData.forEach((value:any, key:any) => {
-    //   formDataObject[key] = value
-    // })
-    // console.log(formDataObject)
 
     const projectData: UpdateProjectRequest = {
       ...(projectName && { projectName: projectName as string }),
@@ -419,15 +414,14 @@ export async function UpdateProjectByID(
 
     const url = `/v1/project/${Number(projectId)}`
 
-    console.log(projectData)
-    // await useAPI(url, {
-    //   method: 'PATCH',
-    //   headers: {
-    //     Authorization: `Bearer ${token.value}`,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(projectData),
-    // })
+    await useAPI(url, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(projectData),
+    })
 
     revalidatePath('/')
   } catch (error) {

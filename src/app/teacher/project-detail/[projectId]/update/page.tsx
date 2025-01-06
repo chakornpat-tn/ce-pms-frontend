@@ -93,7 +93,6 @@ export default function DocsEdit() {
         const data = (await GetProject(projectId)) as ProjectByIDRes
         setProjectData(data)
       } catch (error) {
-        console.log(error)
         router.back()
       }
     }
@@ -282,121 +281,131 @@ export default function DocsEdit() {
                 )}
               </div>
 
-              {projectData.students?.map((item: any, i) => (
-                <div
-                  key={item.student.studentId}
-                  className="mb-2 flex space-x-2"
-                >
-                  <input
-                    type="text"
-                    name={`students[${i}].studentId`}
-                    placeholder="รหัสนักศึกษา"
-                    className="w-[100%] rounded-md border px-3 py-2"
-                    required
-                    defaultValue={item.student.studentId}
-                  />
-                  <input
-                    type="text"
-                    name={`students[${i}].name`}
-                    placeholder="ชื่อ นามสกุล"
-                    className="w-[100%] rounded-md border px-3 py-2"
-                    defaultValue={item.student.name}
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeStudent(i)}
-                    className="rounded-md px-2 text-red-300 transition-all duration-200 hover:text-red-500"
+              {projectData.students &&
+                projectData.students?.map((item: any, i) => (
+                  <div
+                    key={item.student.studentId}
+                    className="mb-2 flex space-x-2"
                   >
-                    <IndeterminateCheckBoxRounded />
-                  </button>
-                </div>
-              ))}
+                    <input
+                      type="text"
+                      name={`students[${i}].studentId`}
+                      placeholder="รหัสนักศึกษา"
+                      className="w-[100%] rounded-md border px-3 py-2"
+                      required
+                      defaultValue={item.student.studentId}
+                    />
+                    <input
+                      type="text"
+                      name={`students[${i}].name`}
+                      placeholder="ชื่อ นามสกุล"
+                      className="w-[100%] rounded-md border px-3 py-2"
+                      defaultValue={item.student.name}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeStudent(i)}
+                      className="rounded-md px-2 text-red-300 transition-all duration-200 hover:text-red-500"
+                    >
+                      <IndeterminateCheckBoxRounded />
+                    </button>
+                  </div>
+                ))}
             </div>
-            {/* <div className="flex flex-col">
-              <div className="mb-3 flex flex-row items-center justify-start">
-                <h3 className="font-bold">อาจารย์</h3>{' '}
-                {projectData.users.length < 3 && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setProjectData({
-                        ...projectData,
-                        users: [
-                          ...projectData.users,
-                          {
-                            userProjectRole: userProjectRole.COMMITTEE,
-                            user: {
-                              id: 0,
-                              name: '',
-                            },
-                          } as UserEntry,
-                        ],
-                      })
-                    }}
-                    className="ml-2 rounded-md p-1 text-primary2-400 transition-all duration-200 hover:text-primary2-500"
-                  >
-                    <AddCircleRounded />
-                  </button>
-                )}
-              </div>
-
-              {projectData.users.map((item, index) => (
-                <div key={item.user.id} className="mb-2 flex space-x-2">
-                  <select
-                    name={`users[${index}].userId`}
-                    className="w-full rounded-md border px-3 py-2"
-                    value={item.user.id || ''}
-                    onChange={e => {
-                      const newUsers = [...projectData.users]
-                      newUsers[index].user.id = parseInt(e.target.value)
-                      setProjectData({ ...projectData, users: newUsers })
-                    }}
-                    required
-                  >
-                    {users.map(user => (
-                      <option
-                        key={user.userId}
-                        value={user.userId}
-                        disabled={projectData.users.some(
-                          projectUser => projectUser.user.id === user.userId,
-                        )}
-                      >
-                        {user.name}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={item.userProjectRole}
-                    name={`users[${index}].userProjectRole`}
-                    onChange={e => {
-                      const newUsers = [...projectData.users]
-                      newUsers[index].userProjectRole = parseInt(e.target.value)
-                      setProjectData({ ...projectData, users: newUsers })
-                    }}
-                    className="mt-2 w-full rounded-md border px-3 py-2 md:mt-0 md:w-2/5"
-                  >
-                    {[
-                      { name: 'ที่ปรึกษา', value: 1 },
-                      { name: 'ที่ปรึกษาร่วม', value: 2 },
-                      { name: 'กรรมการคุมสอบ', value: 3 },
-                    ].map(role => (
-                      <option key={role.value} value={role.value}>
-                        {role.name}
-                      </option>
-                    ))}
-                  </select>
-
-                  <button
-                    type="button"
-                    onClick={() => removeUser(index)}
-                    className="rounded-md px-2 text-red-300 transition-all duration-200 hover:text-red-500"
-                  >
-                    <IndeterminateCheckBoxRounded />
-                  </button>
+            {[userRoles.preProjectTeacher, userRoles.ProjectTeacher].includes(
+              role,
+            ) && (
+              <div className="flex flex-col">
+                <div className="mb-3 flex flex-row items-center justify-start">
+                  <h3 className="font-bold">อาจารย์</h3>{' '}
+                  {(projectData.users && projectData.users.length) < 3 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProjectData({
+                          ...projectData,
+                          users: [
+                            ...projectData.users,
+                            {
+                              userProjectRole: userProjectRole.COMMITTEE,
+                              user: {
+                                id: 0,
+                                name: '',
+                              },
+                            } as UserEntry,
+                          ],
+                        })
+                      }}
+                      className="ml-2 rounded-md p-1 text-primary2-400 transition-all duration-200 hover:text-primary2-500"
+                    >
+                      <AddCircleRounded />
+                    </button>
+                  )}
                 </div>
-              ))}
-            </div> */}
+
+                {projectData.users &&
+                  projectData.users.map((item, index) => (
+                    <div key={item.user.id} className="mb-2 flex space-x-2">
+                      <select
+                        name={`users[${index}].userId`}
+                        className="w-full rounded-md border px-3 py-2"
+                        value={item.user.id || ''}
+                        onChange={e => {
+                          const newUsers = [...projectData.users]
+                          newUsers[index].user.id = parseInt(e.target.value)
+                          setProjectData({ ...projectData, users: newUsers })
+                        }}
+                      >
+                        {users
+                          .filter(
+                            user =>
+                              !projectData.users.some(
+                                projectUser =>
+                                  projectUser.user.id === user.userId &&
+                                  projectUser.user.id !== item.user.id,
+                              ),
+                          )
+                          .map(user => (
+                            <option key={user.userId} value={user.userId}>
+                              {user.name}
+                            </option>
+                          ))}
+                      </select>
+                      <select
+                        value={item.userProjectRole}
+                        name={`users[${index}].userProjectRole`}
+                        onChange={e => {
+                          const newUsers = [...projectData.users]
+                          newUsers[index].userProjectRole = parseInt(
+                            e.target.value,
+                          )
+                          setProjectData({ ...projectData, users: newUsers })
+                        }}
+                        className="mt-2 w-full rounded-md border px-3 py-2 md:mt-0 md:w-2/5"
+                      >
+                        {[
+                          { name: 'ที่ปรึกษา', value: 1 },
+                          { name: 'ที่ปรึกษาร่วม', value: 2 },
+                          { name: 'กรรมการคุมสอบ', value: 3 },
+                        ].map(role => (
+                          <option key={role.value} value={role.value}>
+                            {role.name}
+                          </option>
+                        ))}
+                      </select>
+
+                      <button
+                        type="button"
+                        onClick={() => removeUser(index)}
+                        className="rounded-md px-2 text-red-300 transition-all duration-200 hover:text-red-500"
+                      >
+                        <IndeterminateCheckBoxRounded />
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
         <button

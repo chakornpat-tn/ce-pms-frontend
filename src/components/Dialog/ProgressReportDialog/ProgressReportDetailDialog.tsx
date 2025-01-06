@@ -296,6 +296,7 @@ const EvaluationForm: React.FC<{ id: number; onSuccess?: () => void }> = ({
               <textarea
                 className="min-h-[80px] w-full rounded-md border p-2 text-sm md:min-h-[100px] md:text-base"
                 rows={4}
+                required
                 name="comment"
                 placeholder="กรุณากรอกข้อเสนอแนะ"
               />
