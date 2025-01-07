@@ -376,7 +376,6 @@ export async function UpdateProjectByID(
       index++
     }
 
-
     const projectData: UpdateProjectRequest = {
       ...(projectName && { projectName: projectName as string }),
       ...(projectNameEng && { projectNameEng: projectNameEng as string }),
@@ -448,6 +447,7 @@ export async function updateMultipleProjects(
     const projectSemester = formData.get('projectSemester')
     const projectAcademicYear = formData.get('projectAcademicYear')
     const examLocation = formData.get('examLocation')
+    const examDateTime = formData.get('examDateTime')
 
     const projectData = {
       ids,
@@ -462,9 +462,12 @@ export async function updateMultipleProjects(
       ...(projectSemester && { projectSemester: Number(projectSemester) }),
       ...(projectAcademicYear && {
         projectAcademicYear: Number(projectAcademicYear),
-        ...(examLocation && {
-          examLocation: examLocation === 'null' ? null : examLocation,
-        }),
+      }),
+      ...(examLocation && {
+        examLocation: examLocation === 'null' ? null : examLocation,
+      }),
+      ...(examDateTime && {
+        examDateTime: examDateTime === 'null' ? null : examDateTime,
       }),
     }
 

@@ -48,7 +48,11 @@ export function CreateProgressReportDialog({
         </DialogHeader>
         <div className="mx-auto max-w-2xl space-y-4 md:space-y-6">
           <form className="space-y-3 md:space-y-4" action={action}>
-            <input type="hidden" name="title" value={`รายงานความคืบหน้าครั้งที่ ${progressCount}`}  />
+            <input
+              type="hidden"
+              name="title"
+              value={`รายงานความคืบหน้าครั้งที่ ${progressCount}`}
+            />
             <div className="space-y-2">
               <label htmlFor="section-1" className="text-sm md:text-base">
                 1 แสดงรายละเอียดของผลการดำเนินงาน
@@ -104,28 +108,6 @@ export function CreateProgressReportDialog({
                   <input
                     type="file"
                     className="hidden"
-                    name="product_file"
-                    accept=".pdf"
-                    id="product_file"
-                    onChange={e =>
-                      setProductFileName(e.target.files?.[0]?.name || '')
-                    }
-                  />
-                  <label
-                    htmlFor="product_file"
-                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-gray-300 bg-white p-3 text-sm transition-all hover:border-primary2-400 hover:bg-gray-50 hover:text-primary2-400"
-                  >
-                    <CloudUpload className="h-5 w-5" />
-                    <span className="text-gray-500">
-                      {productFileName ||
-                        'อัปโหลดเอกสารตัวอย่างชิ้นงาน (ไม่บังคับ)'}
-                    </span>
-                  </label>
-                </div>
-                <div className="relative">
-                  <input
-                    type="file"
-                    className="hidden"
                     name="docs_file"
                     required
                     accept=".pdf"
@@ -141,6 +123,28 @@ export function CreateProgressReportDialog({
                     <CloudUpload className="h-5 w-5 text-primary2-400" />
                     <span className="text-primary2-400">
                       {docsFileName || 'อัปโหลดเอกสารรายงาน (บังคับ)'}
+                    </span>
+                  </label>
+                </div>
+                <div className="relative">
+                  <input
+                    type="file"
+                    className="hidden"
+                    name="product_file"
+                    accept=".pdf"
+                    id="product_file"
+                    onChange={e =>
+                      setProductFileName(e.target.files?.[0]?.name || '')
+                    }
+                  />
+                  <label
+                    htmlFor="product_file"
+                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-gray-300 bg-white p-3 text-sm transition-all hover:border-primary2-400 hover:bg-gray-50 hover:text-primary2-400"
+                  >
+                    <CloudUpload className="h-5 w-5" />
+                    <span className="text-gray-500">
+                      {productFileName ||
+                        'อัปโหลดเอกสารตัวอย่างชิ้นงาน (ไม่บังคับ)'}
                     </span>
                   </label>
                 </div>

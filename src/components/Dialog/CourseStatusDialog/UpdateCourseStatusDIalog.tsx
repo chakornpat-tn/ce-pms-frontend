@@ -56,6 +56,7 @@ export function UpdateCourseStatusDialog({
             <>
               <input type="hidden" name="projectStatusId" value={'null'} />
               <input type="hidden" name="examLocation" value={'null'} />
+              <input type="hidden" name="examDateTime" value={'null'} />
             </>
           )}
           <div className="w-full max-w-screen-md px-2">
