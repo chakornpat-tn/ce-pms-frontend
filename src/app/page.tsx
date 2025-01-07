@@ -37,21 +37,18 @@ export default function Home() {
     return res
   }
 
-  const projectList = useSWR(
-    '/list-user-project',
-    async () => {
-      let res = await ListProjects(filters)
-      if (res.length == 0 && filters.academicYear == currentYear) {
-        setFilters({
-          ...filters,
-          projectAcademicYear: currentYear - 1,
-          academicYear: currentYear - 1,
-        })
-        projectList.mutate()
-      }
-      return res
+  const projectList = useSWR('/list-user-project', async () => {
+    let res = await ListProjects(filters)
+    if (res.length == 0 && filters.academicYear == currentYear) {
+      setFilters({
+        ...filters,
+        projectAcademicYear: currentYear - 1,
+        academicYear: currentYear - 1,
+      })
+      projectList.mutate()
     }
-  )
+    return res
+  })
 
   const projectByID = useSWR(
     `/project/${projectSelection}`,
@@ -225,28 +222,30 @@ export default function Home() {
                 )
               })}
             </section>
-            <section className="mt-4 hidden w-2/3 flex-1 md:ml-[64px] md:mt-0 md:block">
+            <section className="relative mt-4 hidden w-2/3 flex-1 md:ml-[64px] md:mt-0 md:block">
               <div className="mb-2 h-6 font-semibold text-gray-800"></div>
-              {!projectSelection ? (
-                <article className="sticky top-0 flex items-start justify-center rounded-lg bg-gray-200">
-                  <div className="mt-2 w-80 rounded-lg p-6 text-center">
-                    <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-primary2-400">
-                      <ArrowBackIcon className="text-white" />
+              <div className="sticky top-2">
+                {!projectSelection ? (
+                  <article className="flex items-start justify-center rounded-lg bg-gray-200">
+                    <div className="mt-2 w-80 rounded-lg p-6 text-center">
+                      <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-primary2-400">
+                        <ArrowBackIcon className="text-white" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        เลือกโครงงาน
+                      </h3>
+                      <p className="mt-2 rounded-lg text-sm text-gray-600">
+                        แสดงรายละเอียดที่นี่
+                      </p>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-800">
-                      เลือกโครงงาน
-                    </h3>
-                    <p className="mt-2 rounded-lg text-sm text-gray-600">
-                      แสดงรายละเอียดที่นี่
-                    </p>
-                  </div>
-                </article>
-              ) : (
-                <ProjectDetail
-                  projectData={projectByID.data}
-                  isLoading={projectByID.isLoading}
-                />
-              )}
+                  </article>
+                ) : (
+                  <ProjectDetail
+                    projectData={projectByID.data}
+                    isLoading={projectByID.isLoading}
+                  />
+                )}
+              </div>
             </section>
           </div>
         </section>
@@ -285,7 +284,7 @@ const ProjectDetail = ({
     )
   }
   return (
-    <section className="min-w- sticky top-2 mt-0 flex-1 overflow-y-auto rounded-md bg-white p-4 shadow-md md:p-10">
+    <section className="mt-0 h-screen flex-1 overflow-y-scroll rounded-md bg-white p-4 shadow-md md:p-10">
       <article className="container mx-auto px-2 md:px-4">
         <h1 className="text-center text-lg sm:text-xl md:text-3xl">
           {projectData.projectName}
@@ -364,8 +363,17 @@ const ProjectDetail = ({
               )}
               <h3 className="mt-4 font-bold">ปีการศึกษา</h3>
               <p className="text-gray-500">
-                {projectData.semester} /{projectData.academicYear}
+                {projectData.semester}/{projectData.academicYear}
               </p>
+              {projectData.projectAcademicYear && (
+                <>
+                  <h3 className="mt-4 font-bold">ปีการศึกษาวิชาโครงงาน</h3>
+                  <p className="text-gray-500">
+                    {projectData.projectSemester}/
+                    {projectData.projectAcademicYear}
+                  </p>
+                </>
+              )}
             </div>
             <div className="flex flex-col">
               <h3 className="mb-2 font-bold">บทคัดย่อ</h3>
