@@ -46,7 +46,10 @@ export default function DocsEdit() {
             รายงานความคืบหน้าของโครงงาน
           </h2>
 
-          <CreateProgressReportDialog progressCount={data.length} onSuccess={mutate} >
+          <CreateProgressReportDialog
+            progressCount={data.length + 1}
+            onSuccess={mutate}
+          >
             <button className="w-full rounded-md bg-primary2-400 px-2 py-1 text-xs text-white transition-colors hover:bg-primary2-500 sm:w-auto sm:px-3 sm:py-1.5 sm:text-sm md:px-4 md:py-2 md:text-base">
               ส่งรายงานความคืบหน้า
             </button>
