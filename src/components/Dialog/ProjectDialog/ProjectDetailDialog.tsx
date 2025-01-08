@@ -63,7 +63,13 @@ export function ProjectDetailDialog({
             {projectDetail(data)}
           </article>
           <article className="mx-2 w-full md:w-1/3">
-            {menuSelection(userRole, projectId, courseMenu, onSuccess)}
+            {menuSelection(
+              userRole,
+              projectId,
+              courseMenu,
+              onSuccess,
+              data.projectAcademicYear ? course.Project : course.PreProject,
+            )}
           </article>
         </section>
         <DialogFooter className="flex justify-start md:items-center md:justify-center">
@@ -183,6 +189,7 @@ const menuSelection = (
   projectId: number,
   courseMenu: number,
   onSuccess?: () => void,
+  projectCourseStatus?: number,
 ) => {
   const commonButtonClasses =
     'btn w-full rounded-md bg-primary2-400 text-white transition-colors duration-200 hover:bg-primary2-500 flex items-center justify-center gap-2 px-4'
@@ -190,14 +197,16 @@ const menuSelection = (
   return (
     <div className="flex w-full flex-col gap-2">
       {userRole === userRoles.Teacher ? (
-        <Link href={`/teacher/consultant/${projectId}/docs`}>
+        <Link href={`/teacher/consultant/${projectId}/docs${projectCourseStatus && `?course=${projectCourseStatus}`}`}>
           <button className={commonButtonClasses}>
             <AssignmentIcon className="shrink-0" />{' '}
             <span className="flex-1 text-center">ตรวจสอบเอกสาร</span>
           </button>
         </Link>
       ) : (
-        <Link href={`/teacher/project-detail/${projectId}/docs`}>
+        <Link
+          href={`/teacher/project-detail/${projectId}/docs${projectCourseStatus && `?course=${projectCourseStatus}`}`}
+        >
           <button className={commonButtonClasses}>
             <AssignmentIcon className="shrink-0" />{' '}
             <span className="flex-1 text-center">ตรวจสอบเอกสาร</span>

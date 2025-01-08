@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 
 import { ProjectDocumentWaitUpdateRes } from '@/models/ProjectDocument'
 import Link from 'next/link'
+import course from '@/constants/course/course'
 
 const WaitUpdateTable = ({
   data,
@@ -42,10 +43,10 @@ const WaitUpdateTable = ({
                   <td className="px-4 py-3 text-xs sm:text-sm">
                     <div className="line-clamp-2 hover:underline sm:line-clamp-1">
                       <Link
-                        href={`/teacher/consultant/${row.project.id}/docs`}
+                        href={`/teacher/consultant/${row.project.id}/docs?course=${row.project.projectAcademicYear ? course.Project : course.PreProject}&docs=${String(row.document.id)}`}
                         key={rowIndex}
                       >
-                        {row.project.projectName}
+                        {row.project.projectName} 
                       </Link>
                     </div>
                     <div className="mt-1 text-xs text-gray-500 sm:hidden">

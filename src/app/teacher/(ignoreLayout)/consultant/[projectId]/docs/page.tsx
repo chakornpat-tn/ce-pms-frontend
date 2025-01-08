@@ -16,11 +16,16 @@ import { Loader } from '@/components/Loading'
 import DocsList from './docsList'
 import { useParams, useRouter } from 'next/navigation'
 import course from '@/constants/course/course'
+import { useSearchParams } from 'next/navigation'
 
 const ProjectPage = () => {
   const params = useParams<{ projectId: string }>()
   const router = useRouter()
   const projectId = params.projectId
+
+  const searchParams = useSearchParams()
+  const courseQuery = searchParams.get('course')
+  const docsQuery = searchParams.get('docs')
   const fetcher = (key: string, ...args: any[]) => {
     if (key === 'project') {
       return GetProject(args[0])
@@ -31,11 +36,13 @@ const ProjectPage = () => {
   }
 
   const [selectedItem, setSelectedItem] = useState<string | null>(null)
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null)
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(
+    courseQuery || null,
+  )
   const [projectCourseStatus, setProjectCourseStatus] = useState(0)
   const [findCourse, setFindCourse] = useState<number | null>(null)
   const [projectID, setProjectID] = useState<number | undefined>(undefined)
-  const [docsID, setDocsID] = useState<number | undefined>(undefined)
+  const [docsID, setDocsID] = useState<number | undefined>(Number(docsQuery)||undefined)
 
   const preProjectStatus = [
     courseStatus.ApprovePreExam,
@@ -100,7 +107,7 @@ const ProjectPage = () => {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2"
+            className="mr-2 h-5 w-5"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -113,7 +120,7 @@ const ProjectPage = () => {
           ย้อนกลับ
         </button>
         <article className="mx-auto text-center">
-        ไม่มีเอกสารที่ส่งมาให้ตรวจสอบ
+          ไม่มีเอกสารที่ส่งมาให้ตรวจสอบ
         </article>
       </div>
     )
@@ -126,7 +133,7 @@ const ProjectPage = () => {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 mr-2"
+          className="mr-2 h-5 w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -180,7 +187,7 @@ const ProjectPage = () => {
                     </svg>
                   </span>
                 </ComboboxButton>
-                <ComboboxOptions className="absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-md bg-white py-1 text-xs shadow-xl ring-1 ring-black ring-opacity-5 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 focus:outline-none sm:max-h-60 sm:text-sm">
+                <ComboboxOptions className="scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-md bg-white py-1 text-xs shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:max-h-60 sm:text-sm">
                   <ComboboxOption
                     value={course.PreProject}
                     className={({ active }) =>

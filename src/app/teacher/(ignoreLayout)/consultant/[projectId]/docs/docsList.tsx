@@ -17,11 +17,11 @@ import projectDocumentStatus from '@/constants/projectDocumentStatus/projectDocu
 type Props = {
   projectId?: number
   documentId?: number
-  documentName: string | null
+  documentName?: string | null
 }
 
 const DocsList = (props: Props) => {
-  const { projectId, documentId, documentName } = props
+  const { projectId, documentId } = props
 
   const fetchDocs = async () => {
     if (projectId && documentId) {
@@ -44,7 +44,6 @@ const DocsList = (props: Props) => {
     )
 
   if (error) return <div>ไม่พบเอกสาร</div>
-  if (!documentName) return
 
   return (
     <>

@@ -14,13 +14,17 @@ import { Document } from '@/models/Document'
 import { ListDocumentInProject } from '@/actions/documents'
 import { Loader } from '@/components/Loading'
 import DocsList from './docsList'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import course from '@/constants/course/course'
 
 const ProjectPage = () => {
   const params = useParams<{ projectId: string }>()
   const router = useRouter()
   const projectId = params.projectId
+    
+  const searchParams = useSearchParams()
+  const courseQuery = searchParams.get('course')
+  const docsQuery = searchParams.get('docs')
   const fetcher = (key: string, ...args: any[]) => {
     if (key === 'project') {
       return GetProject(args[0])
@@ -31,11 +35,11 @@ const ProjectPage = () => {
   }
 
   const [selectedItem, setSelectedItem] = useState<string | null>(null)
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null)
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(courseQuery || null)
   const [projectCourseStatus, setProjectCourseStatus] = useState(0)
   const [findCourse, setFindCourse] = useState<number | null>(null)
   const [projectID, setProjectID] = useState<number | undefined>(undefined)
-  const [docsID, setDocsID] = useState<number | undefined>(undefined)
+  const [docsID, setDocsID] = useState<number | undefined>(Number(docsQuery) || undefined)
 
   const preProjectStatus = [
     courseStatus.ApprovePreExam,
