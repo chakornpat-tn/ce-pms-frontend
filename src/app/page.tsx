@@ -68,16 +68,21 @@ export default function Home() {
     <NavbarWithSideBar>
       <div className="hero mx-auto bg-primary2-400">
         <div className="hero-content text-center text-white">
-          <div className="max-w-lg">
-            <h1 className="py-2 text-4xl font-bold text-white">
-              โครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์
-            </h1>
-            <p className="hidden py-6 sm:block">
-              เว็บไซต์แสดงข้อมูลโครงงานวิศวกรรมไฟฟ้า สาขาวิศวกรรมคอมพิวเตอร์
-              มหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา เชียงใหม่
+          <div className="max-w-xl">
+            <h1 className="py-2 text-3xl font-bold text-white">
+              โครงงานวิศวกรรมไฟฟ้า
+              <span className="whitespace-nowrap">
+                สาขาวิศวกรรมคอมพิวเตอร์
+              </span>
+            </h1>{' '}
+            <p className="hidden py-6 text-base sm:block">
+              เว็บไซต์ที่รวบรวมและนำเสนอข้อมูลโครงงานด้านวิศวกรรมไฟฟ้า
+              ในสาขาวิศวกรรมคอมพิวเตอร์
+              ของนักศึกษามหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา เชียงใหม่
+              เพื่อเผยแพร่ผลงานทางวิชาการและส่งเสริมการเรียนรู้ในวงการวิศวกรรม
             </p>
           </div>
-        </div>
+        </div>{' '}
       </div>
       <div className="flex w-full justify-center bg-primary2-400 py-2">
         <div className="flex flex-col justify-around gap-2 rounded-lg bg-white p-4 shadow-lg sm:flex-row sm:flex-wrap sm:gap-2">
@@ -168,15 +173,25 @@ export default function Home() {
                     className={`my-2 hidden rounded-lg border bg-white shadow-md hover:border-primary2-400 md:block ${project.id === projectSelection ? 'border-2 border-primary2-400' : ''}`}
                   >
                     <div className="m-4 h-auto w-auto overflow-hidden">
-                      <h2 className="truncate text-xl font-bold text-gray-800">
-                        {project.projectName}
-                      </h2>
-                      <p className="truncate text-base text-gray-600">
+                      <div className="flex w-full items-center justify-between">
+                        <h2 className="truncate text-base font-bold text-gray-800">
+                          {project.projectName}
+                        </h2>
+                        <div
+                          className={`h-fit w-fit truncate rounded-md ${project.projectAcademicYear ? 'bg-primary2-400' : 'bg-primary2-200'} p-1 text-sm text-white`}
+                        >
+                          {project.projectAcademicYear != null
+                            ? 'ดำเนินโครงงาน'
+                            : 'เตรียมโครงงาน'}
+                        </div>
+                      </div>
+                      <p className="truncate text-sm text-gray-400">
                         {project.projectNameEng
                           ? project.projectNameEng
                           : 'ไม่ได้ระบุชื่อโครงงานภาษาอังกฤษ'}
                       </p>
-                      <p className="mt-1 truncate text-sm font-medium text-gray-600">
+
+                      <p className="mt-1 truncate text-xs font-medium text-gray-500">
                         ประเภท:
                         {project.type
                           ? project.type
@@ -196,24 +211,31 @@ export default function Home() {
                     key={project.id}
                     href={`/${project.id}`}
                     target="_blank"
-                    className={`m-2 block h-48 max-h-[130px] min-w-full rounded-lg border bg-white shadow-md hover:border-primary2-400 md:hidden ${project.id === projectSelection ? 'border-2 border-primary2-400' : ''}`}
+                    className={`m-2 block h-36 min-h-[144px] min-w-[280px] rounded-lg border bg-white shadow-md hover:border-primary2-400 md:hidden ${project.id === projectSelection ? 'border-2 border-primary2-400' : ''}`}
                   >
                     <div className="m-4 h-auto w-auto overflow-hidden">
-                      <h2 className="truncate text-xl font-bold text-gray-800">
+                      <h2 className="truncate text-base font-bold text-gray-800">
                         {project.projectName}
                       </h2>
-                      <p className="truncate text-base text-gray-600">
+                      <p className="truncate text-sm text-gray-600">
                         {project.projectNameEng
                           ? project.projectNameEng
                           : 'ไม่ได้ระบุชื่อโครงงานภาษาอังกฤษ'}
                       </p>
-                      <p className="mt-1 truncate text-sm font-medium text-gray-600">
+                      <div
+                        className={`h-fit w-fit truncate rounded-md ${project.projectAcademicYear ? 'bg-primary2-400' : 'bg-primary2-200'} p-2 text-xs text-white`}
+                      >
+                        {project.projectAcademicYear != null
+                          ? 'ดำเนินโครงงาน'
+                          : 'เตรียมโครงงาน'}
+                      </div>
+                      <p className="mt-1 truncate text-xs font-medium text-gray-600">
                         ประเภท:
                         {project.type
                           ? project.type
                           : 'ไม่ได้ระบุประเภทโครงงาน'}
                       </p>
-                      <p className="mt-3 truncate text-xs font-light text-gray-500">
+                      <p className="mt-2 truncate text-xs font-light text-gray-500">
                         อัปเดตล่าสุด:
                         {dayjs(project.updatedAt).format('DD/MM/YYYY')}
                       </p>

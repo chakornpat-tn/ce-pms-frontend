@@ -126,6 +126,8 @@ export type ProjectRes = {
   detailEng?: string | null
   semester: number
   academicYear: number
+  projectSemester: number | null
+  projectAcademicYear: number | null
   type?: string | null
   projectStatusId?: number | null
   courseStatus: number
