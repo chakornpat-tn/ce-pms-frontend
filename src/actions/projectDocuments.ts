@@ -191,3 +191,32 @@ export async function ListProjectDocsWaitUpdate() {
     throw error
   }
 }
+
+export async function UpdateAdvisorDocs(preState: unknown, formData: FormData) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const projectDocumentId = formData.get('projectDocumentId')
+    const advisorDocs = formData.get('advisor_docs_file') as File
+
+    const form = new FormData()
+    form.append('advisorDocs', advisorDocs)
+
+    if (projectDocumentId && advisorDocs)
+      await useAPI(`/v1/project-document/${projectDocumentId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+        body: form,
+      })
+
+    revalidatePath('/')
+  } catch (error) {
+    throw error
+  }
+}

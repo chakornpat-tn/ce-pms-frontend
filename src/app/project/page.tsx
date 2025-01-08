@@ -213,9 +213,9 @@ export default async function Page({}: Props) {
                 {projectData.semester} /{projectData.academicYear}
               </p>
 
-              {projectData.academicYear && (
+              {projectData.projectAcademicYear && (
                 <>
-                  <h3 className="mt-4 font-bold">ปีการศึกษาที่ลงวิชาโครงงาน</h3>
+                  <h3 className="mt-4 font-bold">ปีการศึกษาวิชาโครงงาน</h3>
                   <p className="text-gray-500">
                     {projectData.projectSemester} /{projectData.projectAcademicYear}
                   </p>

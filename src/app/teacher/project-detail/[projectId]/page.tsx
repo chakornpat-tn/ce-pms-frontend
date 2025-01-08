@@ -25,7 +25,8 @@ export default function Page({
 }) {
   const [projectData, setProjectData] = useState<ProjectByIDRes | null>(null)
   const [regisExamDate, setRegisExamDate] = useState<any>(null)
-  const [projectProgressReport, setProjectProgressReport] = useState<ProjectProgressReportRes | null>(null)
+  const [projectProgressReport, setProjectProgressReport] =
+    useState<ProjectProgressReportRes | null>(null)
   const [documentStepper, setDocumentStepper] = useState<any[]>([])
   const [projectDocsProgress, setProjectDocsProgress] = useState<any[]>([])
 
@@ -57,7 +58,6 @@ export default function Page({
           data.projectAcademicYear ? course.Project : course.PreProject,
         )
         setProjectDocsProgress(docsProgress)
-
       } catch (error) {
         redirect('/')
       }
@@ -122,8 +122,8 @@ export default function Page({
           </div>
 
           <br />
-          {(projectProgressReport != null) && (
-            <div className='py-4 mb-4'>
+          {projectProgressReport != null && (
+            <div className="mb-4 py-4">
               <div className="mb-4 border-b border-primary2-500"></div>
               <h3 className="text-xs font-bold sm:text-sm md:text-base">
                 ความก้าวหน้าโครง
@@ -190,6 +190,15 @@ export default function Page({
               <p className="text-gray-500">
                 {projectData.semester} /{projectData.academicYear}
               </p>
+              {projectData.projectAcademicYear && (
+                <>
+                  <h3 className="mt-4 font-bold">ปีการศึกษาวิชาโครงงาน</h3>
+                  <p className="text-gray-500">
+                    {projectData.projectSemester} /
+                    {projectData.projectAcademicYear}
+                  </p>
+                </>
+              )}
             </div>
             <div className="flex flex-col">
               <h3 className="mb-2 font-bold">บทคัดย่อ</h3>

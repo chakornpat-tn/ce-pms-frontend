@@ -64,14 +64,16 @@ export async function CreateComments(
       }))
     }
 
-    await useAPI('/v1/comment', {
-      method: 'POST',
-      body: JSON.stringify(commentReq),
-      headers: {
-        Authorization: `Bearer ${token?.value}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    if (commentReq.length > 0) {
+      await useAPI('/v1/comment', {
+        method: 'POST',
+        body: JSON.stringify(commentReq),
+        headers: {
+          Authorization: `Bearer ${token?.value}`,
+          'Content-Type': 'application/json',
+        },
+      })
+    }
 
     revalidatePath('/')
   } catch (error) {

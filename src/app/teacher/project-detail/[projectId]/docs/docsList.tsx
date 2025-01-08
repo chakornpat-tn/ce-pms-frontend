@@ -4,12 +4,12 @@ import useSWR from 'swr'
 import { ProjectDocumentRes } from '@/models/ProjectDocument'
 import {
   ListProjectDocs,
-  UpdateProjectDocStatus,
 } from '@/actions/projectDocuments'
 import { Loader } from '@/components/Loading'
 import { CloudDownload as DownloadIcon, Message } from '@mui/icons-material'
 import dayjs from 'dayjs'
 import projectDocumentStatus from '@/constants/projectDocumentStatus/projectDocumentStatus'
+import PlagiarismIcon from '@mui/icons-material/Plagiarism'
 
 type Props = {
   projectId?: number
@@ -54,9 +54,7 @@ const DocsList = (props: Props) => {
             >
               {/* content  */}
               <div className="mb-3 flex flex-col items-start gap-3 md:flex-row md:items-center">
-                <div
-                  className="flex items-center gap-3 text-primary2-500"
-                >
+                <div className="flex items-center gap-3 text-primary2-500">
                   <a
                     href={doc.documentUrl}
                     target="_blank"
@@ -69,7 +67,6 @@ const DocsList = (props: Props) => {
                     </h1>
                   </a>
                 </div>
-
               </div>
               <div className="space-y-3 md:space-y-4">
                 <div className="flex items-center gap-2 text-xs md:text-sm">
@@ -94,6 +91,24 @@ const DocsList = (props: Props) => {
                       'รอดำเนินการตรวจ'}
                   </span>
                 </div>
+                {doc.advisorDocsUrl && (
+                  <div className="flex items-center gap-2 text-xs md:text-sm">
+                    <span className="text-gray-500">รายงานข้อผิดพลาด:</span>
+                    <div className="flex items-center justify-center gap-2 rounded-md bg-red-100 p-1.5 text-red-600">
+                      <a
+                        href={doc.advisorDocsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-row gap-1.5 transition-colors duration-200 hover:text-red-700 hover:underline"
+                      >
+                        <PlagiarismIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                        <p className="break-all text-sm font-medium">
+                          {doc.documentName + ' (รายละเอียดข้อผิดพลาด)'}
+                        </p>
+                      </a>
+                    </div>
+                  </div>
+                )}
                 <div className="text-xs text-gray-500 md:text-sm">
                   {dayjs(doc.createdAt)
                     .add(543, 'year')

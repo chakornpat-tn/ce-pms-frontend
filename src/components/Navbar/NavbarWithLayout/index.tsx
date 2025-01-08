@@ -151,8 +151,8 @@ const NavbarWithSideBar = ({ children }: Props) => {
       >
         <div className="p-5">
           <nav className="mx-auto mt-8">
-            <p className="mb-4 flex w-full items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-primary2-400 py-4 text-sm text-secondary1">
-              {user}
+            <p className="mb-4 flex w-full items-center justify-center text-ellipsis whitespace-nowrap rounded-md bg-primary2-400 py-4 text-sm text-secondary1 overflow-hidden">
+              <span className="overflow-hidden text-ellipsis text-sm sm:text-xs">{user}</span>
             </p>
             <ul className="cursor-pointer">
               {(role == userRoles.ProjectTeacher ||

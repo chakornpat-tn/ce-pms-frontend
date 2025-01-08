@@ -41,6 +41,7 @@ export type ProjectDocumentRes = {
   updatedAt: Date
   comments: Comment[]
   CommentBasedEdits: CommentBasedEdit[]
+  advisorDocsUrl?:string
 }
 
 export type ProjectDocsAdvisorApproveRes = {
