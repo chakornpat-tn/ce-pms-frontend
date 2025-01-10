@@ -55,7 +55,12 @@ export async function studentlogin(prevState: FormState, formData: FormData) {
   if (res.status === 200) {
     const response = await res.json()
     const expires = new Date(Date.now() + 3 * 60 * 60 * 1000)
-    Cookies.set('token', response.data.token, { expires, httpOnly: true })
+    Cookies.set('token', response.data.token, {
+      expires,
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+    })
 
     if (response.data.token) {
       const secret = new TextEncoder().encode(config.TOKEN_SECRET)
