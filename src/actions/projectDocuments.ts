@@ -9,7 +9,7 @@ import {
   ProjectDocumentRes,
   ProjectDocumentWaitUpdateRes,
 } from '@/models/ProjectDocument'
-import useAPI from '@/utils/useAPI'
+import fetchAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
@@ -21,7 +21,7 @@ export async function ListProjectDocs(projectId: number, documentId: number) {
     if (!token?.value) {
       throw new Error('Authentication token is missing.')
     }
-    const res = await useAPI<{ data: ProjectDocumentRes[] }>(
+    const res = await fetchAPI<{ data: ProjectDocumentRes[] }>(
       `/v1/project-document?projectId=${projectId}&documentId=${documentId}`,
       {
         headers: {
@@ -66,7 +66,7 @@ export async function CreateProjectDocs(
       form.append('commentIDs', formData.getAll('selectedComments').join(','))
     }
 
-    await useAPI('/v1/project-document', {
+    await fetchAPI('/v1/project-document', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -99,7 +99,7 @@ export async function UpdateProjectDocStatus(
       }),
     )
 
-    await useAPI(`/v1/project-document/${documentId}`, {
+    await fetchAPI(`/v1/project-document/${documentId}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -120,7 +120,7 @@ export async function ListProjectDocsApprove(projectId: number) {
     if (!token?.value) {
       throw new Error('Authentication token is missing.')
     }
-    const res = await useAPI<{
+    const res = await fetchAPI<{
       data: {
         preProject: ProjectDocsAdvisorApproveRes[]
         project: ProjectDocsAdvisorApproveRes[]
@@ -147,7 +147,7 @@ export async function ListLastProjectDocsStatus(
     if (!token?.value) {
       throw new Error('Authentication token is missing.')
     }
-    const res = await useAPI<{
+    const res = await fetchAPI<{
       data: ProjectDocument[]
     }>(`/v1/project-document/project-docs-status/${projectId}/${course}`, {
       headers: {
@@ -176,7 +176,7 @@ export async function ListProjectDocsWaitUpdate() {
       throw new Error('Token payload is invalid or missing user ID.')
     }
 
-    const res = await useAPI<{ data: ProjectDocumentWaitUpdateRes[] }>(
+    const res = await fetchAPI<{ data: ProjectDocumentWaitUpdateRes[] }>(
       `/v1/project-document/wait-update/${payload.id}`,
       {
         headers: {
@@ -207,7 +207,7 @@ export async function UpdateAdvisorDocs(preState: unknown, formData: FormData) {
     form.append('advisorDocs', advisorDocs)
 
     if (projectDocumentId && advisorDocs)
-      await useAPI(`/v1/project-document/${projectDocumentId}`, {
+      await fetchAPI(`/v1/project-document/${projectDocumentId}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token.value}`,

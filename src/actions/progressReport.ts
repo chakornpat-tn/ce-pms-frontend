@@ -6,7 +6,7 @@ import {
   ProjectProgressReportRes,
   ProjectReportWaitUpdateRes,
 } from '@/models/ProgressReport'
-import useAPI from '@/utils/useAPI'
+import fetchAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
@@ -25,7 +25,7 @@ export async function ListProgressReportFormToken() {
       throw new Error('Token payload is invalid or missing user ID.')
     }
 
-    const res = await useAPI<{ data: ProgressReport[] }>(
+    const res = await fetchAPI<{ data: ProgressReport[] }>(
       `/v1/progress-report?projectId=${payload.id}`,
       {
         method: 'GET',
@@ -49,7 +49,7 @@ export async function ListProgressReport(projectId: number) {
       throw new Error('Authentication token is missing.')
     }
 
-    const res = await useAPI<{ data: ProgressReport[] }>(
+    const res = await fetchAPI<{ data: ProgressReport[] }>(
       `/v1/progress-report?projectId=${projectId}`,
       {
         method: 'GET',
@@ -73,7 +73,7 @@ export async function GetProgressReportById(id: number) {
       throw new Error('Authentication token is missing.')
     }
 
-    const res = await useAPI<{ data: ProgressReport }>(
+    const res = await fetchAPI<{ data: ProgressReport }>(
       `/v1/progress-report/${id}`,
       {
         method: 'GET',
@@ -143,7 +143,7 @@ export async function UpdateProgressReport(
     const form = new FormData()
     form.append('data', JSON.stringify(data))
     const url = `/v1/progress-report/${progressId}`
-    await useAPI(url, {
+    await fetchAPI(url, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -172,7 +172,7 @@ export async function changeProgressReportStatus(id: number, status: number) {
     const form = new FormData()
     form.append('data', JSON.stringify(data))
     const url = `/v1/progress-report/${id}`
-    await useAPI(url, {
+    await fetchAPI(url, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -251,7 +251,7 @@ export async function CreateProgressReport(
     if (docsFile && docsFile.size > 0) form.append('docsFile', docsFile)
     form.append('data', JSON.stringify(data))
 
-    await useAPI('/v1/progress-report', {
+    await fetchAPI('/v1/progress-report', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -273,7 +273,7 @@ export async function GetProjectProgressReport(projectId: number) {
       throw new Error('Authentication token is missing.')
     }
 
-    const res = await useAPI<{
+    const res = await fetchAPI<{
       data: ProjectProgressReportRes | null
     }>(`/v1/progress-report/project/${projectId}`, {
       method: 'GET',
@@ -302,7 +302,7 @@ export async function GetProjectProgressWaitUpdate() {
       throw new Error('Token payload is invalid or missing user ID.')
     }
 
-    const res = await useAPI<{
+    const res = await fetchAPI<{
       data: ProjectReportWaitUpdateRes[]
     }>(`/v1/progress-report/wait-update/${payload.id}`, {
       method: 'GET',

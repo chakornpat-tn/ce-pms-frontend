@@ -28,7 +28,7 @@ type Project = {
   courseStatus: number
 }
 
-function page({}: Props) {
+function Page({}: Props) {
   const router = useRouter()
   const currentYear = new Date().getFullYear() + 543 - 2
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
@@ -235,4 +235,4 @@ function page({}: Props) {
     </section>
   )
 }
-export default page
+export default Page

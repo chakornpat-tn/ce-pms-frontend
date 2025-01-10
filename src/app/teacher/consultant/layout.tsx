@@ -9,7 +9,7 @@ import { CreateProjectDialog } from '@/components/Dialog'
 type Props = {
   children: React.ReactNode
 }
-function layout({ children }: Props) {
+function Layout({ children }: Props) {
 
 
   const pathname = usePathname()
@@ -54,4 +54,4 @@ function layout({ children }: Props) {
   )
 }
 
-export default layout
+export default Layout

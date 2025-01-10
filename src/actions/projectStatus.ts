@@ -1,7 +1,7 @@
 'use server'
 
 import { ListProjectStatusRequest, ProjectStatus } from '@/models/ProjectStatus'
-import useAPI from '@/utils/useAPI'
+import fetchAPI from '@/utils/useAPI'
 import { cookies } from 'next/headers'
 
 export async function ListProjectStatus(req: ListProjectStatusRequest) {
@@ -16,7 +16,7 @@ export async function ListProjectStatus(req: ListProjectStatusRequest) {
       queryParams.append('isActive', req.isActive.toString())
 
     const url = `/v1/project-status?${queryParams.toString()}`
-    const res = await useAPI<{ data: ProjectStatus[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectStatus[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ export async function UpdateProjectStatus(req: ProjectStatus[]) {
     const token = Cookie.get('token')
 
 
-    await useAPI('/v1/project-status', {
+    await fetchAPI('/v1/project-status', {
       method: 'PUT',
       body: JSON.stringify(req),
       headers: {
@@ -51,7 +51,7 @@ export async function DeleteProjectStatus(id: number) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
-    await useAPI('/v1/project-status/' + id, {
+    await fetchAPI('/v1/project-status/' + id, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token?.value}`,

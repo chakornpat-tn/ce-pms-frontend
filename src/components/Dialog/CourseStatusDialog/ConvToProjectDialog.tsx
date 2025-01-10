@@ -59,7 +59,7 @@ export function ConvToProjectDialog({
           <div className="w-full max-w-screen-md px-2">
             อัปเดตสถานะดำเนิการเป็น
             <span className="font-semibold">
-              "{CourseStatusDesc(newCourseStatus)}"{' '}
+              &ldquo;{CourseStatusDesc(newCourseStatus)}&rdquo;
             </span>
           </div>
 

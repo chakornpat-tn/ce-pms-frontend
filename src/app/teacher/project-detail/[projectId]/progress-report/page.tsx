@@ -17,7 +17,7 @@ import { CheckUserIsAdvisor } from '@/actions/projectUser'
 
 type Props = {}
 
-function progressReport({}: Props) {
+function Page({}: Props) {
   const params = useParams()
   const router = useRouter()
   const { data, isLoading, error, mutate } = useSWR(
@@ -105,4 +105,4 @@ function progressReport({}: Props) {
   )
 }
 
-export default progressReport
+export default Page

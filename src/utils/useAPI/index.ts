@@ -1,14 +1,15 @@
 import config from '@/config'
 
 const baseURL = config.BASE_API
+
 interface FetchOptions extends RequestInit {
   headers?: Record<string, string>
 }
 
-async function useAPI<T>(
-  endpoint: string,
-  options: FetchOptions = {},
-): Promise<T> {
+const fetchAPI = async <T>(
+  endpoint: string, 
+  options: FetchOptions = {}
+): Promise<T> => {
   try {
     const response = await fetch(`${baseURL}${endpoint}`, {
       ...options,
@@ -28,4 +29,4 @@ async function useAPI<T>(
   }
 }
 
-export default useAPI
+export default fetchAPI

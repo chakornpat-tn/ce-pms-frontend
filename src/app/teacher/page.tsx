@@ -14,7 +14,7 @@ import ProjectDocumentWaitUpdateTable from '@/components/Tables/ProjectProgressT
 
 type Props = {}
 
-function page({}: Props) {
+function Page({}: Props) {
   const currentYear = new Date().getFullYear() + 543
   const [year, setYear] = useState(currentYear)
 
@@ -85,4 +85,4 @@ function page({}: Props) {
   )
 }
 
-export default page
+export default Page

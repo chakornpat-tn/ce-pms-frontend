@@ -13,7 +13,7 @@ import userRoles from '@/constants/userRoles/userRoles'
 
 type Props = {}
 
-function page({}: Props) {
+function Page({}: Props) {
   const currentYear = new Date().getFullYear() + 543
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
     projectName: '',
@@ -72,4 +72,4 @@ function page({}: Props) {
     </>
   )
 }
-export default page
+export default Page

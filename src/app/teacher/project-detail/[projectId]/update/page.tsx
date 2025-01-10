@@ -27,7 +27,7 @@ type userListSelect = {
   userProjectRole?: number
 }
 
-export default function DocsEdit() {
+export default function Page() {
   const router = useRouter()
   const params = useParams()
   const [projectData, setProjectData] = useState<ProjectByIDRes | null>()
@@ -98,7 +98,7 @@ export default function DocsEdit() {
     }
     fetchProject()
     fetchUsers()
-  }, [])
+  }, [params.projectId, router])
 
   if (!projectData) {
     return (

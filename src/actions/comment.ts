@@ -1,6 +1,6 @@
 'use server'
 
-import useAPI from '@/utils/useAPI'
+import fetchAPI from '@/utils/useAPI'
 import { Comment, CreateCommentReq } from '@/models/Comment'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
@@ -22,7 +22,7 @@ export async function ListComment(
     }
 
     const url = `/v1/comment/get-by-project-document-id?${queryParams.toString()}`
-    const res = await useAPI<{ data: Comment[] }>(url, {
+    const res = await fetchAPI<{ data: Comment[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export async function CreateComments(
     }
 
     if (commentReq.length > 0) {
-      await useAPI('/v1/comment', {
+      await fetchAPI('/v1/comment', {
         method: 'POST',
         body: JSON.stringify(commentReq),
         headers: {

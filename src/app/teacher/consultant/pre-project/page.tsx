@@ -28,7 +28,7 @@ type Project = {
   }
   courseStatus: number
 }
-function page({}: Props) {
+function Page({}: Props) {
   const currentYear = new Date().getFullYear() + 543
 
   const handleCopyUsername = (username: string) => {
@@ -183,4 +183,4 @@ function page({}: Props) {
     </section>
   )
 }
-export default page
+export default Page

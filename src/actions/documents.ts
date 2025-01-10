@@ -2,7 +2,7 @@
 
 import { ListDocumentRequest } from '@/models/Document'
 import { Document } from '@/models/Document'
-import useAPI from '@/utils/useAPI'
+import fetchAPI from '@/utils/useAPI'
 import { cookies } from 'next/headers'
 
 export async function ListDocument(req: ListDocumentRequest) {
@@ -19,7 +19,7 @@ export async function ListDocument(req: ListDocumentRequest) {
       queryParams.append('submissionOpen', req.submissionOpen.toString())
 
     const url = `/v1/document?${queryParams.toString()}`
-    const res = await useAPI<{ data: Document[] }>(url, {
+    const res = await fetchAPI<{ data: Document[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export async function ListDocumentInProject(projectID: number) {
     const Cookie = await cookies()
     const token = Cookie.get('token')
 
-    const res = await useAPI<{ data: Document[] }>(
+    const res = await fetchAPI<{ data: Document[] }>(
       `/v1/document/in-project/${projectID}`,
       {
         headers: {
@@ -54,7 +54,7 @@ export async function UpdateDocument(req: Document[]) {
     const Cookie = await cookies()
     const token = Cookie.get('token')
 
-    await useAPI('/v1/document', {
+    await fetchAPI('/v1/document', {
       method: 'PUT',
       body: JSON.stringify(req),
       headers: {
@@ -71,7 +71,7 @@ export async function DeleteDocument(id: number) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
-    await useAPI('/v1/document/' + id, {
+    await fetchAPI('/v1/document/' + id, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token?.value}`,

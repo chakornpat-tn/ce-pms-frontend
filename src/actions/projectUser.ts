@@ -12,7 +12,7 @@ import {
   CheckRegisExamDateRes,
   ProjectUserExamDateRes,
 } from '@/models/ProjectUser'
-import useAPI from '@/utils/useAPI'
+import fetchAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
@@ -31,7 +31,7 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     if (req?.courseStatus) queryParams.append('courseStatus', req.courseStatus)
 
     const url = `/v1/project?${queryParams.toString()}`
-    const res = await useAPI<{ data: ProjectRes[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export async function ListProjectByUserID(req: ListProjectFilterQuery) {
 
     const url = `/v1/project-user/${Number(payload.id)}?${queryParams.toString()}`
 
-    const res = await useAPI<{ data: ProjectRes[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ export async function GetProjectInCommittee(req: ListProjectFilterQuery) {
 
     const url = `/v1/project-user/committee/${Number(payload.id)}?${queryParams.toString()}`
 
-    const res = await useAPI<{ data: ProjectRes[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ export async function GetProjectInCompleteUsers(req: ListProjectFilterQuery) {
 
     const url = `/v1/project-user/in-complete-users/${payload.id}?${queryParams.toString()}`
 
-    const res = await useAPI<{ data: ProjectRes[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ export async function CheckStatusRegisExamDateTime(projectId: number) {
     }
 
     const url = `/v1/project-user/check-regis-exam-date/${projectId}`
-    const res = await useAPI<{ data: CheckRegisExamDateRes }>(url, {
+    const res = await fetchAPI<{ data: CheckRegisExamDateRes }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -235,7 +235,7 @@ export async function UpdateProjectUser(
         ...(projectPoint && { projectPoint: Number(projectPoint) }),
       }),
     )
-    await useAPI('/v1/project-user', {
+    await fetchAPI('/v1/project-user', {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -266,7 +266,7 @@ export async function GetProjectUserByProjectIdUserComplete(projectId: number) {
 
     const url = `/v1/project-user/detail?userId=${payload.id}&projectId=${projectId}`
 
-    const res = await useAPI<{ data: ProjectUserWithUser[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectUserWithUser[] }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -297,7 +297,7 @@ export async function GetProjectUserDetail(
 
     const url = `/v1/project-user/detail?${queryParams.toString()}`
 
-    const res = await useAPI<{ data: ProjectUserWithUser[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectUserWithUser[] }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -332,7 +332,7 @@ export async function RegisCommittee(projectId: number) {
       userProjectRole: userProjectRole.COMMITTEE,
     }
 
-    await useAPI('/v1/project-user', {
+    await fetchAPI('/v1/project-user', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -363,7 +363,7 @@ export async function CheckUserIsAdvisor(projectId: number) {
       throw new Error('Token payload is invalid or missing user ID.')
     }
     const url = `/v1/project-user/check-advisor/${payload.id}/${projectId}`
-    const res = await useAPI<{ data: boolean }>(url, {
+    const res = await fetchAPI<{ data: boolean }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -390,7 +390,7 @@ export async function CheckExamDateTimeUserToken() {
       throw new Error('Token payload is invalid or missing user ID.')
     }
 
-    const res = await useAPI<{ data: ProjectUserExamDateRes[] }>(
+    const res = await fetchAPI<{ data: ProjectUserExamDateRes[] }>(
       `/v1/project-user/check-exam-date/${payload.id}`,
       {
         headers: {
@@ -422,7 +422,7 @@ export async function CountProjectInYear(academicYear: number) {
     }
 
     const url = `/v1/project-user/count-project/${payload.id}/${academicYear}`
-    const res = await useAPI<{
+    const res = await fetchAPI<{
       data: {
         CountPreProp: number
         CountOnProject: number

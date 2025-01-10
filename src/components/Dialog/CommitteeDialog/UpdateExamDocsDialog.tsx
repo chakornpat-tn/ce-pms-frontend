@@ -31,13 +31,12 @@ export function UpdateExamDocsDialog(props: Props) {
   const [open, setOpen] = useState(false)
   const { children, projectId, courseId } = props
 
-  if (!projectId) return
-
   const { data, isLoading, error } = useSWR(
     'get-project-user-by-project-id-user-complete',
     () => GetProjectUserByProjectIdUserComplete(projectId),
   )
 
+  if (!projectId) return
   if (isLoading) return <Loader />
   if (!data) return
   return (

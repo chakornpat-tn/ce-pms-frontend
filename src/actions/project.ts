@@ -10,7 +10,7 @@ import {
   ProjectStudentRequest,
   UpdateProjectRequest,
 } from '@/models/Project'
-import useAPI from '@/utils/useAPI'
+import fetchAPI from '@/utils/useAPI'
 import dayjs from 'dayjs'
 import { jwtVerify } from 'jose'
 import { revalidatePath } from 'next/cache'
@@ -37,7 +37,7 @@ export async function ListProjects(req: ListProjectFilterQuery) {
     if (req?.courseStatus) queryParams.append('courseStatus', req.courseStatus)
 
     const url = `/v1/project?${queryParams.toString()}`
-    const res = await useAPI<{ data: ProjectRes[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export async function deleteProject(projectId: number) {
     const Cookie = await cookies()
     const token = Cookie.get('token')
 
-    await useAPI(`/v1/project/${projectId}`, {
+    await fetchAPI(`/v1/project/${projectId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token?.value}`,
@@ -114,7 +114,7 @@ export async function CreateProject(
       requestBody.users = users
     }
 
-    await useAPI<{ message: string }>('/v1/project', {
+    await fetchAPI<{ message: string }>('/v1/project', {
       method: 'POST',
       body: JSON.stringify(requestBody),
       headers: {
@@ -134,7 +134,7 @@ export async function GetProject(Id: number) {
     const token = Cookie.get('token')
     const url = `/v1/project/${Id}`
 
-    const res = await useAPI<{ data: ProjectByIDRes }>(url, {
+    const res = await fetchAPI<{ data: ProjectByIDRes }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ export async function updateProject(formData: FormData) {
       return { error: 'ไม่มีข้อมูลที่ต้องการแก้ไข' }
     }
 
-    const res = await useAPI('/v1/project/' + id, {
+    const res = await fetchAPI('/v1/project/' + id, {
       method: 'PATCH',
       body: JSON.stringify(projectData),
       headers: {
@@ -198,7 +198,7 @@ export async function GetProjectFormToken(): Promise<ProjectByIDRes> {
 
     const url = `/v1/project/${Number(payload.id)}`
 
-    const res = await useAPI<{ data: ProjectByIDRes }>(url, {
+    const res = await fetchAPI<{ data: ProjectByIDRes }>(url, {
       headers: {
         Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -223,7 +223,7 @@ export async function GetProjectByID(
 
     const url = `/v1/project/${projectId}`
 
-    const res = await useAPI<{ data: ProjectByIDRes }>(url, {
+    const res = await fetchAPI<{ data: ProjectByIDRes }>(url, {
       headers: {
         // Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
@@ -312,7 +312,7 @@ export async function UpdateProjectFormToken(
 
     const url = `/v1/project/${Number(payload.id)}`
 
-    await useAPI(url, {
+    await fetchAPI(url, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -413,7 +413,7 @@ export async function UpdateProjectByID(
 
     const url = `/v1/project/${Number(projectId)}`
 
-    await useAPI(url, {
+    await fetchAPI(url, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token.value}`,
@@ -482,7 +482,7 @@ export async function updateMultipleProjects(
     }
 
     if (projectData.ids.length !== 0) {
-      await useAPI('/v1/project', {
+      await fetchAPI('/v1/project', {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${token.value}`,
@@ -510,7 +510,7 @@ export async function ListProjectPassPre(req: ListProjectFilterQuery) {
     if (req?.semester) queryParams.append('semester', req.semester.toString())
 
     const url = `/v1/project/pass-pre?${queryParams.toString()}`
-    const res = await useAPI<{ data: ProjectRes[] }>(url, {
+    const res = await fetchAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',

@@ -62,8 +62,7 @@ export function UpdateCourseStatusDialog({
           <div className="w-full max-w-screen-md px-2">
             อัปเดตสถานะดำเนิการเป็น
             <span className="font-semibold">
-              {' '}
-              "{CourseStatusDesc(newCourseStatus)}"{' '}
+              &rdquo;{CourseStatusDesc(newCourseStatus)}&rdquo;
             </span>
           </div>
           <div className="flex justify-end gap-2">

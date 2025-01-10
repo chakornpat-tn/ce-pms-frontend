@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache'
 import { UserQueryRequest, ResListUser, User } from '@/models/User'
 import { cookies } from 'next/headers'
 import config from '@/config'
-import useAPI from '@/utils/useAPI'
+import fetchAPI from '@/utils/useAPI'
 import { jwtVerify } from 'jose'
 
 export async function createUser(previousState: unknown, formData: FormData) {
@@ -29,7 +29,7 @@ export async function createUser(previousState: unknown, formData: FormData) {
     const Cookie = await cookies()
     const token = Cookie.get('token')
 
-    const res = await useAPI<{ message: string }>('/v1/user', {
+    const res = await fetchAPI<{ message: string }>('/v1/user', {
       method: 'POST',
       body: JSON.stringify(userData),
       headers: {
@@ -65,7 +65,7 @@ export async function updateUser(formData: FormData) {
       role,
     }
 
-    const res = await useAPI('/v1/user/' + id, {
+    const res = await fetchAPI('/v1/user/' + id, {
       method: 'PUT',
       body: JSON.stringify(userData),
       headers: {
@@ -98,7 +98,7 @@ export async function changePassword(formData: FormData) {
     const password = formData.get('password')
     const userData = { password }
 
-    const res = await useAPI('/v1/user/' + payload.id, {
+    const res = await fetchAPI('/v1/user/' + payload.id, {
       method: 'PUT',
       body: JSON.stringify(userData),
       headers: {
@@ -123,7 +123,7 @@ export async function deleteUser(userId: number) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
-    await useAPI('/v1/user/' + userId, {
+    await fetchAPI('/v1/user/' + userId, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token?.value}`,
@@ -150,7 +150,7 @@ export async function listUser(req?: UserQueryRequest) {
 
     const url = `/v1/user?${queryParams.toString()}`
 
-    const res = await useAPI<{ data: ResListUser }>(url, {
+    const res = await fetchAPI<{ data: ResListUser }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
@@ -169,7 +169,7 @@ export async function GetUser(Id: number) {
     const token = Cookie.get('token')
     const url = `/v1/user/${Id}`
 
-    const res = await useAPI<{ data: User }>(url, {
+    const res = await fetchAPI<{ data: User }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
         'Content-Type': 'application/json',
