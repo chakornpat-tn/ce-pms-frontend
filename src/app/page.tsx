@@ -71,9 +71,7 @@ export default function Home() {
           <div className="max-w-xl">
             <h1 className="py-2 text-3xl font-bold text-white">
               โครงงานวิศวกรรมไฟฟ้า
-              <span className="whitespace-nowrap">
-                สาขาวิศวกรรมคอมพิวเตอร์
-              </span>
+              <span className="whitespace-nowrap">สาขาวิศวกรรมคอมพิวเตอร์</span>
             </h1>{' '}
             <p className="hidden py-6 text-base sm:block">
               เว็บไซต์ที่รวบรวมและนำเสนอข้อมูลโครงงานด้านวิศวกรรมไฟฟ้า
@@ -273,8 +271,8 @@ export default function Home() {
         </section>
       ) : (
         <section className="my-2 h-full w-full gap-2">
-          <div className="container mx-auto flex h-full flex-col items-stretch justify-evenly md:flex-row">
-            <h1 className="flex items-center gap-2 text-2xl font-semibold text-gray-800">
+          <div className="container mx-auto flex h-full flex-col items-center justify-evenly md:flex-row md:items-stretch">
+            <h1 className="flex items-center gap-2 text-base font-semibold text-gray-800 sm:text-lg md:text-2xl">
               <FolderOff className="text-gray-600" /> ไม่พบโครงงาน
             </h1>
           </div>
