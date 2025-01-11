@@ -4,83 +4,87 @@ import { jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import config from '@/config'
+import fetchAPI from '@/utils/useAPI'
 
-const Cookies = await cookies()
+// const Cookies = await cookies()
 
-type FormState = {
-  message: string
-}
-
-export async function login(prevState: FormState, formData: FormData) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+export async function login(prevState: unknown, formData: FormData) {
+  const cookieStore = await cookies()
   const username = formData.get('username')
   const password = formData.get('password')
+  try {
+    const { data } = await fetchAPI<{ data: { token: string } }>(
+      '/v1/auth/login',
+      {
+        method: 'POST',
+        body: JSON.stringify({ username, password }),
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
 
-  const res = await fetch(apiUrl + '/v1/auth/login', {
-    method: 'POST',
-    body: JSON.stringify({ username, password }),
-    headers: { 'Content-Type': 'application/json' },
-  })
-
-  if (res.status === 200) {
-    const response = await res.json()
     const expires = new Date(Date.now() + 3 * 60 * 60 * 1000)
-    Cookies.set('token', response.data.token, {
+    cookieStore.set('token', data.token, {
       expires,
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
     })
-
-    redirect('/teacher')
-  } else {
+  } catch (error) {
+    cookieStore.set('token', '', { expires: new Date(0) })
     return {
       message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
     }
   }
+
+  redirect('/teacher')
 }
 
-export async function studentlogin(prevState: FormState, formData: FormData) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
+export async function studentLogin(prevState: unknown, formData: FormData) {
   const username = formData.get('username')
   const password = formData.get('password')
   const bodyData = password ? { username, password } : { username }
+  const cookieStore = await cookies()
+  let token: string
 
-  const res = await fetch(apiUrl + '/v1/auth/login/project', {
-    method: 'POST',
-    body: JSON.stringify(bodyData),
-    headers: { 'Content-Type': 'application/json' },
-  })
+  try {
+    const { data } = await fetchAPI<{ data: { token: string } }>(
+      '/v1/auth/login/project',
+      {
+        method: 'POST',
+        body: JSON.stringify(bodyData),
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
 
-  if (res.status === 200) {
-    const response = await res.json()
     const expires = new Date(Date.now() + 3 * 60 * 60 * 1000)
-    Cookies.set('token', response.data.token, {
+    cookieStore.set('token', data.token, {
       expires,
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
     })
 
-    if (response.data.token) {
-      const secret = new TextEncoder().encode(config.TOKEN_SECRET)
-      const { payload } = await jwtVerify(response.data.token, secret)
-      if (!payload.id) {
-        throw new Error('Token payload is invalid or missing user ID.')
-      }
-
-      if (payload.firstLogin) {
-        redirect('/project/change-password')
-      }
-    }
-    redirect('/project')
-  } else {
+    token = data.token
+  } catch (error) {
+    cookieStore.set('token', '', { expires: new Date(0) })
     return {
       message: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
     }
   }
+  const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+  const { payload } = await jwtVerify(token, secret)
+  if (payload.firstLogin) redirect('/project/change-password')
+
+  redirect('/project')
 }
 
 export async function logout() {
-  Cookies.set('token', '', { expires: new Date(0) })
+  const cookieStore = await cookies()
+  cookieStore.set('token', '', { expires: new Date(0) })
 }

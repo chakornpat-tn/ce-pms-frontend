@@ -2,28 +2,23 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useActionState } from 'react'
-import { studentlogin, login } from '@/actions/auth'
+import { studentLogin, login } from '@/actions/auth'
 import { useState } from 'react'
 import { Loader } from '@/components/Loading'
 
 export default function LoginPage() {
   const [isTeacher, setIsTeacher] = useState(false)
-
-  const initState = {
-    message: '',
-  }
-
-  const [studentState, studentFormAction, studentLoginPending] = useActionState(
-    studentlogin,
-    initState,
+  const [studentError, studentAction, studentIsPending] = useActionState(
+    studentLogin,
+    null,
   )
-  const [teacherState, teacherFormAction, teacherLoginPending] = useActionState(
+  const [teacherError, teacherAction, teacherIsPending] = useActionState(
     login,
-    initState,
+    null,
   )
 
-  const currentState = isTeacher ? teacherState : studentState
-  const currentFormAction = isTeacher ? teacherFormAction : studentFormAction
+  const currentState = isTeacher ? teacherError : studentError
+  const currentFormAction = isTeacher ? teacherAction : studentAction
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -59,8 +54,6 @@ export default function LoginPage() {
         <div className="relative bottom-12 w-full rounded-md bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
           <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
             <div className="mt-6 grid justify-center text-lg leading-tight tracking-tight text-gray-900 sm:text-2xl md:text-3xl">
-              {/* Toggle Switch */}
-
               <div className="flex w-full gap-4 rounded-md bg-white p-2 shadow">
                 <button
                   onClick={() => setIsTeacher(false)}
@@ -113,17 +106,16 @@ export default function LoginPage() {
                 />
               </div>
 
-              {currentState.message && (
+              {currentState?.message && (
                 <p className="text-red-500">{currentState.message}</p>
               )}
 
               <button
                 type="submit"
-                disabled={studentLoginPending || teacherLoginPending}
-                className="focus:ring-primary-300 w-full rounded-md bg-primary2-400 px max-h-[25px]-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none focus:ring-4"
-             
+                disabled={studentIsPending || teacherIsPending}
+                className="focus:ring-primary-300 px max-h-[25px]-5 w-full rounded-md bg-primary2-400 py-2.5 text-center text-sm font-medium text-white hover:bg-primary2-500 focus:outline-none focus:ring-4"
               >
-                {studentLoginPending || teacherLoginPending ? (
+                {studentIsPending || teacherIsPending ? (
                   <div>
                     <Loader />
                   </div>
