@@ -197,7 +197,9 @@ export default function Home() {
                       </p>
                       <p className="mt-3 truncate text-xs font-light text-gray-500">
                         อัปเดตล่าสุด:
-                        {dayjs(project.updatedAt).format('DD/MM/YYYY')}
+                        {dayjs(project.updatedAt)
+                          .add(543, 'year')
+                          .format('DD/MM/YYYY')}
                       </p>
                     </div>
                   </article>
@@ -235,7 +237,9 @@ export default function Home() {
                       </p>
                       <p className="mt-2 truncate text-xs font-light text-gray-500">
                         อัปเดตล่าสุด:
-                        {dayjs(project.updatedAt).format('DD/MM/YYYY')}
+                        {dayjs(project.updatedAt)
+                          .add(543, 'year')
+                          .format('DD/MM/YYYY')}
                       </p>
                     </div>
                   </a>
