@@ -123,18 +123,21 @@ export async function deleteUser(userId: number) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
-    await fetchAPI('/v1/user/' + userId, {
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+    await fetchAPI(`/v1/user/${userId}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer ${token?.value}`,
+        Authorization: `Bearer ${token.value}`,
         'Content-Type': 'application/json',
       },
     })
 
     revalidatePath('/')
-    return
   } catch (error) {
-    return error
+    console.log(error)
+    throw error
   }
 }
 export async function listUser(req?: UserQueryRequest) {

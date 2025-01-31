@@ -27,10 +27,7 @@ function Page({}: Props) {
     return res
   }
 
-  const { data, isLoading, mutate } = useSWR('/v1/user', fetchData, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  })
+  const { data, isLoading, mutate } = useSWR('/v1/user', fetchData)
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -125,7 +122,7 @@ function Page({}: Props) {
       {data?.users && (
         <div className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md">
           <>
-            <UsersTable usersData={data.users} />
+            <UsersTable usersData={data.users} onUpdate={mutate} />
             <div className="flex flex-row justify-between">
               <p className="text-sm text-gray-500">
                 จำนวนทั้งหมด {data?.totalCount} ผู้ใช้

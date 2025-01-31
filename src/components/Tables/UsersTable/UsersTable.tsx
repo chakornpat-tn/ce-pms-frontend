@@ -4,9 +4,10 @@ import UserMenu from './UserMenu'
 
 type Props = {
   usersData: User[] | undefined
+  onUpdate?: () => void
 }
 
-export function UsersTable({ usersData }: Props) {
+export function UsersTable({ usersData, onUpdate }: Props) {
   const roleColor = [, 'bg-blue-600', 'bg-orange-600', 'bg-green-600']
 
   return (
@@ -49,7 +50,7 @@ export function UsersTable({ usersData }: Props) {
                 </div>
               </td>
               <td className="whitespace-nowrap px-6 py-4 text-right text-sm text-primary1">
-                <UserMenu userId={user.id} userName={user.name} />
+                <UserMenu userId={user.id} userName={user.name} onUpdate={onUpdate} />
               </td>
             </tr>
           ))}

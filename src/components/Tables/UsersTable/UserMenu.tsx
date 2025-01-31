@@ -13,6 +13,7 @@ import Link from 'next/link'
 type Props = {
   userId: number
   userName: string
+  onUpdate?: () => void
 }
 
 function UserMenu(Props: Props) {
@@ -53,7 +54,7 @@ function UserMenu(Props: Props) {
           </Link>
         </MenuItem>
 
-        <DeleteUserModalForm handleClose={handleClose} userInfo={Props}>
+        <DeleteUserModalForm handleClose={handleClose} userInfo={Props} onUpdate={Props.onUpdate}>
           <MenuItem className=" text-red-500">
             <DeleteIcon fontSize="small" className="mr-1" />
             ลบ
