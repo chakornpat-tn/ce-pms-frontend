@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DashboardCard, ColumnCard, ColumnCard2 } from '@/components/Cards'
 import ExamDateTimeTable from '@/components/Tables/ExamTable/ExamDateTime'
 import useSWR from 'swr'
@@ -11,12 +11,12 @@ import { ListProjectDocsWaitUpdate } from '@/actions/projectDocuments'
 import WaitUpdateTable from '@/components/Tables/ProjectDocsTable/waitUpdateTable'
 import { GetProjectProgressWaitUpdate } from '@/actions/progressReport'
 import ProjectDocumentWaitUpdateTable from '@/components/Tables/ProjectProgressTable/ProgressWaitUpdate'
+import { GetMaxProjectAcademicYear } from '@/actions/project'
 
 type Props = {}
 
 function Page({}: Props) {
-  const currentYear = new Date().getFullYear() + 543
-  const [year, setYear] = useState(currentYear)
+  const [year, setYear] = useState<number>(new Date().getFullYear() + 543)
 
   const ExamDateTimeData = useSWR('/project-user/check-exam-date', () =>
     CheckExamDateTimeUserToken(),
@@ -34,15 +34,24 @@ function Page({}: Props) {
   const CountProject = useSWR(
     `/project-user/count-project/userId/${year}`,
     async () => {
+      if (!year) return
       const res = await CountProjectInYear(year)
-      if (res.CountAllProject == 0 && year == currentYear) {
-        setYear(currentYear - 1)
-        CountProject.mutate()
-      }
       return res
     },
   )
 
+  useEffect(() => {
+    const fetchYear = async () => {
+      const res = await GetMaxProjectAcademicYear()
+      const maxYear = res
+        ? Math.max(res.academicYear, res.projectAcademicYear)
+        : new Date().getFullYear() + 543
+
+      setYear(maxYear)
+    }
+    fetchYear()
+    CountProject.mutate()
+  }, [])
   return (
     <section className="h-full bg-bg_primary">
       <article className="mb-2 flex min-h-[200px] w-full flex-row flex-wrap justify-around gap-2 rounded-sm bg-primary2-400 p-4">
@@ -58,7 +67,6 @@ function Page({}: Props) {
               value={year}
               onChange={e => {
                 setYear(Number(e.target.value))
-             
               }}
               className="rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
@@ -77,7 +85,7 @@ function Page({}: Props) {
         </div>
         <ExamDateTimeTable data={ExamDateTimeData.data} />
       </article>
-      <article className="mb-2 flex min-h-[200px] w-full flex-col md:flex-row flex-wrap justify-around gap-2 rounded-sm p-4">
+      <article className="mb-2 flex min-h-[200px] w-full flex-col flex-wrap justify-around gap-2 rounded-sm p-4 md:flex-row">
         <WaitUpdateTable data={ProjectDocsWaitUpdate.data} />
         <ProjectDocumentWaitUpdateTable data={ProjectProgressWaitUpdate.data} />
       </article>

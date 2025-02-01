@@ -1,21 +1,16 @@
 'use client'
 import useSWR from 'swr'
 import courseStatus from '@/constants/course/courseStatus'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ListProjectFilterQuery } from '@/models/Project'
 import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
-import {
-  GetProjectInCommittee,
-  GetProjectInCompleteUsers,
-  ListProjectByUserID,
-} from '@/actions/projectUser'
+import { GetProjectInCompleteUsers } from '@/actions/projectUser'
 import { Loader } from '@/components/Loading'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import ProjectMenu from '@/components/Tables/ProjectTable/TeacherProjectMenu'
 import { ProjectStatusBadge } from '@/components/Badge'
 import course from '@/constants/course/course'
 import { RegisCommitteeDialog } from '@/components/Dialog'
+import { GetMaxProjectAcademicYear } from '@/actions/project'
 
 type Props = {}
 
@@ -43,13 +38,6 @@ function Regis({}: Props) {
 
   const fetchData = async () => {
     const res = await GetProjectInCompleteUsers(filters)
-    if (res.length == 0 && filters.academicYear == currentYear) {
-      setFilters({
-        ...filters,
-        academicYear: currentYear - 1,
-      })
-      mutate()
-    }
     return res
   }
 
@@ -68,6 +56,22 @@ function Regis({}: Props) {
       handleSearch(e as unknown as React.FormEvent)
     }
   }
+
+  useEffect(() => {
+    const fetchYear = async () => {
+      const res = await GetMaxProjectAcademicYear()
+      const maxYear = res.academicYear
+        ? res.academicYear
+        : new Date().getFullYear() + 543
+
+      setFilters(prev => ({
+        ...prev,
+        academicYear: maxYear,
+      }))
+      mutate()
+    }
+    fetchYear()
+  }, [])
 
   const ProjectTable = ({
     data,

@@ -1,5 +1,10 @@
 'use client'
-import { GetProjectByID, ListProjects } from '@/actions/project'
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
+import {
+  GetMaxProjectAcademicYear,
+  GetProjectByID,
+  ListProjects,
+} from '@/actions/project'
 import NavbarWithSideBar from '@/components/Navbar/NavbarWithLayout'
 import {
   ListProjectFilterQuery,
@@ -8,23 +13,24 @@ import {
 } from '@/models/Project'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { FolderOff } from '@mui/icons-material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import dayjs from 'dayjs'
 import { ProjectStatusBadge } from '@/components/Badge'
 import { CourseStatusDesc } from '@/utils/courseStatusDesc'
 import userProjectRole from '@/constants/userProjectRole/userProjectRole'
-import Project from './teacher/present/project/page'
 import { Loader } from '@/components/Loading'
+import { ListProjectDocsPublicReleaseDialog } from '@/components/Dialog'
 
 export default function Home() {
-  const currentYear = new Date().getFullYear() + 543
+  // const currentYear = new Date().getFullYear() + 543
+
   const [filters, setFilters] = useState<ListProjectFilterQuery>({
     projectName: '',
     projectSemester: 0,
     semester: 0,
-    academicYear: currentYear,
-    projectAcademicYear: currentYear,
+    academicYear: 0,
+    projectAcademicYear: 0,
     projectStatus: '',
     // courseStatus: `${courseStatus.Project}, ${courseStatus.ApproveProjectExam},${courseStatus.Pass}`,
   })
@@ -37,16 +43,16 @@ export default function Home() {
     return res
   }
 
-  const projectList = useSWR('/list-user-project', async () => {
+  const projectList = useSWR(`/list-user-project`, async () => {
     let res = await ListProjects(filters)
-    if (res.length == 0 && filters.academicYear == currentYear) {
-      setFilters({
-        ...filters,
-        projectAcademicYear: currentYear - 1,
-        academicYear: currentYear - 1,
-      })
-      projectList.mutate()
-    }
+    // if (res.length == 0 && filters.academicYear == currentYear) {
+    //   setFilters({
+    //     ...filters,
+    //     projectAcademicYear: currentYear - 1,
+    //     academicYear: currentYear - 1,
+    //   })
+    //   projectList.mutate()
+    // }
     return res
   })
 
@@ -60,6 +66,22 @@ export default function Home() {
     },
   )
 
+  useEffect(() => {
+    const fetchYear = async () => {
+      const res = await GetMaxProjectAcademicYear()
+      const maxYear = res
+        ? Math.max(res.academicYear, res.projectAcademicYear)
+        : new Date().getFullYear() + 543
+
+      setFilters(prev => ({
+        ...prev,
+        academicYear: maxYear,
+        projectAcademicYear: maxYear,
+      }))
+      projectList.mutate()
+    }
+    fetchYear()
+  }, [])
   const handleSearch = () => {
     projectList.mutate()
     setProjectSelection(null)
@@ -127,8 +149,8 @@ export default function Home() {
               type="number"
               name="year"
               placeholder="ปีการศึกษา"
-              min="0"
-              defaultValue={filters.academicYear}
+              value={filters.academicYear || ''}
+              // defaultValue={filters.academicYear}
               onChange={e =>
                 setFilters({
                   ...filters,
@@ -153,7 +175,8 @@ export default function Home() {
           </button>
         </div>{' '}
       </div>
-      {projectList.data && projectList.data.length > 0 ? (
+
+      {projectList.data && projectList.data.length > 0 && (
         <section className="my-2 h-full w-full gap-2">
           <div className="container mx-auto flex h-full flex-col items-stretch justify-evenly md:flex-row">
             <section className="w-full md:w-1/3">
@@ -273,14 +296,6 @@ export default function Home() {
             </section>
           </div>
         </section>
-      ) : (
-        <section className="my-2 h-full w-full gap-2">
-          <div className="container mx-auto flex h-full flex-col items-center justify-evenly md:flex-row md:items-stretch">
-            <h1 className="flex items-center gap-2 text-base font-semibold text-gray-800 sm:text-lg md:text-2xl">
-              <FolderOff className="text-gray-600" /> ไม่พบโครงงาน
-            </h1>
-          </div>
-        </section>
       )}
     </NavbarWithSideBar>
   )
@@ -340,11 +355,20 @@ const ProjectDetail = ({
 
           <div className="mb-4 border-b border-primary2-400"></div>
           <div className="flex w-full flex-col gap-2 text-xs sm:text-sm md:text-base">
-            <div className="flex flex-col">
-              <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
-                <h3 className="mt-4 font-bold">ประเภทโครงงาน</h3>
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-col">
+                <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
+                  <h3 className="mt-4 font-bold">ประเภทโครงงาน</h3>
+                </div>
+                <p className="text-gray-500">{projectData.type ?? 'ไม่ระบุ'}</p>
               </div>
-              <p className="text-gray-500">{projectData.type ?? 'ไม่ระบุ'}</p>
+
+              <ListProjectDocsPublicReleaseDialog projectId={projectData.id}>
+                <button className="flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 font-bold text-secondary1 shadow-2xl hover:bg-primary2-500">
+                  <InsertDriveFileIcon />
+                  <span>เอกสารโครงงาน</span>
+                </button>
+              </ListProjectDocsPublicReleaseDialog>
             </div>
 
             <div className="flex flex-col">

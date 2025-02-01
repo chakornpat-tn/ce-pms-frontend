@@ -5,6 +5,7 @@ import config from '@/config'
 import { Document } from '@/models/Document'
 import {
   ProjectDocsAdvisorApproveRes,
+  ProjectDocsPublicRelease,
   ProjectDocument,
   ProjectDocumentRes,
   ProjectDocumentWaitUpdateRes,
@@ -113,6 +114,40 @@ export async function UpdateProjectDocStatus(
   }
 }
 
+export async function UpdateProjectReleaseDocs(
+  documentId: number,
+  releaseDocs: boolean,
+) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+
+    const form = new FormData()
+    form.append(
+      'data',
+      JSON.stringify({
+        releaseDocs,
+      }),
+    )
+
+    const res = await fetchAPI(`/v1/project-document/${documentId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      body: form,
+    })
+    console.log(res, releaseDocs)
+    revalidatePath('/')
+    return
+  } catch (error) {
+    throw error
+  }
+}
+
 export async function ListProjectDocsApprove(projectId: number) {
   try {
     const Cookie = await cookies()
@@ -131,6 +166,24 @@ export async function ListProjectDocsApprove(projectId: number) {
         Authorization: `Bearer ${token.value}`,
       },
     })
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function ListProjectDocsPublicRelease(projectId: number) {
+  try {
+    const query = `/v1/project-document/public-release/${projectId}`
+    const res = await fetchAPI<{
+      data: ProjectDocsPublicRelease[]
+    }>(query, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    console.log(query)
+    console.log(res)
     return res.data
   } catch (error) {
     throw error

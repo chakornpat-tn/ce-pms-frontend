@@ -189,3 +189,8 @@ export type UserEntry = {
     name: string
   }
 }
+
+export type MaxProjectAcademicYearRes = {
+  academicYear: number 
+  projectAcademicYear: number
+}

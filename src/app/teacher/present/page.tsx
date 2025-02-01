@@ -10,7 +10,7 @@ export default function SelectProject() {
     <div className="">
       <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
         <h1 className="text-2xl font-bold text-primary1 md:text-4xl">
-          คุมสอบโครงงาน
+          กรรมการสอบ
         </h1>
       </div>
       <div className="h-full min-h-[80dvh] w-full rounded-md bg-white shadow-md">
@@ -37,7 +37,7 @@ export default function SelectProject() {
                 onClick={() => setActiveTab('regis-pre-project')}
                 className={`primary-hover inline-block rounded-t-lg border-b-2 p-4 text-primary1 ${activeTab === 'regis-pre-project' ? 'border-primary1' : 'border-transparent'}`}
               >
-                ลงทะเบียนเป็นกรรมการ
+                เข้าร่วมเป็นกรรมการ
               </button>
             </li>
           </ul>

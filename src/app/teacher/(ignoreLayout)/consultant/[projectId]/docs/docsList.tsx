@@ -6,10 +6,11 @@ import PlagiarismIcon from '@mui/icons-material/Plagiarism'
 import {
   ListProjectDocs,
   UpdateProjectDocStatus,
+  UpdateProjectReleaseDocs,
 } from '@/actions/projectDocuments'
 import { Loader } from '@/components/Loading'
 import { CreateCommentsDialog } from '@/components/Dialog/CommentDialog/CreateCommentDialog'
-import { CloudDownload as DownloadIcon, Message } from '@mui/icons-material'
+import { CloudDownload as DownloadIcon, Message, Update } from '@mui/icons-material'
 import dayjs from 'dayjs'
 import { CheckIcon } from 'lucide-react'
 import projectDocumentStatus from '@/constants/projectDocumentStatus/projectDocumentStatus'
@@ -107,14 +108,13 @@ const DocsList = (props: Props) => {
 
                     <CreateCommentsDialog
                       projectDocsId={doc.id}
-                      onSuccess={() =>
-                        UpdateProjectDocStatus(
-                          doc.id,
-                          projectDocumentStatus.REJECTED,
-                        ).then(() => {
-                          mutate()
-                        })
-                      }
+                      onSuccess={async () => {
+                        await Promise.all([
+                          UpdateProjectDocStatus(doc.id, projectDocumentStatus.REJECTED),
+                          UpdateProjectReleaseDocs(doc.id, false)
+                        ])
+                        mutate()
+                      }}
                       trigger={
                         <button className="primary-hover group rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-700 shadow-sm md:px-4 md:py-2 md:text-sm">
                           <div className="flex flex-row items-center">
@@ -161,7 +161,7 @@ const DocsList = (props: Props) => {
                         className="flex flex-row gap-1.5 transition-colors duration-200 hover:text-red-700 hover:underline"
                       >
                         <PlagiarismIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                        <p className="break-all text-sm font-medium ">
+                        <p className="break-all text-sm font-medium">
                           {doc.documentName + ' (รายละเอียดข้อผิดพลาด)'}
                         </p>
                       </a>

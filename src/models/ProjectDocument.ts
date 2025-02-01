@@ -1,5 +1,4 @@
 import Project from '@/app/teacher/present/project/page'
-import { Document } from './Document'
 import { ProjectByIDRes } from './Project'
 
 export type ProjectDocument = {
@@ -41,7 +40,8 @@ export type ProjectDocumentRes = {
   updatedAt: Date
   comments: Comment[]
   CommentBasedEdits: CommentBasedEdit[]
-  advisorDocsUrl?:string
+  advisorDocsUrl?: string
+  releaseDocs: boolean
 }
 
 export type ProjectDocsAdvisorApproveRes = {
@@ -57,6 +57,25 @@ export type ProjectDocsAdvisorApproveRes = {
     course: number
     name: string
   }
+}
+
+export type ProjectDocsPublicRelease = {
+  id: number
+  projectId: number
+  documentId: number
+  documentName: string
+  documentUrl: string
+  advisorDocsUrl: null
+  status: number
+  createdAt: Date
+  updatedAt: Date
+  releaseDocs: boolean
+  document: DocsPublicRelease
+}
+
+export type DocsPublicRelease = {
+  course: number
+  name: string
 }
 
 export type ProjectDocumentWaitUpdateRes = {

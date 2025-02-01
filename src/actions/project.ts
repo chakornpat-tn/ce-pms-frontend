@@ -4,6 +4,7 @@ import config from '@/config'
 import userProjectRole from '@/constants/userProjectRole/userProjectRole'
 import {
   ListProjectFilterQuery,
+  MaxProjectAcademicYearRes,
   Project,
   ProjectByIDRes,
   ProjectRes,
@@ -513,6 +514,22 @@ export async function ListProjectPassPre(req: ListProjectFilterQuery) {
     const res = await fetchAPI<{ data: ProjectRes[] }>(url, {
       headers: {
         Authorization: `Bearer ${token?.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
+
+    return res.data
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function GetMaxProjectAcademicYear() {
+  try {
+    const url = `/v1/project/max-academic-year`
+
+    const res = await fetchAPI<{data:MaxProjectAcademicYearRes}>(url, {
+      headers: {
         'Content-Type': 'application/json',
       },
     })

@@ -1,8 +1,8 @@
 'use client'
 import useSWR from 'swr'
-import { ListProjects } from '@/actions/project'
+import { GetMaxProjectAcademicYear, ListProjects } from '@/actions/project'
 import courseStatus from '@/constants/course/courseStatus'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ListProjectFilterQuery } from '@/models/Project'
 import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
@@ -45,6 +45,22 @@ function Page({}: Props) {
     }
   }
 
+   useEffect(() => {
+    const fetchYear = async () => {
+      const res = await GetMaxProjectAcademicYear()
+      const maxYear = res.academicYear
+        ? res.academicYear
+        : new Date().getFullYear() + 543
+
+      setFilters(prev => ({
+        ...prev,
+        academicYear: maxYear,
+      }))
+      mutate()
+    }
+    fetchYear()
+  }, [])
+
   return (
     <>
       <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
@@ -58,7 +74,7 @@ function Page({}: Props) {
         setFilters={setFilters}
         handleSearch={handleSearch}
         handleKeyPress={handleKeyPress}
-        currentYear={Number(filters.projectAcademicYear)}
+        currentYear={Number(filters.academicYear)}
         course={Course.PreProject}
       />
       {/* Search Results */}

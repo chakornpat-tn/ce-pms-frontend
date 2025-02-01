@@ -89,7 +89,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
       role: 3,
     },
     {
-      name: 'คุมสอบโครงงาน',
+      name: 'กรรมการสอบ',
       icon: Group,
       link: '/teacher/present',
       role: userRoles.Teacher,

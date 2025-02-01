@@ -21,7 +21,7 @@ const ProjectPage = () => {
   const params = useParams<{ projectId: string }>()
   const router = useRouter()
   const projectId = params.projectId
-    
+
   const searchParams = useSearchParams()
   const courseQuery = searchParams.get('course')
   const docsQuery = searchParams.get('docs')
@@ -35,11 +35,15 @@ const ProjectPage = () => {
   }
 
   const [selectedItem, setSelectedItem] = useState<string | null>(null)
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(courseQuery || null)
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(
+    courseQuery || null,
+  )
   const [projectCourseStatus, setProjectCourseStatus] = useState(0)
   const [findCourse, setFindCourse] = useState<number | null>(null)
   const [projectID, setProjectID] = useState<number | undefined>(undefined)
-  const [docsID, setDocsID] = useState<number | undefined>(Number(docsQuery) || undefined)
+  const [docsID, setDocsID] = useState<number | undefined>(
+    Number(docsQuery) || undefined,
+  )
 
   const preProjectStatus = [
     courseStatus.ApprovePreExam,
@@ -308,6 +312,7 @@ const ProjectPage = () => {
         <div className="my-2 w-full px-2 sm:my-4 sm:px-4">
           {docsID && (
             <DocsList
+              selectCourse={Number(selectedCourse)}
               projectId={projectID}
               documentId={docsID}
               documentName={selectedItem}
