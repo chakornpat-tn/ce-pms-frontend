@@ -24,7 +24,7 @@ type Props = {
 
 export function UpdateExamDocsDialog(props: Props) {
   const [actionError, action, isPending] = useActionState(
-    UpdateProjectUser ,
+    UpdateProjectUser,
     null,
   )
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
@@ -47,7 +47,7 @@ export function UpdateExamDocsDialog(props: Props) {
           <DialogTitle className="text-2xl">
             {courseId === course.PreProject
               ? 'อัปโหลดเอกสารสอบเตรียมโครงงาน'
-              : 'อัปโหลดเอกสารสอบโครงงาน'}{' '}
+              : 'อัปโหลดเอกสารสอบโครงงาน'}
           </DialogTitle>
         </DialogHeader>
         <div className="mx-auto w-full p-4">
@@ -120,18 +120,20 @@ export function UpdateExamDocsDialog(props: Props) {
                       >
                         รายการ
                       </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                      >
-                        เตรียมโครงงาน
-                      </th>
+                      {courseId === course.PreProject && (
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                        >
+                          เตรียมโครงงาน
+                        </th>
+                      )}
                       {courseId === course.Project && (
                         <th
                           scope="col"
                           className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                         >
-                        โครงงาน
+                          โครงงาน
                         </th>
                       )}
                     </tr>
@@ -141,20 +143,23 @@ export function UpdateExamDocsDialog(props: Props) {
                       <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                         ไฟล์ล่าสุด
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {data[0]?.prepDocs ? (
-                          <a
-                            href={data[0]?.prepDocs || undefined}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-primary2-400 hover:underline"
-                          >
-                            <span>เปิด</span>
-                          </a>
-                        ) : (
-                          'ไม่มีเอกสาร'
-                        )}
-                      </td>
+                      {courseId === course.PreProject && (
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                          {data[0]?.prepDocs ? (
+                            <a
+                              href={data[0]?.prepDocs || undefined}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-primary2-400 hover:underline"
+                            >
+                              <span>เปิด</span>
+                            </a>
+                          ) : (
+                            'ไม่มีเอกสาร'
+                          )}
+                        </td>
+                      )}
+
                       {courseId === course.Project && (
                         <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                           {data[0]?.projectDocs ? (
@@ -176,11 +181,13 @@ export function UpdateExamDocsDialog(props: Props) {
                       <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                         คะแนนที่ให้
                       </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                        {data[0]?.prepPoint
-                          ? `${data[0].prepPoint} คะแนน`
-                          : 'ไม่ระบุคะแนน'}
-                      </td>
+                      {courseId === course.PreProject && (
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                          {data[0]?.prepPoint
+                            ? `${data[0].prepPoint} คะแนน`
+                            : 'ไม่ระบุคะแนน'}
+                        </td>
+                      )}
                       {courseId === course.Project &&
                         courseId === course.Project && (
                           <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">

@@ -249,7 +249,7 @@ const menuSelection = (
           </UpdateExamDocsDialog>
         </div>
       ) : (
-        <PointTeacherDialog projectId={projectId}>
+        <PointTeacherDialog projectId={projectId} courseId={courseMenu}>
           <button className={commonButtonClasses}>
             <PreviewIcon className="shrink-0" />
             <span className="flex-1 text-center">ตรวจคะแนนสอบ</span>
