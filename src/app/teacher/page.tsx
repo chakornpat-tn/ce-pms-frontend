@@ -50,7 +50,7 @@ function Page({}: Props) {
       setYear(maxYear)
     }
     fetchYear()
-    CountProject.mutate()
+    CountProject?.mutate?.()
   }, [])
   return (
     <section className="h-full bg-bg_primary">

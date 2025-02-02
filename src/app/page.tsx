@@ -78,7 +78,7 @@ export default function Home() {
         academicYear: maxYear,
         projectAcademicYear: maxYear,
       }))
-      projectList.mutate()
+      projectList?.mutate?.()
     }
     fetchYear()
   }, [])

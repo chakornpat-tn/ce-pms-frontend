@@ -1,5 +1,6 @@
 import Project from '@/app/teacher/present/project/page'
 import { ProjectByIDRes } from './Project'
+import { Document } from './Document'
 
 export type ProjectDocument = {
   id: number

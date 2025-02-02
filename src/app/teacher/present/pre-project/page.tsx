@@ -74,7 +74,7 @@ function PreProject({}: Props) {
         ...prev,
         academicYear: maxYear,
       }))
-      mutate()
+      mutate?.()
     }
     fetchYear()
   }, [])

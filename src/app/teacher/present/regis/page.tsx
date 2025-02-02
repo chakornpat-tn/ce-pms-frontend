@@ -68,7 +68,7 @@ function Regis({}: Props) {
         ...prev,
         academicYear: maxYear,
       }))
-      mutate()
+      mutate?.()
     }
     fetchYear()
   }, [])

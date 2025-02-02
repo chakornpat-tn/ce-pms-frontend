@@ -75,7 +75,7 @@ function Page({}: Props) {
         ...prev,
         academicYear: maxYear,
       }))
-      mutate()
+      mutate?.()
     }
     fetchYear()
   }, [])
