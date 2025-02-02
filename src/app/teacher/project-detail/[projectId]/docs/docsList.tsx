@@ -78,7 +78,7 @@ const DocsList = (props: Props) => {
                 </div>
                 {index === 0 &&
                   selectCourse === course.Project &&
-                  doc.status === projectDocumentStatus.APPROVED && (
+                  (doc.status === projectDocumentStatus.APPROVED || doc.releaseDocs) && (
                     <div className="mt-3 flex flex-row gap-2 md:ml-auto md:mt-0">
                       <button
                         onClick={() =>
