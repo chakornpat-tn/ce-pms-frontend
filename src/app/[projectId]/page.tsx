@@ -5,6 +5,8 @@ import { GetProjectByID } from '@/actions/project'
 import { ProjectStatusBadge } from '@/components/Badge'
 import { ProjectByIDRes } from '@/models/Project'
 import { redirect } from 'next/navigation'
+import { ListProjectDocsPublicReleaseDialog } from '@/components/Dialog'
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile'
 
 export default async function Page({
   params,
@@ -56,12 +58,22 @@ export default async function Page({
 
           <div className="mb-4 border-b border-primary2-400"></div>
           <div className="flex w-full flex-col gap-2 text-xs sm:text-sm md:text-base">
-            <div className="flex flex-col">
-              <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
-                <h3 className="mt-4 font-bold">ประเภทโครงงาน</h3>
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-col">
+                <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
+                  <h3 className="mt-4 font-bold">ประเภทโครงงาน</h3>
+                </div>
+                <p className="text-gray-500">{projectData.type ?? 'ไม่ระบุ'}</p>
               </div>
-              <p className="text-gray-500">{projectData.type ?? 'ไม่ระบุ'}</p>
+
+              <ListProjectDocsPublicReleaseDialog projectId={projectData.id}>
+                <button className="flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 font-bold text-secondary1 shadow-2xl hover:bg-primary2-500">
+                  <InsertDriveFileIcon />
+                  <span>เอกสารโครงงาน</span>
+                </button>
+              </ListProjectDocsPublicReleaseDialog>
             </div>
+
 
             <div className="flex flex-col">
               <h3 className="mb-2 font-bold">ผู้พัฒนา</h3>
