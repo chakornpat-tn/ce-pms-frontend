@@ -136,7 +136,6 @@ export async function deleteUser(userId: number) {
 
     revalidatePath('/')
   } catch (error) {
-    console.log(error)
     throw error
   }
 }

@@ -140,7 +140,6 @@ export async function UpdateProjectReleaseDocs(
       },
       body: form,
     })
-    console.log(res, releaseDocs)
     revalidatePath('/')
     return
   } catch (error) {
@@ -182,8 +181,6 @@ export async function ListProjectDocsPublicRelease(projectId: number) {
         'Content-Type': 'application/json',
       },
     })
-    console.log(query)
-    console.log(res)
     return res.data
   } catch (error) {
     throw error
