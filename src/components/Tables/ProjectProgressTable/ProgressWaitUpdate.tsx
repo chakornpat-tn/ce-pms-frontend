@@ -13,7 +13,7 @@ const ProjectDocumentWaitUpdateTable = ({
     <div
       className={`min-h-[400px] w-full flex-1 rounded-md border bg-white shadow-md`}
     >
-      <div className="border bg-primary2-400 p-4">
+      <div className="border bg-green-600 p-4">
         <h2 className="text-lg font-semibold text-white">รายงานความคืบหน้า</h2>
       </div>
       <div className="overflow-x-auto">
@@ -34,7 +34,7 @@ const ProjectDocumentWaitUpdateTable = ({
           </thead>
           <tbody className="divide-y divide-gray-200 overflow-y-scroll">
             {data && data.length > 0 ? (
-              data.map((row, rowIndex) => (
+              data.slice(0,10).map((row, rowIndex) => (
                 <tr key={rowIndex} className="cursor-pointer hover:bg-gray-100">
                   <td className="px-4 py-3 text-xs sm:text-sm">
                     <div className="line-clamp-2 hover:underline sm:line-clamp-1">

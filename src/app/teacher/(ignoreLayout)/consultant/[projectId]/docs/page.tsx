@@ -42,7 +42,9 @@ const ProjectPage = () => {
   const [projectCourseStatus, setProjectCourseStatus] = useState(0)
   const [findCourse, setFindCourse] = useState<number | null>(null)
   const [projectID, setProjectID] = useState<number | undefined>(undefined)
-  const [docsID, setDocsID] = useState<number | undefined>(Number(docsQuery)||undefined)
+  const [docsID, setDocsID] = useState<number | undefined>(
+    Number(docsQuery) || undefined,
+  )
 
   const preProjectStatus = [
     courseStatus.ApprovePreExam,
@@ -147,83 +149,86 @@ const ProjectPage = () => {
       </button>
       <article className="flex flex-col items-center">
         <div className="flex w-full flex-col items-center justify-center space-y-4 px-2 sm:flex-row sm:space-x-4 sm:space-y-0 sm:px-4">
-          <div className="w-full max-w-screen-md px-2 sm:w-1/2 sm:px-0">
-            <label
-              id="course-listbox-label"
-              className="mb-2 block text-sm font-semibold text-gray-700 sm:text-base"
-            >
-              เลือกวิชา
-            </label>
-            <Combobox
-              value={selectedCourse}
-              onChange={(value: string | null) => {
-                setSelectedCourse(value)
-                setSelectedItem(null)
-                setDocsID(undefined)
-              }}
-            >
-              <div className="relative">
-                <ComboboxButton className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 text-left text-xs shadow-sm transition-colors hover:border-primary2-400 focus:border-primary2-400 focus:outline-none focus:ring-2 focus:ring-primary2-400/20 sm:py-3 sm:pl-4 sm:pr-10 sm:text-sm">
-                  <span className="block truncate">
-                    {Number(selectedCourse) === course.PreProject
-                      ? 'เอกสารวิชาเตรียมโครงงาน'
-                      : Number(selectedCourse) === course.Project
-                        ? 'เอกสารวิชาโครงงาน'
-                        : 'เลือกวิชา'}
-                  </span>
-                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3">
-                    <svg
-                      className="h-3 w-3 text-gray-400 sm:h-4 sm:w-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </span>
-                </ComboboxButton>
-                <ComboboxOptions className="scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-md bg-white py-1 text-xs shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:max-h-60 sm:text-sm">
-                  <ComboboxOption
-                    value={course.PreProject}
-                    className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-8 pr-4 sm:py-3 sm:pl-10 ${active ? 'bg-primary2-400 text-white' : 'text-gray-900'}`
-                    }
-                  >
-                    {({ selected }) => (
-                      <>
-                        <span
-                          className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}
+          {courseQuery == null ||
+            (Number(courseQuery) === course.Project && (
+              <div className="w-full max-w-screen-md px-2 sm:w-1/2 sm:px-0">
+                <label
+                  id="course-listbox-label"
+                  className="mb-2 block text-sm font-semibold text-gray-700 sm:text-base"
+                >
+                  เลือกวิชา
+                </label>
+                <Combobox
+                  value={selectedCourse}
+                  onChange={(value: string | null) => {
+                    setSelectedCourse(value)
+                    setSelectedItem(null)
+                    setDocsID(undefined)
+                  }}
+                >
+                  <div className="relative">
+                    <ComboboxButton className="relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-8 text-left text-xs shadow-sm transition-colors hover:border-primary2-400 focus:border-primary2-400 focus:outline-none focus:ring-2 focus:ring-primary2-400/20 sm:py-3 sm:pl-4 sm:pr-10 sm:text-sm">
+                      <span className="block truncate">
+                        {Number(selectedCourse) === course.PreProject
+                          ? 'เอกสารวิชาเตรียมโครงงาน'
+                          : Number(selectedCourse) === course.Project
+                            ? 'เอกสารวิชาโครงงาน'
+                            : 'เลือกวิชา'}
+                      </span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3">
+                        <svg
+                          className="h-3 w-3 text-gray-400 sm:h-4 sm:w-4"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          aria-hidden="true"
                         >
-                          เอกสารวิชาเตรียมโครงงาน
-                        </span>
-                      </>
-                    )}
-                  </ComboboxOption>
-                  <ComboboxOption
-                    value={course.Project}
-                    className={({ active }) =>
-                      `relative cursor-default select-none py-2 pl-8 pr-4 sm:py-3 sm:pl-10 ${active ? 'bg-primary2-400 text-white' : 'text-gray-900'}`
-                    }
-                  >
-                    {({ selected }) => (
-                      <>
-                        <span
-                          className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}
-                        >
-                          เอกสารวิชาโครงงาน
-                        </span>
-                      </>
-                    )}
-                  </ComboboxOption>
-                </ComboboxOptions>
+                          <path
+                            fillRule="evenodd"
+                            d="M10 3a1 1 0 011 1v12a1 1 0 01-2 0V4a1 1 0 011-1z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      </span>
+                    </ComboboxButton>
+                    <ComboboxOptions className="scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 absolute z-10 mt-1 max-h-48 w-full overflow-y-auto rounded-md bg-white py-1 text-xs shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none sm:max-h-60 sm:text-sm">
+                      <ComboboxOption
+                        value={course.PreProject}
+                        className={({ active }) =>
+                          `relative cursor-default select-none py-2 pl-8 pr-4 sm:py-3 sm:pl-10 ${active ? 'bg-primary2-400 text-white' : 'text-gray-900'}`
+                        }
+                      >
+                        {({ selected }) => (
+                          <>
+                            <span
+                              className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}
+                            >
+                              เอกสารวิชาเตรียมโครงงาน
+                            </span>
+                          </>
+                        )}
+                      </ComboboxOption>
+                      <ComboboxOption
+                        value={course.Project}
+                        className={({ active }) =>
+                          `relative cursor-default select-none py-2 pl-8 pr-4 sm:py-3 sm:pl-10 ${active ? 'bg-primary2-400 text-white' : 'text-gray-900'}`
+                        }
+                      >
+                        {({ selected }) => (
+                          <>
+                            <span
+                              className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}
+                            >
+                              เอกสารวิชาโครงงาน
+                            </span>
+                          </>
+                        )}
+                      </ComboboxOption>
+                    </ComboboxOptions>
+                  </div>
+                </Combobox>
               </div>
-            </Combobox>
-          </div>
+            ))}
           {selectedCourse && (
             <div className="w-full max-w-screen-md px-2 sm:w-1/2 sm:px-0">
               <label

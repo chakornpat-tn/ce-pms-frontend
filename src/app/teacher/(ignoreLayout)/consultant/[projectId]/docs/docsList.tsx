@@ -12,7 +12,6 @@ import { Loader } from '@/components/Loading'
 import { CreateCommentsDialog } from '@/components/Dialog/CommentDialog/CreateCommentDialog'
 import { CloudDownload as DownloadIcon, Message, Update } from '@mui/icons-material'
 import dayjs from 'dayjs'
-import { CheckIcon } from 'lucide-react'
 import projectDocumentStatus from '@/constants/projectDocumentStatus/projectDocumentStatus'
 
 type Props = {
@@ -83,29 +82,6 @@ const DocsList = (props: Props) => {
                 </div>
                 {index === 0 && (
                   <div className="mt-3 flex flex-row gap-2 md:ml-auto md:mt-0">
-                    {![
-                      projectDocumentStatus.REJECTED,
-                      projectDocumentStatus.APPROVED,
-                    ].includes(doc.status) && (
-                      <button
-                        className={`group rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.status === projectDocumentStatus.APPROVED ? 'bg-green-300' : 'bg-white hover:bg-green-300 hover:text-primary1'}`}
-                        disabled={doc.status === projectDocumentStatus.APPROVED}
-                        onClick={() =>
-                          UpdateProjectDocStatus(
-                            doc.id,
-                            projectDocumentStatus.APPROVED,
-                          ).then(() => {
-                            mutate()
-                          })
-                        }
-                      >
-                        <div className="flex flex-row items-center">
-                          <CheckIcon className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
-                          อนุมัติผ่าน
-                        </div>
-                      </button>
-                    )}
-
                     <CreateCommentsDialog
                       projectDocsId={doc.id}
                       onSuccess={async () => {

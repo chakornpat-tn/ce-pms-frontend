@@ -4,6 +4,7 @@ import useSWR from 'swr'
 import { ProjectDocumentRes } from '@/models/ProjectDocument'
 import {
   ListProjectDocs,
+  UpdateProjectDocStatus,
   UpdateProjectReleaseDocs,
 } from '@/actions/projectDocuments'
 import { Loader } from '@/components/Loading'
@@ -76,31 +77,58 @@ const DocsList = (props: Props) => {
                     </h1>
                   </a>
                 </div>
-                {index === 0 &&
-                  selectCourse === course.Project &&
-                  (doc.status === projectDocumentStatus.APPROVED || doc.releaseDocs) && (
-                    <div className="mt-3 flex flex-row gap-2 md:ml-auto md:mt-0">
+
+                {index === 0 && (
+                  <div className="mt-3 flex flex-row gap-2 md:ml-auto md:mt-0">
+                    {selectCourse === course.Project &&
+                      (doc.status === projectDocumentStatus.APPROVED ||
+                        doc.releaseDocs) && (
+                          <button
+                            onClick={() =>
+                              UpdateProjectReleaseDocs(
+                                doc.id,
+                                !doc.releaseDocs,
+                              ).then(() => {
+                                mutate()
+                              })
+                            }
+                            disabled={
+                              doc.status !== projectDocumentStatus.APPROVED
+                            }
+                            className={`group rounded-md ${doc.releaseDocs ? 'border-2 border-green-500 bg-green-100 hover:bg-green-200' : 'border border-gray-300 bg-white hover:bg-gray-100'} px-3 py-1.5 text-xs shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.releaseDocs ? 'text-green-700' : 'text-gray-700'}`}
+                          >
+                            <div className="flex flex-row items-center">
+                              <PublicIcon
+                                className={`mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5 ${doc.releaseDocs ? 'text-green-600' : 'text-gray-600'}`}
+                              />
+                              แสดงแบบสาธารณะ
+                            </div>
+                          </button>
+                        )}
+                    {![
+                      projectDocumentStatus.REJECTED,
+                      projectDocumentStatus.APPROVED,
+                    ].includes(doc.status) && (
                       <button
+                        className={`group rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.status === projectDocumentStatus.APPROVED ? 'bg-green-300' : 'bg-white hover:bg-green-300 hover:text-primary1'}`}
+                        disabled={doc.status === projectDocumentStatus.APPROVED}
                         onClick={() =>
-                          UpdateProjectReleaseDocs(
+                          UpdateProjectDocStatus(
                             doc.id,
-                            !doc.releaseDocs,
+                            projectDocumentStatus.APPROVED,
                           ).then(() => {
                             mutate()
                           })
                         }
-                        disabled={doc.status !== projectDocumentStatus.APPROVED}
-                        className={`group rounded-md ${doc.releaseDocs ? 'border-2 border-green-500 bg-green-100 hover:bg-green-200' : 'border border-gray-300 bg-white hover:bg-gray-100'} px-3 py-1.5 text-xs shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.releaseDocs ? 'text-green-700' : 'text-gray-700'}`}
                       >
                         <div className="flex flex-row items-center">
-                          <PublicIcon
-                            className={`mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5 ${doc.releaseDocs ? 'text-green-600' : 'text-gray-600'}`}
-                          />
-                          แสดงแบบสาธารณะ
+                          <CheckIcon className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
+                          อนุมัติผ่าน
                         </div>
                       </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                )}
               </div>
               <div className="space-y-3 md:space-y-4">
                 <div className="flex items-center gap-2 text-xs md:text-sm">
@@ -120,7 +148,7 @@ const DocsList = (props: Props) => {
                       'อนุมัติแล้ว'}
                     {doc.status === projectDocumentStatus.REJECTED &&
                       'ไม่อนุมัติ'}
-                    {doc.status === projectDocumentStatus.SEEN && 'ดูแล้ว'}
+                    {doc.status === projectDocumentStatus.SEEN && 'ที่ปร๊กษาเปิดเอกสารแล้ว'}
                     {doc.status === projectDocumentStatus.WAITING &&
                       'รอดำเนินการตรวจ'}
                   </span>

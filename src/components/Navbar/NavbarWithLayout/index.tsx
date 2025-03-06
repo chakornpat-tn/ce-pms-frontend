@@ -77,16 +77,10 @@ const NavbarWithSideBar = ({ children }: Props) => {
       role: userRoles.ProjectTeacher,
     },
     {
-      name: 'วิชาเตรียมโครงงาน',
-      icon: Book,
-      link: '/teacher/pre-project',
-      role: userRoles.preProjectTeacher,
-    },
-    {
       name: 'โครงงานที่เป็นที่ปรึกษา',
       icon: Bookmark,
       link: '/teacher/consultant/pre-project',
-      role: 3,
+      role: userRoles.Teacher,
     },
     {
       name: 'กรรมการสอบ',
@@ -95,10 +89,10 @@ const NavbarWithSideBar = ({ children }: Props) => {
       role: userRoles.Teacher,
     },
     {
-      name: 'จัดการผู้ใช้',
-      icon: Person,
-      link: '/teacher/users',
-      role: userRoles.ProjectTeacher,
+      name: 'เอกสาร',
+      icon: Description,
+      link: '/teacher/docs',
+      role: userRoles.preProjectTeacher,
     },
     {
       name: 'สถานะโครงงาน',
@@ -107,10 +101,10 @@ const NavbarWithSideBar = ({ children }: Props) => {
       role: userRoles.preProjectTeacher,
     },
     {
-      name: 'เอกสาร',
-      icon: Description,
-      link: '/teacher/docs',
-      role: userRoles.preProjectTeacher,
+      name: 'จัดการผู้ใช้',
+      icon: Person,
+      link: '/teacher/users',
+      role: userRoles.ProjectTeacher,
     },
     {
       name: 'เปลี่ยนรหัสผ่าน',
@@ -119,6 +113,22 @@ const NavbarWithSideBar = ({ children }: Props) => {
       role: userRoles.Teacher,
     },
   ]
+
+  if (role === userRoles.ProjectTeacher) {
+    authenticatedItems.push({
+      name: 'วิชาเตรียมโครงงาน',
+      icon: Book,
+      link: '/teacher/pre-project',
+      role: userRoles.ProjectTeacher,
+    })
+  } else {
+    authenticatedItems.splice(2, 0, {
+      name: 'วิชาเตรียมโครงงาน',
+      icon: Book,
+      link: '/teacher/pre-project',
+      role: userRoles.preProjectTeacher,
+    })
+  }
 
   const projectItems = [
     { name: 'หน้าแรก', icon: Home, link: '/project' },
@@ -151,8 +161,10 @@ const NavbarWithSideBar = ({ children }: Props) => {
       >
         <div className="p-5">
           <nav className="mx-auto mt-8">
-            <p className="mb-4 flex w-full items-center justify-center text-ellipsis whitespace-nowrap rounded-md bg-primary2-400 py-4 text-sm text-secondary1 overflow-hidden">
-              <span className="overflow-hidden text-ellipsis text-sm sm:text-xs">{user}</span>
+            <p className="mb-4 flex w-full items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-primary2-400 py-4 text-sm text-secondary1">
+              <span className="overflow-hidden text-ellipsis text-sm sm:text-xs">
+                {user}
+              </span>
             </p>
             <ul className="cursor-pointer">
               {(role == userRoles.ProjectTeacher ||
@@ -272,7 +284,8 @@ const NavbarWithSideBar = ({ children }: Props) => {
           </div>
         </div>
 
-        <main className='h-full'
+        <main
+          className="h-full"
           onClick={() => isOpen && window.innerWidth < 768 && toggleSidebar()}
         >
           {children}
