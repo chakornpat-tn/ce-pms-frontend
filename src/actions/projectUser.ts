@@ -287,6 +287,7 @@ export async function GetProjectUserByProjectIdUserComplete(projectId: number) {
 export async function GetProjectUserDetail(
   projectId?: number,
   userId?: number,
+  committeeStatus?:boolean
 ) {
   try {
     const Cookie = await cookies()
@@ -298,6 +299,43 @@ export async function GetProjectUserDetail(
     const queryParams = new URLSearchParams()
     if (projectId) queryParams.append('projectId', projectId.toString())
     if (userId) queryParams.append('userId', userId.toString())
+      if (committeeStatus !== undefined) queryParams.append('committeeProject', committeeStatus.toString())
+
+    const url = `/v1/project-user/detail?${queryParams.toString()}`
+
+    const res = await fetchAPI<{ data: ProjectUserWithUser[] }>(url, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    return res.data
+  } catch (error: any) {
+    throw new Error(
+      error.response?.data?.message || 'Failed to fetch project list.',
+    )
+  }
+}
+
+export async function GetMyProjectUserDetail(
+  projectId: number,
+) {
+  try {
+    const Cookie = await cookies()
+    const token = Cookie.get('token')
+    if (!token?.value) {
+      throw new Error('Authentication token is missing.')
+    }
+   
+     const secret = new TextEncoder().encode(config.TOKEN_SECRET)
+    const { payload } = await jwtVerify(token.value, secret)
+
+    if (!payload.id) {
+      throw new Error('Token payload is invalid or missing user ID.')
+    }
+    const queryParams = new URLSearchParams()
+    queryParams.append('projectId', projectId.toString())
+    queryParams.append('userId', payload.id.toString())
 
     const url = `/v1/project-user/detail?${queryParams.toString()}`
 

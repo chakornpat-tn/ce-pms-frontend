@@ -94,6 +94,7 @@ export async function CreateProject(
       users.push({
         userId: Number(formData.get(`users[${index}].userId`)),
         userProjectRole: userProjectRole.CO_ADVISOR,
+        committeeProject: Boolean(formData.get(`committeeProject`)),
       })
       index++
     }
@@ -373,6 +374,9 @@ export async function UpdateProjectByID(
         userProjectRole: Number(
           formData.get(`users[${index}].userProjectRole`),
         ),
+        committeeProject: Boolean(
+          formData.get(`users[${index}].committeeProject`),
+        ),
       })
       index++
     }
@@ -528,7 +532,7 @@ export async function GetMaxProjectAcademicYear() {
   try {
     const url = `/v1/project/max-academic-year`
 
-    const res = await fetchAPI<{data:MaxProjectAcademicYearRes}>(url, {
+    const res = await fetchAPI<{ data: MaxProjectAcademicYearRes }>(url, {
       headers: {
         'Content-Type': 'application/json',
       },

@@ -14,7 +14,7 @@ import userProjectRole from '@/constants/userProjectRole/userProjectRole'
 import { useState } from 'react'
 import useSWR from 'swr'
 import dayjs from 'dayjs'
-import { ProjectByIDRes } from '@/models/Project'
+import { ProjectByIDRes, ProjectUserWithUser } from '@/models/Project'
 import Link from 'next/link'
 import userRoles from '@/constants/userRoles/userRoles'
 import { UpdateCourseStatusDialog } from '../CourseStatusDialog/UpdateCourseStatusDIalog'
@@ -27,6 +27,7 @@ import GradeIcon from '@mui/icons-material/Grade'
 import PreviewIcon from '@mui/icons-material/Preview'
 import { UpdateExamDocsDialog } from '../CommitteeDialog/UpdateExamDocsDialog'
 import PointTeacherDialog from '../PointTeacherDialog/PointTeacherDialog'
+import { GetMyProjectUserDetail } from '@/actions/projectUser'
 
 type Props = {
   children: React.ReactNode
@@ -49,6 +50,10 @@ export function ProjectDetailDialog({
     GetProjectByID(projectId),
   )
 
+  const projectUserDetail = useSWR(`get-project-user-by-${projectId}`, () =>
+    GetMyProjectUserDetail(projectId),
+  )
+
   if (!data) return <>{children}</>
 
   return (
@@ -68,6 +73,7 @@ export function ProjectDetailDialog({
               projectId,
               courseMenu,
               onSuccess,
+              projectUserDetail.data,
               data.projectAcademicYear ? course.Project : course.PreProject,
             )}
           </article>
@@ -189,6 +195,7 @@ const menuSelection = (
   projectId: number,
   courseMenu: number,
   onSuccess?: () => void,
+  projectUserDetail?: ProjectUserWithUser[],
   projectCourseStatus?: number,
 ) => {
   const commonButtonClasses =
@@ -197,7 +204,9 @@ const menuSelection = (
   return (
     <div className="flex w-full flex-col gap-2">
       {userRole === userRoles.Teacher ? (
-        <Link href={`/teacher/consultant/${projectId}/docs${projectCourseStatus && `?course=${projectCourseStatus}`}`}>
+        <Link
+          href={`/teacher/consultant/${projectId}/docs${projectCourseStatus && `?course=${projectCourseStatus}`}`}
+        >
           <button className={commonButtonClasses}>
             <AssignmentIcon className="shrink-0" />{' '}
             <span className="flex-1 text-center">ตรวจสอบเอกสาร</span>
@@ -223,7 +232,18 @@ const menuSelection = (
       )}
 
       {userRole === userRoles.Teacher ? (
-        <div className="space-y-2">
+        projectUserDetail?.[0]?.committeeProject && (
+          <div className="space-y-2">
+            <UpdateExamDocsDialog projectId={projectId} courseId={courseMenu}>
+              <button className={commonButtonClasses}>
+                <GradeIcon className="shrink-0" />
+                <span className="flex-1 text-center">ส่งคะแนนสอบ</span>
+              </button>
+            </UpdateExamDocsDialog>
+          </div>
+        )
+      ) : (
+        <>
           <UpdateCourseStatusDialog
             ids={[projectId]}
             newCourseStatus={
@@ -240,22 +260,13 @@ const menuSelection = (
               <span className="flex-1 text-center">อนุมัติสอบ</span>
             </button>
           </UpdateCourseStatusDialog>
-
-          <UpdateExamDocsDialog projectId={projectId} courseId={courseMenu}>
+          <PointTeacherDialog projectId={projectId} courseId={courseMenu}>
             <button className={commonButtonClasses}>
-              <GradeIcon className="shrink-0" />
-              <span className="flex-1 text-center">ส่งคะแนนสอบ</span>
+              <PreviewIcon className="shrink-0" />
+              <span className="flex-1 text-center">ตรวจคะแนนสอบ</span>
             </button>
-          </UpdateExamDocsDialog>
-        </div>
-      ) : (
-        <PointTeacherDialog projectId={projectId} courseId={courseMenu}>
-          <button className={commonButtonClasses}>
-            <PreviewIcon className="shrink-0" />
-            <span className="flex-1 text-center">ตรวจคะแนนสอบ</span>
-          </button>
-        </PointTeacherDialog>
-      )}
-    </div>
+          </PointTeacherDialog>
+        </>
+      )}    </div>
   )
 }

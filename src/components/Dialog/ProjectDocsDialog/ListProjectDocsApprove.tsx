@@ -90,7 +90,7 @@ export function ListProjectDocsApproveDialog({ children, projectId }: Props) {
             ) : null}
             {data.preProject.length === 0 && data.project.length === 0 && (
               <Typography className="text-center text-gray-500 py-8">
-                ยังไม่มีเอกสารที่อนุมัติจากที่ปรึกษา
+                ยังไม่มีเอกสารที่อนุมัติจากอาจารย์ประจำวิชา
               </Typography>
             )}
           </div>

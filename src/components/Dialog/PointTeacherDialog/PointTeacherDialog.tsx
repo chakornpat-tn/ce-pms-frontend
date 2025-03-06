@@ -26,7 +26,7 @@ const PointTeacherDialog = ({
 }: Props) => {
   const { data, isLoading, error } = useSWR<ProjectUserWithUser[]>(
     `/project-users/${projectId}`,
-    () => GetProjectUserDetail(projectId),
+    () => GetProjectUserDetail(projectId,undefined,true),
   )
 
   const courseCheck = (children: React.ReactNode, courseTarget: number) => {

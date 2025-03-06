@@ -329,6 +329,7 @@ export default function Page() {
                             ...projectData.users,
                             {
                               userProjectRole: userProjectRole.COMMITTEE,
+                              committeeProject: true,
                               user: {
                                 id: 0,
                                 name: '',
@@ -343,7 +344,6 @@ export default function Page() {
                     </button>
                   )}
                 </div>
-
                 {projectData.users &&
                   projectData.users.map((item, index) => (
                     <div key={item.user.id} className="mb-2 flex space-x-2">
@@ -356,6 +356,7 @@ export default function Page() {
                           newUsers[index].user.id = parseInt(e.target.value)
                           setProjectData({ ...projectData, users: newUsers })
                         }}
+                        disabled={role === userRoles.Teacher}
                       >
                         {users
                           .filter(
@@ -382,6 +383,7 @@ export default function Page() {
                           )
                           setProjectData({ ...projectData, users: newUsers })
                         }}
+                        disabled={role === userRoles.Teacher}
                         className="mt-2 w-full rounded-md border px-3 py-2 md:mt-0 md:w-2/5"
                       >
                         {[
@@ -394,11 +396,30 @@ export default function Page() {
                           </option>
                         ))}
                       </select>
-
+                  
+                      <div className={`flex flex-col items-center gap-2 ${item.userProjectRole === userRoles.Teacher ? 'hidden' : ''}`}>
+                        <label className="inline-flex cursor-pointer items-center">
+                          <input
+                            type="checkbox"
+                            name={`users[${index}].committeeProject`}
+                            checked={item.committeeProject}
+                            className="peer sr-only"
+                            disabled={role === userRoles.Teacher}
+                            onChange={e => {
+                              const newUsers = [...projectData.users]
+                              newUsers[index].committeeProject = e.target.checked
+                              setProjectData({ ...projectData, users: newUsers })
+                            }}
+                          />
+                          <div className="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary2-400 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 rtl:peer-checked:after:-translate-x-full"></div>
+                        </label>
+                        <span className="ml-2">กรรมการ</span>
+                      </div>
                       <button
                         type="button"
                         onClick={() => removeUser(index)}
                         className="rounded-md px-2 text-red-300 transition-all duration-200 hover:text-red-500"
+                        disabled={role === userRoles.Teacher}
                       >
                         <IndeterminateCheckBoxRounded />
                       </button>

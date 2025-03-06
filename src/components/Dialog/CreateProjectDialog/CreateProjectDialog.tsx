@@ -28,6 +28,7 @@ type userListSelect = {
   userId: number
   name: string
   userProjectRole: number
+  committeeProject: boolean
 }
 
 type IActionState = {
@@ -58,7 +59,12 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
 
     setSelectedUsers([
       ...selectedUsers,
-      { userId: 0, name: '', userProjectRole: userProjectRole.CO_ADVISOR },
+      {
+        userId: 0,
+        name: '',
+        userProjectRole: userProjectRole.CO_ADVISOR,
+        committeeProject: true,
+      },
     ])
   }
 
@@ -76,6 +82,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
           userId: user.id,
           name: user.name,
           userProjectRole: userProjectRole.CO_ADVISOR,
+          committeeProject: true,
         }))
         setUsers(data)
       } catch (error) {
@@ -202,7 +209,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
                   </button>
                 )}
               </div>
-              {selectedUsers.map((_, index) => (
+              {selectedUsers.map((u, index) => (
                 <div key={index} className="mb-2 flex space-x-2">
                   <select
                     name={`users[${index}].userId`}
@@ -224,6 +231,26 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
                     name={`users[${index}].userProjectRole`}
                     value={userProjectRole.CO_ADVISOR}
                   />
+                  <div className="flex flex-col items-center gap-2">
+                    <label className="inline-flex cursor-pointer items-center">
+                      <input
+                        type="checkbox"
+                        name="committeeProject"
+                        checked={u.committeeProject}
+                        className="peer sr-only"
+                        onChange={e => {
+                          const checked = e.target.checked
+                          setSelectedUsers(prev => {
+                            const newSelectedUsers = [...prev]
+                            newSelectedUsers[index].committeeProject = checked
+                            return newSelectedUsers
+                          })
+                        }}
+                      />
+                      <div className="peer relative h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary2-400 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-4 rtl:peer-checked:after:-translate-x-full"></div>
+                    </label>
+                    <span className="ml-2">กรรมการ</span>
+                  </div>
                   <button
                     type="button"
                     onClick={() => removeUser(index)}

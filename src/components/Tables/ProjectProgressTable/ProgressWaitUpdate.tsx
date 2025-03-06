@@ -63,7 +63,7 @@ const ProjectDocumentWaitUpdateTable = ({
             ) : (
               <tr>
                 <td colSpan={4} className="px-4 py-8 text-center text-gray-500">
-                  ยังไม่มีเอกสารอัปเดต
+                  ยังไม่มีรายงานความคืบหน้า
                 </td>
               </tr>
             )}

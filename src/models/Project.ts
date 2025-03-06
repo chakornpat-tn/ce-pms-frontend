@@ -58,7 +58,11 @@ export type UpdateProjectRequest = {
   projectStatusId?: number | null
   courseStatus?: number
   students?: ProjectStudentRequest[]
-  users?: { userId: number; userProjectRole: number }[]
+  users?: {
+    userId: number
+    userProjectRole: number
+    committeeProject: boolean
+  }[]
   examDateTime?: Date
 }
 
@@ -108,6 +112,7 @@ export type ProjectUserWithUser = {
   userProjectRole: number
   prepPoint: number | null
   projectPoint: number | null
+  committeeProject: boolean
   user: {
     id: number
     name: string
@@ -184,6 +189,7 @@ export type StudentEntry = {
 
 export type UserEntry = {
   userProjectRole: number
+  committeeProject: boolean
   user: {
     id: number
     name: string
@@ -191,6 +197,6 @@ export type UserEntry = {
 }
 
 export type MaxProjectAcademicYearRes = {
-  academicYear: number 
+  academicYear: number
   projectAcademicYear: number
 }
