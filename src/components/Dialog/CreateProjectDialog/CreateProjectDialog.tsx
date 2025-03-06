@@ -126,7 +126,7 @@ const CreateProjectDialog: React.FC<Props> = ({ trigger }: Props) => {
                 name="semester"
                 className="w-[100%] rounded-md border px-3 py-2"
                 min={1}
-                max={2}
+                max={3}
                 defaultValue={1}
                 required
               />

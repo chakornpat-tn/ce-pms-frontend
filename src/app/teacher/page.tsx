@@ -17,6 +17,7 @@ type Props = {}
 
 function Page({}: Props) {
   const [year, setYear] = useState<number>(new Date().getFullYear() + 543)
+  const [semester, setSemester] = useState<number | undefined>(undefined)
 
   const ExamDateTimeData = useSWR('/project-user/check-exam-date', () =>
     CheckExamDateTimeUserToken(),
@@ -31,21 +32,16 @@ function Page({}: Props) {
     () => GetProjectProgressWaitUpdate(),
   )
 
-  const CountProject = useSWR(
-    `/project-user/count-project/userId/${year}`,
-    async () => {
-      if (!year) return
-      const res = await CountProjectInYear(year)
-      return res
-    },
-  )
+  const CountProject = useSWR(`/project-user/${year}?${semester}`, async () => {
+    if (!year) return
+    const res = await CountProjectInYear(year, semester)
+    return res
+  })
 
   useEffect(() => {
     const fetchYear = async () => {
       const res = await GetMaxProjectAcademicYear()
-      const maxYear = res
-        ? Math.max(res.academicYear, res.projectAcademicYear)
-        : new Date().getFullYear() + 543
+      const maxYear = Math.max(res.academicYear, res.projectAcademicYear)
 
       setYear(maxYear)
     }
@@ -64,6 +60,17 @@ function Page({}: Props) {
             </span>
             <input
               type="number"
+              value={semester || ''}
+              min={1}
+              max={3}
+              onChange={e => {
+                setSemester(Number(e.target.value))
+              }}
+              className="rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+            <span className="mx-4 text-sm font-medium text-white">/</span>
+            <input
+              type="number"
               value={year}
               onChange={e => {
                 setYear(Number(e.target.value))
@@ -75,7 +82,7 @@ function Page({}: Props) {
             <div className="min-h-16 w-full rounded-lg border-l-4 border-blue-500 bg-blue-50 p-4 text-center font-semibold text-blue-700 shadow-md transition-colors duration-200 hover:bg-blue-100">
               โครงงานในวิชาเตรียมโครงงาน {CountProject.data?.CountPreProp ?? 0}
             </div>
-            <div className="min-h-16 w-full rounded-lg border-l-4 border-green-500 bg-green-50 p-4 text-center font-semibold text-green-700 shadow-md transition-colors duration-200 hover:bg-green-100">
+            <div className="min-h-16 w-full rounded-lg border-l-4 border-yellow-500 bg-yellow-50 p-4 text-center font-semibold text-yellow-700 shadow-md transition-colors duration-200 hover:bg-yellow-100">
               โครงงานในวิชาโครงงาน {CountProject.data?.CountOnProject ?? 0}
             </div>
             <div className="min-h-16 w-full rounded-lg border-l-4 border-purple-500 bg-purple-50 p-4 text-center font-semibold text-purple-700 shadow-md transition-colors duration-200 hover:bg-purple-100">

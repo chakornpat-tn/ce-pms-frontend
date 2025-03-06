@@ -105,9 +105,13 @@ export async function GetProjectInCommittee(req: ListProjectFilterQuery) {
     if (req?.academicYear)
       queryParams.append('academicYear', req.academicYear.toString())
     if (req?.projectAcademicYear)
-      queryParams.append('projectAcademicYear', req.projectAcademicYear.toString())
+      queryParams.append(
+        'projectAcademicYear',
+        req.projectAcademicYear.toString(),
+      )
     if (req?.semester) queryParams.append('semester', req.semester.toString())
-    if (req?.projectSemester) queryParams.append('projectSemester', req.projectSemester.toString())
+    if (req?.projectSemester)
+      queryParams.append('projectSemester', req.projectSemester.toString())
     if (req?.projectStatus)
       queryParams.append('projectStatus', req.projectStatus)
     if (req?.courseStatus) queryParams.append('courseStatus', req.courseStatus)
@@ -406,7 +410,10 @@ export async function CheckExamDateTimeUserToken() {
   }
 }
 
-export async function CountProjectInYear(academicYear: number) {
+export async function CountProjectInYear(
+  academicYear: number,
+  semester?: number,
+) {
   try {
     const Cookie = await cookies()
     const token = Cookie.get('token')
@@ -414,14 +421,7 @@ export async function CountProjectInYear(academicYear: number) {
       throw new Error('Authentication token is missing.')
     }
 
-    const secret = new TextEncoder().encode(config.TOKEN_SECRET)
-    const { payload } = await jwtVerify(token.value, secret)
-
-    if (!payload.id) {
-      throw new Error('Token payload is invalid or missing user ID.')
-    }
-
-    const url = `/v1/project-user/count-project/${payload.id}/${academicYear}`
+    const url = `/v1/project-user/count-project/${academicYear}${semester ? `?${'semester=' + semester}` : ''}`
     const res = await fetchAPI<{
       data: {
         CountPreProp: number

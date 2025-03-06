@@ -74,7 +74,7 @@ export function ConvToProjectDialog({
               required
               defaultValue={1}
               min={1}
-              max={2}
+              max={3}
               className="w-full rounded-md border border-gray-300 p-2"
             />
           </div>

@@ -194,7 +194,7 @@ function Page({}: Props) {
             type="number"
             name="semester"
             min={1}
-            max={2}
+            max={3}
             placeholder="ทุกภาคเรียน"
             className="w-full min-w-[113px] rounded-md border p-2 text-sm sm:text-base"
             value={filters.semester || ''}

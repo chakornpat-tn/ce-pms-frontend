@@ -12,7 +12,6 @@ import {
   ProjectRes,
 } from '@/models/Project'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { FolderOff } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import dayjs from 'dayjs'
@@ -69,9 +68,7 @@ export default function Home() {
   useEffect(() => {
     const fetchYear = async () => {
       const res = await GetMaxProjectAcademicYear()
-      const maxYear = res
-        ? Math.max(res.academicYear, res.projectAcademicYear)
-        : new Date().getFullYear() + 543
+      const maxYear = Math.max(res.academicYear, res.projectAcademicYear)
 
       setFilters(prev => ({
         ...prev,
@@ -128,7 +125,7 @@ export default function Home() {
               type="number"
               name="semester"
               min={1}
-              max={2}
+              max={3}
               placeholder="ทุกภาคเรียน"
               onChange={e =>
                 setFilters({
@@ -195,18 +192,18 @@ export default function Home() {
                   >
                     <div className="m-4 h-auto w-auto overflow-hidden">
                       <div className="flex w-full items-center justify-between">
-                        <h2 className="truncate text-base font-bold text-gray-800">
+                        <h2 className="line-clamp-2 max-w-[70%] text-base font-bold text-gray-800">
                           {project.projectName}
                         </h2>
                         <div
-                          className={`h-fit w-fit truncate rounded-md ${project.projectAcademicYear ? 'bg-primary2-400' : 'bg-primary2-200'} p-1 text-sm text-white`}
+                          className={`h-fit w-fit shrink-0 truncate rounded-md ${project.projectAcademicYear ? 'bg-primary2-400' : 'bg-primary2-200'} p-1 text-sm text-white`}
                         >
                           {project.projectAcademicYear != null
-                            ? 'ดำเนินโครงงาน'
+                            ? 'โครงงาน'
                             : 'เตรียมโครงงาน'}
                         </div>
                       </div>
-                      <p className="truncate text-sm text-gray-400">
+                      <p className="line-clamp-2 text-sm text-gray-400">
                         {project.projectNameEng
                           ? project.projectNameEng
                           : 'ไม่ได้ระบุชื่อโครงงานภาษาอังกฤษ'}
@@ -249,7 +246,7 @@ export default function Home() {
                         className={`h-fit w-fit truncate rounded-md ${project.projectAcademicYear ? 'bg-primary2-400' : 'bg-primary2-200'} p-2 text-xs text-white`}
                       >
                         {project.projectAcademicYear != null
-                          ? 'ดำเนินโครงงาน'
+                          ? 'โครงงาน'
                           : 'เตรียมโครงงาน'}
                       </div>
                       <p className="mt-1 truncate text-xs font-medium text-gray-600">

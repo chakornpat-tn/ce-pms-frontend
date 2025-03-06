@@ -22,7 +22,7 @@ function Page({}: Props) {
     projectSemester: 0,
     projectAcademicYear: currentYear,
     projectStatus: '',
-    courseStatus: `${courseStatus.Project}, ${courseStatus.ApproveProjectExam},${courseStatus.Pass}`,
+    courseStatus: `${courseStatus.Project}, ${courseStatus.ApproveProjectExam},${courseStatus.Pass}, ${courseStatus.Fail}`,
   })
 
   const fetchData = async () => {
