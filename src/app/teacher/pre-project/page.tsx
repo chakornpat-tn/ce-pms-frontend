@@ -10,6 +10,8 @@ import TeacherProjectTable from '@/components/Tables/ProjectTable/TeacherProject
 import Course from '@/constants/course/course'
 import course from '@/constants/course/course'
 import userRoles from '@/constants/userRoles/userRoles'
+import { ListAltOutlined } from '@mui/icons-material'
+import { CreateCommitteePointExcelDialog } from '@/components/Dialog'
 
 type Props = {}
 
@@ -45,7 +47,7 @@ function Page({}: Props) {
     }
   }
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchYear = async () => {
       const res = await GetMaxProjectAcademicYear()
       const maxYear = res.academicYear
@@ -67,6 +69,13 @@ function Page({}: Props) {
         <h1 className="text-3xl font-bold text-primary1">
           จัดการหัวข้อเตรียมโครงงาน
         </h1>
+        <div className="flex gap-2">
+          <CreateCommitteePointExcelDialog courseSelect={Course.PreProject} academicYear={filters.academicYear} semester={filters.semester}>
+            <button className="mt-2 flex items-center gap-2 rounded-md bg-green-600 px-4 py-2 text-secondary1 shadow-md transition hover:bg-green-700 md:mt-0">
+              <ListAltOutlined /> สร้างใบคะแนนสอบ
+            </button>
+          </CreateCommitteePointExcelDialog>
+        </div>
       </div>
       {/* Search Form */}
       <ProjectFilterForm
