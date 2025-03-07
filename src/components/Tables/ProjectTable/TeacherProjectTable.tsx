@@ -10,6 +10,7 @@ import { ProjectManagementMenu } from '@/components/DropdownMenu'
 import { UpdateProjectsRequest } from '@/models/Project'
 import { CourseStatusDesc } from '@/utils/courseStatusDesc'
 import { ProjectDetailDialog } from '@/components/Dialog'
+import course from '@/constants/course/course'
 
 type Project = {
   id: number
@@ -63,10 +64,10 @@ const TeacherProjectTable: React.FC<Props> = ({
   }
 
   return (
-    <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md">
+    <section className={`relative mt-4  h-full overflow-x-auto p-4 shadow-md sm:rounded-md ${courseList === course.Project ? 'bg-gradient-to-b from-primary2-200 to-primary2-100' : courseList === course.PreProject ? 'bg-gradient-to-b from-yellow-200 to-yellow-100' : 'bg-white'}`}>
       <article>
         <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
-          <h2 className="mb-4 text-xl font-bold md:mb-0 md:text-2xl">
+          <h2 className="mb-4 text-xl font-bold md:mb-0 md:text-2xl ">
             ผลลัพธ์การค้นหา
           </h2>
           <ProjectManagementMenu
@@ -83,7 +84,7 @@ const TeacherProjectTable: React.FC<Props> = ({
           </ProjectManagementMenu>
         </div>
 
-        <div className="mt-4 overflow-x-auto">
+        <div className="mt-4 overflow-x-auto rounded-md shadow-md">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="divide-y bg-gray-50">
               <tr>

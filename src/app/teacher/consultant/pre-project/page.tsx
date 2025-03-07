@@ -96,7 +96,7 @@ function Page({}: Props) {
     }
 
     return (
-      <section className="relative mt-4 overflow-x-auto bg-white p-4 shadow-md sm:rounded-md">
+      <section className="relative mt-4 overflow-x-auto bg-gradient-to-b from-orange-400 to-yellow-300 p-4 shadow-md sm:rounded-md">
         <article>
           <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
             <h2 className="mb-4 text-xl font-bold md:mb-0 md:text-2xl">
@@ -104,7 +104,7 @@ function Page({}: Props) {
             </h2>
           </div>
 
-          <div className="mt-4 overflow-x-auto">
+          <div className="mt-4 overflow-x-auto rounded-md">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="divide-y bg-gray-50">
                 <tr>
