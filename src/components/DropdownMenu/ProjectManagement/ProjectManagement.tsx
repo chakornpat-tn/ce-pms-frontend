@@ -83,7 +83,7 @@ export function ProjectManagementMenu({
               </UpdateCourseStatusDialog>
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem
+          {/* <DropdownMenuItem
             onSelect={e => e.preventDefault()}
             className="flex cursor-pointer justify-start gap-2"
           >
@@ -98,7 +98,7 @@ export function ProjectManagementMenu({
                 <span>โครงงานไม่ผ่าน</span>
               </div>
             </UpdateCourseStatusDialog>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

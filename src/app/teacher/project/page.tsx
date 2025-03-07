@@ -4,14 +4,14 @@ import { GetMaxProjectAcademicYear, ListProjects } from '@/actions/project'
 import courseStatus from '@/constants/course/courseStatus'
 import { useEffect, useState } from 'react'
 import { ListProjectFilterQuery } from '@/models/Project'
-import { toast } from 'sonner'
 import ProjectFilterForm from '@/components/Forms/ProjectFilterForm/ProjectFilterForm'
 import TeacherProjectTable from '@/components/Tables/ProjectTable/TeacherProjectTable'
 import Course from '@/constants/course/course'
 import course from '@/constants/course/course'
 import userRoles from '@/constants/userRoles/userRoles'
 import Link from 'next/link'
-import { Add } from '@mui/icons-material'
+import { Add, ListAltOutlined } from '@mui/icons-material'
+import { CreateCommitteePointExcelDialog } from '@/components/Dialog'
 
 type Props = {}
 
@@ -47,7 +47,7 @@ function Page({}: Props) {
     }
   }
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchYear = async () => {
       const res = await GetMaxProjectAcademicYear()
       const maxYear = res.projectAcademicYear
@@ -67,7 +67,16 @@ function Page({}: Props) {
     <>
       <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
         <h1 className="text-3xl font-bold text-primary1">จัดการโครงงาน</h1>
-        <div>
+        <div className="flex gap-2">
+            
+            <CreateCommitteePointExcelDialog courseSelect={Course.Project} academicYear={filters.projectAcademicYear} semester={filters.projectSemester}>
+              <button
+              className="mt-2 flex items-center gap-2 rounded-md bg-green-600 px-4 py-2 text-secondary1 shadow-md transition hover:bg-green-700 md:mt-0"
+            >
+              <ListAltOutlined /> สร้างใบคะแนนสอบ
+            </button>
+            </CreateCommitteePointExcelDialog>
+
           <Link href="/teacher/project/pass-pre-project">
             <button className="mt-2 flex items-center gap-2 rounded-md bg-primary2-400 px-4 py-2 text-secondary1 shadow-md transition hover:bg-primary2-500 md:mt-0">
               <Add /> เพิ่มโครงงาน
@@ -84,7 +93,6 @@ function Page({}: Props) {
         currentYear={Number(filters.projectAcademicYear)}
         course={Course.Project}
       />
-
       {/* Search Results */}
       <TeacherProjectTable
         courseList={course.Project}
@@ -92,7 +100,7 @@ function Page({}: Props) {
         data={data}
         loading={isLoading}
         mutate={mutate}
-      />
+      />{' '}
     </>
   )
 }
