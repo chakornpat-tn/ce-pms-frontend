@@ -251,19 +251,36 @@ export async function UpdateAdvisorDocs(preState: unknown, formData: FormData) {
     }
 
     const projectDocumentId = formData.get('projectDocumentId')
-    const advisorDocs = formData.get('advisor_docs_file') as File
+    const advisorDocs = formData.get('advisor_docs_file') as File | null
+    const subjectTeacherDocs = formData.get(
+      'subject_teacher_docs',
+    ) as File | null
+
+    if (!advisorDocs && !subjectTeacherDocs) {
+      return
+    }
+
+    if (!projectDocumentId) {
+      return
+    }
 
     const form = new FormData()
-    form.append('advisorDocs', advisorDocs)
+    if (advisorDocs) {
+      form.append('advisorDocs', advisorDocs)
+    }
+    if (subjectTeacherDocs) {
+      form.append('subjectTeacherDocs', subjectTeacherDocs)
+    }
 
-    if (projectDocumentId && advisorDocs)
-      await fetchAPI(`/v1/project-document/${projectDocumentId}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-        },
-        body: form,
-      })
+    console.log(form)
+
+    await fetchAPI(`/v1/project-document/${projectDocumentId}`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+      body: form,
+    })
 
     revalidatePath('/')
   } catch (error) {

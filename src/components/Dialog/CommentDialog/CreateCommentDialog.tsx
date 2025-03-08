@@ -21,12 +21,14 @@ type Props = {
   trigger: React.ReactNode
   projectDocsId: number
   onSuccess?: () => void
+  isAdvisor?: boolean
 }
 
 export function CreateCommentsDialog({
   trigger,
   projectDocsId,
   onSuccess,
+  isAdvisor = true
 }: Props) {
   const [comments, setComments] = useState<CreateCommentReq[]>([])
   const [docsFileName, setDocsFileName] = useState('')
@@ -86,15 +88,15 @@ export function CreateCommentsDialog({
                   <input
                     type="file"
                     className="hidden"
-                    name="advisor_docs_file"
+                    name={isAdvisor ? 'advisor_docs_file' : 'subject_teacher_docs'}
                     accept=".pdf"
-                    id="advisor_docs_file"
+                    id={isAdvisor ? 'advisor_docs_file' : 'subject_teacher_docs'}
                     onChange={e =>
                       setDocsFileName(e.target.files?.[0]?.name || '')
                     }
                   />
                   <label
-                    htmlFor="advisor_docs_file"
+                    htmlFor={isAdvisor ? 'advisor_docs_file' : 'subject_teacher_docs'}
                     className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-md border border-gray-300 bg-white p-3 text-sm transition-all hover:border-primary2-400 hover:bg-gray-50 hover:text-primary2-400"
                   >
                     <CloudUpload className="h-5 w-5" />

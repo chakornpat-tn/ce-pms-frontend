@@ -42,6 +42,7 @@ export type ProjectDocumentRes = {
   comments: Comment[]
   CommentBasedEdits: CommentBasedEdit[]
   advisorDocsUrl?: string
+  subjectTeacherDocs?: string
   releaseDocs: boolean
 }
 

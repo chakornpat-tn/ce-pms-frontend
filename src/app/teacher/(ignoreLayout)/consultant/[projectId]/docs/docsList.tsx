@@ -10,7 +10,11 @@ import {
 } from '@/actions/projectDocuments'
 import { Loader } from '@/components/Loading'
 import { CreateCommentsDialog } from '@/components/Dialog/CommentDialog/CreateCommentDialog'
-import { CloudDownload as DownloadIcon, Message, Update } from '@mui/icons-material'
+import {
+  CloudDownload as DownloadIcon,
+  Message,
+  Update,
+} from '@mui/icons-material'
 import dayjs from 'dayjs'
 import projectDocumentStatus from '@/constants/projectDocumentStatus/projectDocumentStatus'
 
@@ -86,8 +90,11 @@ const DocsList = (props: Props) => {
                       projectDocsId={doc.id}
                       onSuccess={async () => {
                         await Promise.all([
-                          UpdateProjectDocStatus(doc.id, projectDocumentStatus.REJECTED),
-                          UpdateProjectReleaseDocs(doc.id, false)
+                          UpdateProjectDocStatus(
+                            doc.id,
+                            projectDocumentStatus.REJECTED,
+                          ),
+                          UpdateProjectReleaseDocs(doc.id, false),
                         ])
                         mutate()
                       }}
@@ -139,6 +146,24 @@ const DocsList = (props: Props) => {
                         <PlagiarismIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
                         <p className="break-all text-sm font-medium">
                           {doc.documentName + ' (รายละเอียดข้อผิดพลาด)'}
+                        </p>
+                      </a>
+                    </div>
+                  </div>
+                )}
+                {doc.subjectTeacherDocs && (
+                  <div className="flex items-center gap-2 text-xs md:text-sm">
+                    <span className="text-gray-500">รายงานข้อผิดพลาด:</span>
+                    <div className="flex items-center justify-center gap-2 rounded-md bg-red-100 p-1.5 text-red-600">
+                      <a
+                        href={doc.subjectTeacherDocs}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-row gap-1.5 transition-colors duration-200 hover:text-red-700 hover:underline"
+                      >
+                        <PlagiarismIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                        <p className="break-all text-sm font-medium">
+                          {doc.documentName + ' (จากอาจารย์ประจำวิชา)'}
                         </p>
                       </a>
                     </div>

@@ -15,6 +15,7 @@ import PlagiarismIcon from '@mui/icons-material/Plagiarism'
 import PublicIcon from '@mui/icons-material/Public'
 import { CheckIcon } from 'lucide-react'
 import course from '@/constants/course/course'
+import { CreateCommentsDialog } from '@/components/Dialog/CommentDialog/CreateCommentDialog'
 
 type Props = {
   projectId?: number
@@ -83,49 +84,80 @@ const DocsList = (props: Props) => {
                     {selectCourse === course.Project &&
                       (doc.status === projectDocumentStatus.APPROVED ||
                         doc.releaseDocs) && (
-                          <button
-                            onClick={() =>
-                              UpdateProjectReleaseDocs(
-                                doc.id,
-                                !doc.releaseDocs,
-                              ).then(() => {
-                                mutate()
-                              })
-                            }
-                            disabled={
-                              doc.status !== projectDocumentStatus.APPROVED
-                            }
-                            className={`group rounded-md ${doc.releaseDocs ? 'border-2 border-green-500 bg-green-100 hover:bg-green-200' : 'border border-gray-300 bg-white hover:bg-gray-100'} px-3 py-1.5 text-xs shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.releaseDocs ? 'text-green-700' : 'text-gray-700'}`}
-                          >
-                            <div className="flex flex-row items-center">
-                              <PublicIcon
-                                className={`mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5 ${doc.releaseDocs ? 'text-green-600' : 'text-gray-600'}`}
-                              />
-                              แสดงแบบสาธารณะ
-                            </div>
-                          </button>
-                        )}
+                        <button
+                          onClick={() =>
+                            UpdateProjectReleaseDocs(
+                              doc.id,
+                              !doc.releaseDocs,
+                            ).then(() => {
+                              mutate()
+                            })
+                          }
+                          disabled={
+                            doc.status !== projectDocumentStatus.APPROVED
+                          }
+                          className={`group rounded-md ${doc.releaseDocs ? 'border-2 border-green-500 bg-green-100 hover:bg-green-200' : 'border border-gray-300 bg-white hover:bg-gray-100'} px-3 py-1.5 text-xs shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.releaseDocs ? 'text-green-700' : 'text-gray-700'}`}
+                        >
+                          <div className="flex flex-row items-center">
+                            <PublicIcon
+                              className={`mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5 ${doc.releaseDocs ? 'text-green-600' : 'text-gray-600'}`}
+                            />
+                            แสดงแบบสาธารณะ
+                          </div>
+                        </button>
+                      )}
                     {![
                       projectDocumentStatus.REJECTED,
                       projectDocumentStatus.APPROVED,
                     ].includes(doc.status) && (
-                      <button
-                        className={`group rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.status === projectDocumentStatus.APPROVED ? 'bg-green-300' : 'bg-white hover:bg-green-300 hover:text-primary1'}`}
-                        disabled={doc.status === projectDocumentStatus.APPROVED}
-                        onClick={() =>
-                          UpdateProjectDocStatus(
-                            doc.id,
-                            projectDocumentStatus.APPROVED,
-                          ).then(() => {
+                      <>
+                        <button
+                          className={`group rounded-md border border-gray-300 px-3 py-1.5 text-xs text-gray-700 shadow-sm transition-all duration-200 md:px-4 md:py-2 md:text-sm ${doc.status === projectDocumentStatus.APPROVED ? 'bg-green-300' : 'bg-white hover:bg-green-300 hover:text-primary1'}`}
+                          disabled={
+                            doc.status === projectDocumentStatus.APPROVED
+                          }
+                          onClick={() =>
+                            UpdateProjectDocStatus(
+                              doc.id,
+                              projectDocumentStatus.APPROVED,
+                            ).then(() => {
+                              mutate()
+                            })
+                          }
+                        >
+                          <div className="flex flex-row items-center">
+                            <CheckIcon className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
+                            อนุมัติผ่าน
+                          </div>
+                        </button>
+                      </>
+                    )}
+                    {(![projectDocumentStatus.APPROVED].includes(doc.status) ||
+                      !doc.subjectTeacherDocs) && (
+                      <>
+                        <CreateCommentsDialog
+                          projectDocsId={doc.id}
+                          isAdvisor={false}
+                          onSuccess={async () => {
+                            await Promise.all([
+                              UpdateProjectDocStatus(
+                                doc.id,
+                                projectDocumentStatus.REJECTED,
+                              ),
+                              UpdateProjectReleaseDocs(doc.id, false),
+                            ])
                             mutate()
-                          })
-                        }
-                      >
-                        <div className="flex flex-row items-center">
-                          <CheckIcon className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
-                          อนุมัติผ่าน
-                        </div>
-                      </button>
+                          }}
+                          trigger={
+                            <button className="primary-hover group rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-700 shadow-sm md:px-4 md:py-2 md:text-sm">
+                              <div className="flex flex-row items-center">
+                                <Message className="mr-1 h-4 w-4 transform transition-transform duration-200 group-hover:scale-110 md:mr-2 md:h-5 md:w-5" />
+                                แนะนำเอกสาร
+                              </div>
+                            </button>
+                          }
+                        />
+                      </>
                     )}
                   </div>
                 )}
@@ -148,7 +180,8 @@ const DocsList = (props: Props) => {
                       'อนุมัติแล้ว'}
                     {doc.status === projectDocumentStatus.REJECTED &&
                       'ไม่อนุมัติ'}
-                    {doc.status === projectDocumentStatus.SEEN && 'ที่ปร๊กษาเปิดเอกสารแล้ว'}
+                    {doc.status === projectDocumentStatus.SEEN &&
+                      'ที่ปร๊กษาเปิดเอกสารแล้ว'}
                     {doc.status === projectDocumentStatus.WAITING &&
                       'รอดำเนินการตรวจ'}
                   </span>
@@ -165,7 +198,25 @@ const DocsList = (props: Props) => {
                       >
                         <PlagiarismIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
                         <p className="break-all text-sm font-medium">
-                          {doc.documentName + ' (รายละเอียดข้อผิดพลาด)'}
+                          {doc.documentName + ' (ที่ปรึกษา)'}
+                        </p>
+                      </a>
+                    </div>
+                  </div>
+                )}
+                {doc.subjectTeacherDocs && (
+                  <div className="flex items-center gap-2 text-xs md:text-sm">
+                    <span className="text-gray-500">รายงานข้อผิดพลาด:</span>
+                    <div className="flex items-center justify-center gap-2 rounded-md bg-red-100 p-1.5 text-red-600">
+                      <a
+                        href={doc.subjectTeacherDocs}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex flex-row gap-1.5 transition-colors duration-200 hover:text-red-700 hover:underline"
+                      >
+                        <PlagiarismIcon className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                        <p className="break-all text-sm font-medium">
+                          {doc.documentName + ' (อาจารย์ประจำวิชา)'}
                         </p>
                       </a>
                     </div>
