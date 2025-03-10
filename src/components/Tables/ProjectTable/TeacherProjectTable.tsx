@@ -64,7 +64,7 @@ const TeacherProjectTable: React.FC<Props> = ({
   }
 
   return (
-    <section className={`relative mt-4  h-full overflow-x-auto p-4 shadow-md sm:rounded-md ${courseList === course.Project ? 'bg-gradient-to-b from-orange-400 to-orange-200' : courseList === course.PreProject ? 'bg-gradient-to-b from-primary2-300 to-primary2-100' : 'bg-white'}`}>
+    <section className={`relative mt-4  h-full overflow-x-auto p-4 shadow-md sm:rounded-md ${courseList === course.Project ? 'bg-gradient-to-b from-orange-300 to-orange-200' : courseList === course.PreProject ? 'bg-gradient-to-b from-primary2-200 to-primary2-100' : 'bg-white'}`}>
       <article>
         <div className="mb-4 flex flex-col items-start justify-between md:flex-row md:items-center">
           <h2 className="mb-4 text-xl font-bold md:mb-0 md:text-2xl ">

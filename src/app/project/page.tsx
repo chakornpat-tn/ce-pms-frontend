@@ -49,7 +49,7 @@ export default async function Page({}: Props) {
   if (!projectData) return null
 
   return (
-    <section className={`relative mt-0 overflow-x-auto rounded-md  ${!projectData.projectAcademicYear ? 'bg-gradient-to-b from-yellow-50 to-white' : 'bg-gradient-to-b from-sky-50 to-sky-200'} p-4 shadow-md md:p-10`}>
+    <section className={`relative mt-0 overflow-x-auto rounded-md  ${!projectData.projectAcademicYear ? 'bg-gradient-to-b from-sky-50 to-white' : 'bg-gradient-to-b from-yellow-50 to-white'} p-4 shadow-md md:p-10`}>
       <article className="container mx-auto px-2 md:px-4">
         <h1 className="text-center text-lg sm:text-xl md:text-3xl">
           {projectData.projectName}
