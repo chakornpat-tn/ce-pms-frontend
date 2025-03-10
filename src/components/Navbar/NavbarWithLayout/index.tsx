@@ -15,7 +15,7 @@ import {
   Lock,
 } from '@mui/icons-material'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import userRoles from '@/constants/userRoles/userRoles'
 
 type Props = {
@@ -30,6 +30,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(true)
 
   const router = useRouter()
+  const pathname = usePathname()
 
   const toggleSidebar = () => setIsOpen(!isOpen)
 
@@ -151,6 +152,14 @@ const NavbarWithSideBar = ({ children }: Props) => {
       role: userRoles.Teacher,
     },
   ]
+
+  const getBackgroundColor = () => {
+    if (pathname === '/teacher/project') return 'bg-sky-100'
+    if (pathname === '/teacher/pre-project') return 'bg-yellow-100'
+    if (pathname === '/teacher/consultant/pre-project') return 'bg-rose-200'
+    if (pathname === '/teacher/present') return 'bg-green-100'
+    return ''
+  }
 
   return (
     <div className="relative">
@@ -285,7 +294,7 @@ const NavbarWithSideBar = ({ children }: Props) => {
         </div>
 
         <main
-          className="h-full"
+          className={`h-full rounded ${getBackgroundColor()}`}
           onClick={() => isOpen && window.innerWidth < 768 && toggleSidebar()}
         >
           {children}
