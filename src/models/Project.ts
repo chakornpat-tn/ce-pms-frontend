@@ -202,8 +202,8 @@ export type MaxProjectAcademicYearRes = {
 }
 
 export type StudentCommitteePointRes = {
-  projectName: string
   studentId: string
   name: string
+  projectName: string
   [key: string]: string | number | null
 }
