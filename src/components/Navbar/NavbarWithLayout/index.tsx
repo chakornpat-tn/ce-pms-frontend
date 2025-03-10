@@ -154,9 +154,10 @@ const NavbarWithSideBar = ({ children }: Props) => {
   ]
 
   const getBackgroundColor = () => {
-    if (pathname === '/teacher/project') return 'bg-sky-100'
-    if (pathname === '/teacher/pre-project') return 'bg-yellow-100'
-    if (pathname === '/teacher/consultant/pre-project') return 'bg-rose-200'
+    if (pathname === '/teacher/project') return 'bg-orange-100'
+    if (pathname === '/teacher/pre-project') return 'bg-sky-100'
+    if (pathname === '/teacher/consultant/pre-project') return 'bg-indigo-200'
+    if (pathname === '/teacher/consultant/project') return 'bg-rose-200'
     if (pathname === '/teacher/present') return 'bg-green-100'
     return ''
   }
