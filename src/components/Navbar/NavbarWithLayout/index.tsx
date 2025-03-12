@@ -162,6 +162,8 @@ const NavbarWithSideBar = ({ children }: Props) => {
     return ''
   }
 
+  const roleColor = [, 'bg-primary2-400', 'bg-orange-600', 'bg-green-600', 'bg-sky-500']
+
   return (
     <div className="relative">
       <aside
@@ -171,8 +173,8 @@ const NavbarWithSideBar = ({ children }: Props) => {
       >
         <div className="p-5">
           <nav className="mx-auto mt-8">
-            <p className="mb-4 flex w-full items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-primary2-400 py-4 text-sm text-secondary1">
-              <span className="overflow-hidden text-ellipsis text-sm sm:text-xs">
+            <p className={`mb-4 flex w-full items-center justify-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md py-4 text-sm text-secondary1 ${roleColor[role]}`}>
+              <span className={`overflow-hidden text-ellipsis text-sm sm:text-xs`}>
                 {user}
               </span>
             </p>

@@ -49,12 +49,21 @@ export default async function Page({}: Props) {
   if (!projectData) return null
 
   return (
-    <section className={`relative mt-0 overflow-x-auto rounded-md  ${!projectData.projectAcademicYear ? 'bg-gradient-to-b from-sky-50 to-white' : 'bg-gradient-to-b from-yellow-50 to-white'} p-4 shadow-md md:p-10`}>
+    <section
+      className={`relative mt-0 overflow-x-auto rounded-md ${!projectData.projectAcademicYear ? 'bg-gradient-to-b from-sky-50 to-white' : 'bg-gradient-to-b from-yellow-50 to-white'} p-4 shadow-md md:p-10`}
+    >
       <article className="container mx-auto px-2 md:px-4">
-        <h1 className="text-center text-lg sm:text-xl md:text-3xl">
-          {projectData.projectName}
+        <h1
+          className={`mb-3 rounded-sm ${projectData.projectAcademicYear ? 'bg-primary2-400' : 'bg-primary2-200'} text-white p-3 text-center text-lg font-bold sm:text-xl md:text-3xl`}
+        >
+          {projectData.projectAcademicYear
+            ? 'วิชาโครงงาน'
+            : 'วิชาเตรียมโครงงาน'}
         </h1>
-        <h2 className="mb-5 text-center text-base text-gray-400 sm:text-lg md:text-2xl">
+        <h2 className="mb-2 text-center text-lg text-gray-700 sm:text-xl md:text-3xl">
+          {projectData.projectName}
+        </h2>
+        <h2 className="mb-6 text-center text-base text-gray-400 sm:text-lg md:text-2xl">
           {projectData.projectNameEng ?? 'ไม่ได้ระบุชื่อโครงงานภาษาอังกฤษ'}
         </h2>
         <div className="w-full">
@@ -217,7 +226,8 @@ export default async function Page({}: Props) {
                 <>
                   <h3 className="mt-4 font-bold">ปีการศึกษาวิชาโครงงาน</h3>
                   <p className="text-gray-500">
-                    {projectData.projectSemester} /{projectData.projectAcademicYear}
+                    {projectData.projectSemester} /
+                    {projectData.projectAcademicYear}
                   </p>
                 </>
               )}
